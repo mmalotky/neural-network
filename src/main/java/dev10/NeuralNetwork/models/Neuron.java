@@ -1,11 +1,12 @@
 package dev10.NeuralNetwork.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Neuron {
-    private List<Synapse> connections;
+public class Neuron implements Node {
+    private final List<Synapse> connections;
 
-    private List<Integer> activationState;
+    private final List<Integer> activationState = new ArrayList<>();
 
     public Neuron(List<Synapse> connections) {
         this.connections = connections;
@@ -23,14 +24,17 @@ public class Neuron {
         return connections;
     }
 
+    @Override
     public void resetActivationState() {
         activationState.clear();
     }
 
+    @Override
     public List<Integer> getActivationState() {
         return activationState;
     }
 
+    @Override
     public void input(int state) {
         activationState.add(state);
         boolean activate = checkActivation();

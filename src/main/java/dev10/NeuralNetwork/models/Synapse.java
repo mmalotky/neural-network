@@ -1,10 +1,10 @@
 package dev10.NeuralNetwork.models;
 
 public class Synapse {
-    private final Neuron receiver;
+    private final Node receiver;
     private int weight;
 
-    public Synapse(Neuron receiver, int weight) {
+    public Synapse(Node receiver, int weight) {
         this.receiver = receiver;
         this.weight = weight;
     }
