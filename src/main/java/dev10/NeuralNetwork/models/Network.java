@@ -9,7 +9,7 @@ public class Network {
 
     public Network(int options, int[] layers) {
         for(int i = 0; i < options; i++) {
-            this.options.add(new Option());
+            this.options.add(new Option(i));
         }
         for(int i = 0; i < layers.length; i++) {
             this.layers.add(new ArrayList<>());
@@ -32,5 +32,9 @@ public class Network {
 
     public List<Option> getOptions() {
         return options;
+    }
+
+    public void forward() {
+        //TODO
     }
 }

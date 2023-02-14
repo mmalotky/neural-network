@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Option implements Node {
+
+    private final int optionId;
     private final List<Integer> activationState = new ArrayList<>();
+
+    private double probability = 0.0;
+
+    public Option(int optionId) {
+        this.optionId = optionId;
+    }
 
     @Override
     public void resetActivationState() {
@@ -19,7 +27,16 @@ public class Option implements Node {
     @Override
     public void input(int state) {
         activationState.add(state);
-        //TODO: add Markovian Decision
+        //TODO: add probability function
+        double probability = this.probability + 0.0;
+        setProbability(probability);
     }
 
+    private void setProbability(double probability) {
+        this.probability = probability;
+    }
+
+    public double getProbability() {
+        return probability;
+    }
 }
