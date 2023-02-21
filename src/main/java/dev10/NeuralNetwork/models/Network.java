@@ -7,6 +7,8 @@ public class Network {
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
+    private Option choice;
+
     public Network(int options, int[] layers) {
         for(int i = 0; i < options; i++) {
             this.options.add(new Option(i));
@@ -34,7 +36,46 @@ public class Network {
         return options;
     }
 
-    public void forward() {
-        //TODO
+    public Option getChoice() {
+        return choice;
+    }
+
+    public void forward(List<Integer> states) {
+        if(states.size() != layers.get(0).size()) {
+            System.out.println("Invalid Input");
+            return; //TODO: throw exception?
+        }
+        for(int i = 0; i < layers.get(0).size(); i++) {
+            Neuron neuron = layers.get(0).get(i);
+            Integer state = states.get(i);
+            neuron.input(state);
+        }
+
+        this.choice = softMax();
+
+        for (List<Neuron> layer : layers) {
+            for (Neuron neuron : layer) {
+                neuron.resetActivationState();
+            }
+        }
+    }
+
+    public void reverse() {
+        //TODO: train ai
+    }
+
+    private Option softMax() {
+        double rand = Math.random();
+        double totalValues = options.stream().mapToInt(Option::getSum).sum();
+        double currentProbability = 0.0;
+        for(Option option : options) {
+            double probability = option.getSum() / totalValues;
+            currentProbability += probability;
+            if(rand <= currentProbability) {
+                return option;
+            }
+        }
+
+        return null;
     }
 }

@@ -7,8 +7,7 @@ public class Option implements Node {
 
     private final int optionId;
     private final List<Integer> activationState = new ArrayList<>();
-
-    private double probability = 0.0;
+    private int sum = 0;
 
     public Option(int optionId) {
         this.optionId = optionId;
@@ -17,6 +16,7 @@ public class Option implements Node {
     @Override
     public void resetActivationState() {
         activationState.clear();
+        sum = 0;
     }
 
     @Override
@@ -27,16 +27,14 @@ public class Option implements Node {
     @Override
     public void input(int state) {
         activationState.add(state);
-        //TODO: add probability function
-        double probability = this.probability + 0.0;
-        setProbability(probability);
+        sum = activationState.stream().mapToInt(Integer::intValue).sum();
     }
 
-    private void setProbability(double probability) {
-        this.probability = probability;
+    public int getOptionId() {
+        return optionId;
     }
 
-    public double getProbability() {
-        return probability;
+    public int getSum() {
+        return sum;
     }
 }
