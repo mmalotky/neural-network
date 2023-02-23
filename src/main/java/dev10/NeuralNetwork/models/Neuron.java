@@ -6,7 +6,7 @@ import java.util.List;
 public class Neuron implements Node {
     private final List<Synapse> connections;
 
-    private final List<Integer> activationState = new ArrayList<>();
+    private final List<Double> activationState = new ArrayList<>();
 
     public Neuron(List<Synapse> connections) {
         this.connections = connections;
@@ -30,27 +30,22 @@ public class Neuron implements Node {
     }
 
     @Override
-    public List<Integer> getActivationState() {
+    public List<Double> getActivationState() {
         return activationState;
     }
 
     @Override
-    public void input(int state) {
+    public void input(double state) {
         activationState.add(state);
-        boolean activate = checkActivation();
-        if(activate) {
-            output();
+        double inputSum = activationState.stream().mapToDouble(Double::doubleValue).sum();
+        if(inputSum > 0) {
+            output(inputSum);
         }
     }
 
-    private void output() {
+    private void output(double value) {
         for(Synapse connection : connections) {
-            connection.transmit();
+            connection.transmit(value);
         }
-    }
-
-    private boolean checkActivation() {
-        //TODO: activation algorithm
-        return false;
     }
 }

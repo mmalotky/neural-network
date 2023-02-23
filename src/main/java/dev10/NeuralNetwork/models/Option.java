@@ -6,8 +6,8 @@ import java.util.List;
 public class Option implements Node {
 
     private final int optionId;
-    private final List<Integer> activationState = new ArrayList<>();
-    private int sum = 0;
+    private final List<Double> activationState = new ArrayList<>();
+    private double sum = 0;
 
     public Option(int optionId) {
         this.optionId = optionId;
@@ -20,21 +20,21 @@ public class Option implements Node {
     }
 
     @Override
-    public List<Integer> getActivationState() {
+    public List<Double> getActivationState() {
         return activationState;
     }
 
     @Override
-    public void input(int state) {
+    public void input(double state) {
         activationState.add(state);
-        sum = activationState.stream().mapToInt(Integer::intValue).sum();
+        sum = activationState.stream().mapToDouble(Double::doubleValue).sum();
     }
 
     public int getOptionId() {
         return optionId;
     }
 
-    public int getSum() {
+    public double getSum() {
         return sum;
     }
 }

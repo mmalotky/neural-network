@@ -5,7 +5,7 @@ import java.util.List;
 public interface Node {
     void resetActivationState();
 
-    List<Integer> getActivationState();
+    List<Double> getActivationState();
 
-    void input(int state);
+    void input(double state);
 }

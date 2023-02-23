@@ -61,12 +61,12 @@ public class Network {
     }
 
     public void reverse() {
-        //TODO: train ai
+        //TODO: back propagation
     }
 
     private Option softMax() {
         double rand = Math.random();
-        double totalValues = options.stream().mapToInt(Option::getSum).sum();
+        double totalValues = options.stream().mapToDouble(Option::getSum).sum();
         double currentProbability = 0.0;
         for(Option option : options) {
             double probability = option.getSum() / totalValues;

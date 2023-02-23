@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4293f630-a925-4698-97d2-169522d8348a" name="Changes" comment="+ last">
+    <list default="true" id="4293f630-a925-4698-97d2-169522d8348a" name="Changes" comment="added softmax">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Synapse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Synapse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/Martin Malotky/Documents/Dev10/warm-ups/Oauth"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -82,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676400779528</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added softmax">
+      <created>1677014650726</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677014650726</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -101,6 +111,7 @@
     <MESSAGE value="Added Neuron and Synapse models" />
     <MESSAGE value="Added Node, Option, and Network" />
     <MESSAGE value="+ last" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ last" />
+    <MESSAGE value="added softmax" />
+    <option name="LAST_COMMIT_MESSAGE" value="added softmax" />
   </component>
 </project>
