@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Neuron implements Node {
     private final List<Synapse> connections;
-
     private final List<Double> activationState = new ArrayList<>();
 
     public Neuron(List<Synapse> connections) {
