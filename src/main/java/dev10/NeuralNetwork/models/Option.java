@@ -4,18 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Option implements Node {
-
     private final int optionId;
+
+    private int inputs;
     private final List<Double> activationState = new ArrayList<>();
     private double sum = 0;
 
-    public Option(int optionId) {
+    public Option(int optionId, int inputs) {
         this.optionId = optionId;
+        setInputs(inputs);
+    }
+
+    @Override
+    public int getInputs() {
+        return inputs;
+    }
+
+    private void setInputs(int inputs) {
+        this.inputs = inputs;
+        for(int i = 0; i < inputs; i++) {
+            activationState.add(0.0);
+        }
     }
 
     @Override
     public void resetActivationState() {
-        activationState.clear();
+        activationState.forEach(n -> n = 0.0);
         sum = 0;
     }
 
@@ -25,8 +39,8 @@ public class Option implements Node {
     }
 
     @Override
-    public void input(double state) {
-        activationState.add(state);
+    public void input(int inputId, double state) {
+        activationState.set(inputId, state);
         sum = activationState.stream().mapToDouble(Double::doubleValue).sum();
     }
 

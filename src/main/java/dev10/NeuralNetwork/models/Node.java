@@ -3,9 +3,12 @@ package dev10.NeuralNetwork.models;
 import java.util.List;
 
 public interface Node {
+
+    int getInputs();
+
     void resetActivationState();
 
     List<Double> getActivationState();
 
-    void input(double state);
+    void input(int inputId, double state);
 }

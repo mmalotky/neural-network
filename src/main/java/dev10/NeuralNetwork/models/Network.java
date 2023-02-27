@@ -12,18 +12,22 @@ public class Network {
 
     public Network(int options, int[] layers) {
         for(int i = 0; i < options; i++) {
-            this.options.add(new Option(i));
+            this.options.add(new Option(i, layers[0]));
         }
         for(int i = 0; i < layers.length; i++) {
             this.layers.add(new ArrayList<>());
+
             for (int j = 0; j < layers[i]; j++) {
                 List<Synapse> connections = new ArrayList<>();
+
                 for(Node n : i == 0 ? this.options : this.layers.get(i-1)) {
                     int weight = 1; //TODO: set up initial weight distribution
-                    Synapse connection = new Synapse(n, weight);
+                    Synapse connection = new Synapse(n, j, weight);
                     connections.add(connection);
                 }
-                Neuron neuron = new Neuron(connections);
+                int inputs = i < layers.length - 1 ? layers[i + 1] : 1;
+                Neuron neuron = new Neuron(inputs, connections);
+
                 this.layers.get(i).add(neuron);
             }
         }
@@ -49,7 +53,7 @@ public class Network {
         for(int i = 0; i < layers.get(0).size(); i++) {
             Neuron neuron = layers.get(0).get(i);
             Integer state = states.get(i);
-            neuron.input(state);
+            neuron.input(0, state);
         }
 
         this.choice = softMax();

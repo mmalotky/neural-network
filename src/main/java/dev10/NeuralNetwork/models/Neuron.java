@@ -5,18 +5,29 @@ import java.util.List;
 
 public class Neuron implements Node {
     private final List<Synapse> connections;
+    private int inputs;
     private final List<Double> activationState = new ArrayList<>();
 
-    public Neuron(List<Synapse> connections) {
+    public Neuron(int inputs, List<Synapse> connections) {
         this.connections = connections;
+        setInputs(inputs);
+    }
+
+    @Override
+    public int getInputs() {
+        return inputs;
+    }
+
+    private void setInputs(int inputs) {
+        this.inputs = inputs;
+        for(int i = 0; i < inputs; i++) {
+            activationState.add(0.0);
+        }
     }
 
     public void addConnection(Synapse connection) {
         connections.add(connection);
-    }
-
-    public void removeConnection(Synapse connection) {
-        connections.remove(connection);
+        setInputs(inputs + 1);
     }
 
     public List<Synapse> getConnections() {
@@ -25,7 +36,7 @@ public class Neuron implements Node {
 
     @Override
     public void resetActivationState() {
-        activationState.clear();
+        activationState.forEach(n -> n = 0.0);
     }
 
     @Override
@@ -34,8 +45,8 @@ public class Neuron implements Node {
     }
 
     @Override
-    public void input(double state) {
-        activationState.add(state);
+    public void input(int inputId, double state) {
+        activationState.set(inputId, state);
         double inputSum = activationState.stream().mapToDouble(Double::doubleValue).sum();
         if(inputSum > 0) {
             output(inputSum);

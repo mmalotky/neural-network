@@ -30,15 +30,15 @@ class NetworkTest {
     @Test
     void shouldInstantiateNeurons() {
         Neuron n1 = test1.getLayers().get(0).get(0);
-        assertEquals(0, n1.getActivationState().size());
+        assertEquals(1, n1.getActivationState().size());
         assertEquals(1, n1.getConnections().size());
 
         Neuron n2 = test2.getLayers().get(1).get(1);
-        assertEquals(0, n2.getActivationState().size());
+        assertEquals(2, n2.getActivationState().size());
         assertEquals(2, n2.getConnections().size());
 
         Neuron n3 = test3.getLayers().get(1).get(1);
-        assertEquals(0, n3.getActivationState().size());
+        assertEquals(4, n3.getActivationState().size());
         assertEquals(3, n3.getConnections().size());
     }
 
@@ -46,27 +46,30 @@ class NetworkTest {
     void shouldInstantiateSynapses() {
         Synapse s1 = test1.getLayers().get(0).get(0).getConnections().get(0);
         assertEquals(1, s1.getWeight());
+        assertEquals(0, s1.getOutputId());
 
         Synapse s2 = test2.getLayers().get(1).get(1).getConnections().get(1);
         assertEquals(1, s2.getWeight());
+        assertEquals(1, s2.getOutputId());
 
         Synapse s3 = test3.getLayers().get(1).get(1).getConnections().get(2);
         assertEquals(1, s3.getWeight());
+        assertEquals(1, s3.getOutputId());
     }
 
     @Test
     void shouldInstantiateOptions() {
         Option o1 = test1.getOptions().get(0);
         assertEquals(0, o1.getOptionId());
-        assertEquals(0, o1.getActivationState().size());
+        assertEquals(1, o1.getActivationState().size());
 
         Option o2 = test2.getOptions().get(1);
         assertEquals(1, o2.getOptionId());
-        assertEquals(0, o2.getActivationState().size());
+        assertEquals(2, o2.getActivationState().size());
 
         Option o3 = test3.getOptions().get(2);
         assertEquals(2, o3.getOptionId());
-        assertEquals(0, o3.getActivationState().size());
+        assertEquals(5, o3.getActivationState().size());
     }
 
     @Test
@@ -76,7 +79,7 @@ class NetworkTest {
         test1.forward(input1);
         assertEquals(1, test1.getOptions().get(0).getSum());
         test1.resetState();
-        assertEquals(0, test1.getChoice().getActivationState().size());
+        assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
 
         List<Integer> input2 = new ArrayList<>();
         input2.add(1);
@@ -84,7 +87,7 @@ class NetworkTest {
         test2.forward(input2);
         assertEquals(2, test2.getOptions().get(0).getSum());
         test2.resetState();
-        assertEquals(0, test2.getChoice().getActivationState().size());
+        assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
 
         List<Integer> input3 = new ArrayList<>();
         input3.add(1);
@@ -92,8 +95,18 @@ class NetworkTest {
         input3.add(-1);
         input3.add(2);
         test3.forward(input3);
-        assertEquals(10, test3.getOptions().get(0).getSum());
+        assertEquals(15, test3.getOptions().get(0).getSum());
         test3.resetState();
-        assertEquals(0, test3.getChoice().getActivationState().size());
+        assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
+    }
+
+    @Test
+    void shouldNotForwardInvalidInput() {
+        try {
+            test1.forward(new ArrayList<>());
+            fail();
+        } catch (NetworkConfigurationException e) {
+            assertEquals("Invalid Input", e.getMessage());
+        }
     }
 }
