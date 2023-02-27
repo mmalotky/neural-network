@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4293f630-a925-4698-97d2-169522d8348a" name="Changes" comment="added softmax">
+    <list default="true" id="4293f630-a925-4698-97d2-169522d8348a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Synapse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Synapse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +20,7 @@
       <list>
         <option value="Class" />
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -40,13 +41,111 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "last_opened_file_path": "C:/Users/Martin Malotky/Documents/Dev10/warm-ups/Oauth"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="dev10.NeuralNetwork.models" />
     </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="dev10.NeuralNetwork.models" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.NetworkTest">
+    <configuration name="NetworkTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="neural-network" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dev10.NeuralNetwork.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dev10.NeuralNetwork.models" />
+      <option name="MAIN_CLASS_NAME" value="dev10.NeuralNetwork.models.NetworkTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkTest.shouldInstantiateNeurons" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="neural-network" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dev10.NeuralNetwork.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dev10.NeuralNetwork.models" />
+      <option name="MAIN_CLASS_NAME" value="dev10.NeuralNetwork.models.NetworkTest" />
+      <option name="METHOD_NAME" value="shouldInstantiateNeurons" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkTest.shouldInstantiateOptions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="neural-network" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dev10.NeuralNetwork.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dev10.NeuralNetwork.models" />
+      <option name="MAIN_CLASS_NAME" value="dev10.NeuralNetwork.models.NetworkTest" />
+      <option name="METHOD_NAME" value="shouldInstantiateOptions" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkTest.shouldInstantiateSynapses" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="neural-network" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dev10.NeuralNetwork.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dev10.NeuralNetwork.models" />
+      <option name="MAIN_CLASS_NAME" value="dev10.NeuralNetwork.models.NetworkTest" />
+      <option name="METHOD_NAME" value="shouldInstantiateSynapses" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NetworkTest.shouldPropagateForward" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="neural-network" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dev10.NeuralNetwork.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dev10.NeuralNetwork.models" />
+      <option name="MAIN_CLASS_NAME" value="dev10.NeuralNetwork.models.NetworkTest" />
+      <option name="METHOD_NAME" value="shouldPropagateForward" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.NetworkTest" />
+        <item itemvalue="JUnit.NetworkTest.shouldInstantiateNeurons" />
+        <item itemvalue="JUnit.NetworkTest.shouldPropagateForward" />
+        <item itemvalue="JUnit.NetworkTest.shouldInstantiateOptions" />
+        <item itemvalue="JUnit.NetworkTest.shouldInstantiateSynapses" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -113,5 +212,33 @@
     <MESSAGE value="+ last" />
     <MESSAGE value="added softmax" />
     <option name="LAST_COMMIT_MESSAGE" value="added softmax" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="dev10.NeuralNetwork.models.Option" memberName="activationState" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="test3.layers.get(0)" />
+        <watch expression="test3.layers.get(0)" />
+        <watch expression="test3.layers.get(0)" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

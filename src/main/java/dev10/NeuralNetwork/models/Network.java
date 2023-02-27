@@ -1,6 +1,7 @@
 package dev10.NeuralNetwork.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Network {
@@ -26,6 +27,7 @@ public class Network {
                 this.layers.get(i).add(neuron);
             }
         }
+        Collections.reverse(this.layers);
     }
 
     public List<List<Neuron>> getLayers() {
@@ -51,11 +53,17 @@ public class Network {
         }
 
         this.choice = softMax();
+    }
 
+    public void resetState() {
         for (List<Neuron> layer : layers) {
             for (Neuron neuron : layer) {
                 neuron.resetActivationState();
             }
+        }
+
+        for (Option option : options) {
+            option.resetActivationState();
         }
     }
 
