@@ -40,10 +40,9 @@ public class Network {
         return choice;
     }
 
-    public void forward(List<Integer> states) {
+    public void forward(List<Integer> states) throws NetworkConfigurationException {
         if(states.size() != layers.get(0).size()) {
-            System.out.println("Invalid Input");
-            return; //TODO: throw exception?
+            throw new NetworkConfigurationException("Invalid Input", new Throwable().fillInStackTrace());
         }
         for(int i = 0; i < layers.get(0).size(); i++) {
             Neuron neuron = layers.get(0).get(i);
@@ -66,7 +65,9 @@ public class Network {
 
     private Option softMax() {
         double rand = Math.random();
-        double totalValues = options.stream().mapToDouble(Option::getSum).sum();
+        double min = options.stream().mapToDouble(Option::getSum).min().orElse(0);
+        double mod = min > 0 ? 0.0 : min * -1.0 + 1.0;
+        double totalValues = options.stream().mapToDouble(o -> o.getSum() + mod).sum();
         double currentProbability = 0.0;
         for(Option option : options) {
             double probability = option.getSum() / totalValues;
