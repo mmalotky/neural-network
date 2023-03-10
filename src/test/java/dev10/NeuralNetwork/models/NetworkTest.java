@@ -45,15 +45,15 @@ class NetworkTest {
     @Test
     void shouldInstantiateSynapses() {
         Synapse s1 = test1.getLayers().get(0).get(0).getConnections().get(0);
-        assertEquals(1, s1.getWeight());
+        assertTrue(0 < s1.getWeight());
         assertEquals(0, s1.getOutputId());
 
         Synapse s2 = test2.getLayers().get(1).get(1).getConnections().get(1);
-        assertEquals(1, s2.getWeight());
+        assertTrue(0 < s2.getWeight());
         assertEquals(1, s2.getOutputId());
 
         Synapse s3 = test3.getLayers().get(1).get(1).getConnections().get(2);
-        assertEquals(1, s3.getWeight());
+        assertTrue(0 < s3.getWeight());
         assertEquals(1, s3.getOutputId());
     }
 
@@ -77,7 +77,7 @@ class NetworkTest {
         List<Integer> input1 = new ArrayList<>();
         input1.add(1);
         test1.forward(input1);
-        assertEquals(1, test1.getOptions().get(0).getSum());
+        assertTrue(0 < test1.getOptions().get(0).getSum());
         test1.resetState();
         assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
 
@@ -85,7 +85,7 @@ class NetworkTest {
         input2.add(1);
         input2.add(0);
         test2.forward(input2);
-        assertEquals(2, test2.getOptions().get(0).getSum());
+        assertTrue(0 < test2.getOptions().get(0).getSum());
         test2.resetState();
         assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
 
@@ -95,7 +95,7 @@ class NetworkTest {
         input3.add(-1);
         input3.add(2);
         test3.forward(input3);
-        assertEquals(15, test3.getOptions().get(0).getSum());
+        assertTrue(0 < test3.getOptions().get(0).getSum());
         test3.resetState();
         assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
     }

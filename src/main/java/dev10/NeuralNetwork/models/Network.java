@@ -21,7 +21,7 @@ public class Network {
                 List<Synapse> connections = new ArrayList<>();
 
                 for(Node n : i == 0 ? this.options : this.layers.get(i-1)) {
-                    int weight = 1; //TODO: set up initial weight distribution
+                    double weight = Math.random();
                     Synapse connection = new Synapse(n, j, weight);
                     connections.add(connection);
                 }
@@ -71,7 +71,13 @@ public class Network {
         }
     }
 
-    public void reverse() {
+    public void reverse(List<Double> probabilities) {
+        double cost = 0.0;
+        for(int i = 0; i < options.size(); i++) {
+            Option option = options.get(i);
+            double expected = probabilities.get(i);
+            cost += 0.5 * Math.pow((option.getLastProbability() - expected), 2);
+        }
         //TODO: back propagation
     }
 
@@ -82,8 +88,8 @@ public class Network {
         double totalValues = options.stream().mapToDouble(o -> o.getSum() + mod).sum();
         double currentProbability = 0.0;
         for(Option option : options) {
-            double probability = option.getSum() / totalValues;
-            currentProbability += probability;
+            option.setLastProbability(option.getSum() / totalValues);
+            currentProbability += option.getLastProbability();
             if(rand <= currentProbability) {
                 return option;
             }

@@ -10,6 +10,8 @@ public class Option implements Node {
     private final List<Double> activationState = new ArrayList<>();
     private double sum = 0;
 
+    private double lastProbability = 0;
+
     public Option(int optionId, int inputs) {
         this.optionId = optionId;
         setInputs(inputs);
@@ -50,5 +52,13 @@ public class Option implements Node {
 
     public double getSum() {
         return sum;
+    }
+
+    public double getLastProbability() {
+        return lastProbability;
+    }
+
+    public void setLastProbability(double lastProbability) {
+        this.lastProbability = lastProbability;
     }
 }
