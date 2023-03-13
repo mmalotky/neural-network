@@ -12,6 +12,8 @@ public class Option implements Node {
 
     private double lastProbability = 0;
 
+    private double error;
+
     public Option(int optionId, int inputs) {
         this.optionId = optionId;
         setInputs(inputs);
@@ -60,5 +62,15 @@ public class Option implements Node {
 
     public void setLastProbability(double lastProbability) {
         this.lastProbability = lastProbability;
+    }
+
+    @Override
+    public double getError() {
+        return error;
+    }
+
+    @Override
+    public void setError(double error) {
+        this.error = error;
     }
 }

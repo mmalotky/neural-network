@@ -5,6 +5,8 @@ public class Synapse {
     private final int outputId;
     private double weight;
 
+    private double lastOut;
+
     public Synapse(Node receiver, int outputId, double weight) {
         this.receiver = receiver;
         this.outputId = outputId;
@@ -12,6 +14,7 @@ public class Synapse {
     }
 
     public void transmit(double value) {
+        this.lastOut = value;
         receiver.input(outputId, value * weight);
     }
 
@@ -25,5 +28,13 @@ public class Synapse {
 
     public int getOutputId() {
         return outputId;
+    }
+
+    public double getLastOut() {
+        return lastOut;
+    }
+
+    public Node getReceiver() {
+        return receiver;
     }
 }

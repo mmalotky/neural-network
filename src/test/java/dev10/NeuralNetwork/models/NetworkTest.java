@@ -109,4 +109,41 @@ class NetworkTest {
             assertEquals("Invalid Input", e.getMessage());
         }
     }
+
+    @Test
+    void shouldBackPropagate() throws NetworkConfigurationException {
+        List<Integer> input2 = new ArrayList<>();
+        input2.add(1);
+        input2.add(0);
+
+        double lastProb = 0;
+
+        for(int i = 0; i < 20; i++) {
+            test2.forward(input2);
+            double probability = test2.getOptions().get(0).getLastProbability();
+            assertTrue(lastProb < probability);
+
+            test2.reverse(0);
+            lastProb = probability;
+            test2.resetState();
+        }
+
+        List<Integer> input3 = new ArrayList<>();
+        input3.add(1);
+        input3.add(0);
+        input3.add(-1);
+        input3.add(2);
+
+        lastProb = 0;
+
+        for(int i = 0; i < 20; i++) {
+            test3.forward(input3);
+            double probability = test3.getOptions().get(2).getLastProbability();
+            assertTrue(lastProb < probability);
+
+            test3.reverse(2);
+            lastProb = probability;
+            test3.resetState();
+        }
+    }
 }

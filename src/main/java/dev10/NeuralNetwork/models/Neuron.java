@@ -8,6 +8,8 @@ public class Neuron implements Node {
     private int inputs;
     private final List<Double> activationState = new ArrayList<>();
 
+    private double error;
+
     public Neuron(int inputs, List<Synapse> connections) {
         this.connections = connections;
         setInputs(inputs);
@@ -51,6 +53,16 @@ public class Neuron implements Node {
         if(inputSum > 0) {
             output(inputSum);
         }
+    }
+
+    @Override
+    public double getError() {
+        return error;
+    }
+
+    @Override
+    public void setError(double error) {
+        this.error = error;
     }
 
     private void output(double value) {

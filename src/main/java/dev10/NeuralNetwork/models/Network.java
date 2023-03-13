@@ -8,6 +8,8 @@ public class Network {
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
+    private double learningRate = 1.0;
+
     private Option choice;
 
     public Network(int options, int[] layers) {
@@ -46,6 +48,14 @@ public class Network {
         return choice;
     }
 
+    public double getLearningRate() {
+        return learningRate;
+    }
+
+    public void setLearningRate(double learningRate) {
+        this.learningRate = learningRate;
+    }
+
     public void forward(List<Integer> states) throws NetworkConfigurationException {
         if(states.size() != layers.get(0).size()) {
             throw new NetworkConfigurationException("Invalid Input", new Throwable().fillInStackTrace());
@@ -56,7 +66,7 @@ public class Network {
             neuron.input(0, state);
         }
 
-        this.choice = softMax();
+        softMax();
     }
 
     public void resetState() {
@@ -71,30 +81,43 @@ public class Network {
         }
     }
 
-    public void reverse(List<Double> probabilities) {
-        double cost = 0.0;
-        for(int i = 0; i < options.size(); i++) {
-            Option option = options.get(i);
-            double expected = probabilities.get(i);
-            cost += 0.5 * Math.pow((option.getLastProbability() - expected), 2);
+    public void reverse(int expectedId) {
+        for (Option option : options) {
+            optionError(option, expectedId);
         }
-        //TODO: back propagation
+        for (int i = layers.size() - 1; i >= 0; i--) {
+            List<Neuron> layer = layers.get(i);
+            for (Neuron neuron : layer) {
+                double error = 0;
+                for (Synapse synapse : neuron.getConnections()) {
+                    double change = synapse.getReceiver().getError() * synapse.getWeight();
+                    synapse.setWeight(synapse.getWeight() - learningRate * change);
+                    error += change;
+                }
+                neuron.setError(error);
+            }
+        }
+
     }
 
-    private Option softMax() {
+    private void optionError(Option option, int expectedId) {
+        double errorByOut = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
+        double outByNet = 1.0 / options.size();
+        option.setError(errorByOut * outByNet);
+    }
+
+    private void softMax() {
         double rand = Math.random();
         double min = options.stream().mapToDouble(Option::getSum).min().orElse(0);
-        double mod = min > 0 ? 0.0 : min * -1.0 + 1.0;
+        double mod = min > 0 ? 0.0 : (min * -1.0) + 1.0;
         double totalValues = options.stream().mapToDouble(o -> o.getSum() + mod).sum();
         double currentProbability = 0.0;
         for(Option option : options) {
             option.setLastProbability(option.getSum() / totalValues);
             currentProbability += option.getLastProbability();
             if(rand <= currentProbability) {
-                return option;
+                this.choice = option;
             }
         }
-
-        return null;
     }
 }

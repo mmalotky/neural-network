@@ -11,4 +11,8 @@ public interface Node {
     List<Double> getActivationState();
 
     void input(int inputId, double state);
+
+    double getError();
+
+    void setError(double error);
 }
