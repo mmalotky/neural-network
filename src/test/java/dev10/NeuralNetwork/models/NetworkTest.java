@@ -146,4 +146,37 @@ class NetworkTest {
             test3.resetState();
         }
     }
+
+    @Test
+    void shouldBackPropagateMultipleInputs() throws NetworkConfigurationException {
+        List<Integer> input1 = new ArrayList<>();
+        input1.add(0);
+        input1.add(1);
+
+        List<Integer> input2 = new ArrayList<>();
+        input2.add(1);
+        input2.add(0);
+
+        for(int i = 0; i < 40; i++) {
+            boolean flip = i%2 == 1;
+            test2.forward((flip? input1:input2));
+            double probability1 = test2.getOptions().get((flip?1:0)).getLastProbability();
+
+            test2.reverse((flip?1:0));
+            test2.resetState();
+
+            test2.forward((flip? input1:input2));
+            double probability2 = test2.getOptions().get((flip?1:0)).getLastProbability();
+            test2.resetState();
+
+            assertTrue(probability2 > probability1);
+        }
+        test2.forward(input1);
+        assertTrue(test2.getOptions().get(1).getLastProbability() > 0.50);
+        test2.resetState();
+
+        test2.forward(input2);
+        assertTrue(test2.getOptions().get(0).getLastProbability() > 0.50);
+        test2.resetState();
+    }
 }
