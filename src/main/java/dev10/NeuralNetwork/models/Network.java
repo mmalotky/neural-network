@@ -104,20 +104,20 @@ public class Network {
 
     private void optionErrorByState(Option option, int expectedId) {
         double errorByProb = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
-        double outputSum = option.getSum() / option.getLastProbability();
-        double probByState = (outputSum - option.getSum()) / Math.pow(outputSum, 2);
+        double outputSum = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
+        double outputCurrent = Math.exp(option.getSum());
+        double probByState = (outputSum - outputCurrent) * outputCurrent / Math.pow(outputSum, 2);
         option.setErrorByState(errorByProb * probByState);
     }
 
     private void softMax() {
         double rand = Math.random();
-        double min = options.stream().mapToDouble(Option::getSum).min().orElse(0);
-        double mod = min > 0 ? 0.0 : (min * -1.0) + 1.0;
-        double totalValues = options.stream().mapToDouble(o -> o.getSum() + mod).sum();
+        double totalValues = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
         double currentProbability = 0.0;
         for(Option option : options) {
-            option.setLastProbability(option.getSum() / totalValues);
-            currentProbability += option.getLastProbability();
+            double prob = Math.exp(option.getSum()) / totalValues;
+            option.setLastProbability(prob);
+            currentProbability += prob;
             if(rand <= currentProbability) {
                 this.choice = option;
             }
