@@ -12,7 +12,7 @@ public class Option implements Node {
 
     private double lastProbability = 0;
 
-    private double error;
+    private double errorByState;
 
     public Option(int optionId, int inputs) {
         this.optionId = optionId;
@@ -65,12 +65,12 @@ public class Option implements Node {
     }
 
     @Override
-    public double getError() {
-        return error;
+    public double getErrorByState() {
+        return errorByState;
     }
 
     @Override
-    public void setError(double error) {
-        this.error = error;
+    public void setErrorByState(double errorByState) {
+        this.errorByState = errorByState;
     }
 }

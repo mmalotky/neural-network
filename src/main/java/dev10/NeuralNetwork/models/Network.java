@@ -83,27 +83,30 @@ public class Network {
 
     public void reverse(int expectedId) {
         for (Option option : options) {
-            optionError(option, expectedId);
+            optionErrorByState(option, expectedId);
         }
         for (int i = layers.size() - 1; i >= 0; i--) {
             List<Neuron> layer = layers.get(i);
             for (Neuron neuron : layer) {
-                double error = 0;
+                double errorByState = 0;
                 for (Synapse synapse : neuron.getConnections()) {
-                    double change = synapse.getReceiver().getError() * synapse.getWeight();
+                    double change = synapse.getReceiver().getErrorByState() * synapse.getLastOut();
                     synapse.setWeight(synapse.getWeight() - learningRate * change);
-                    error += change;
+
+                    int active = neuron.getSum() > 0 ? 1 : 0;
+                    errorByState += synapse.getReceiver().getErrorByState() * synapse.getWeight() * active;
                 }
-                neuron.setError(error);
+                neuron.setErrorByState(errorByState);
             }
         }
 
     }
 
-    private void optionError(Option option, int expectedId) {
-        double errorByOut = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
-        double outByNet = 1.0 / options.size();
-        option.setError(errorByOut * outByNet);
+    private void optionErrorByState(Option option, int expectedId) {
+        double errorByProb = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
+        double outputSum = option.getSum() / option.getLastProbability();
+        double probByState = (outputSum - option.getSum()) / Math.pow(outputSum, 2);
+        option.setErrorByState(errorByProb * probByState);
     }
 
     private void softMax() {

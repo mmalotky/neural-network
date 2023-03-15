@@ -12,7 +12,7 @@ public interface Node {
 
     void input(int inputId, double state);
 
-    double getError();
+    double getErrorByState();
 
-    void setError(double error);
+    void setErrorByState(double errorByState);
 }

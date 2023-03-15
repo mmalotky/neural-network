@@ -7,8 +7,8 @@ public class Neuron implements Node {
     private final List<Synapse> connections;
     private int inputs;
     private final List<Double> activationState = new ArrayList<>();
-
-    private double error;
+    private double errorByState;
+    private double sum;
 
     public Neuron(int inputs, List<Synapse> connections) {
         this.connections = connections;
@@ -49,20 +49,31 @@ public class Neuron implements Node {
     @Override
     public void input(int inputId, double state) {
         activationState.set(inputId, state);
-        double inputSum = activationState.stream().mapToDouble(Double::doubleValue).sum();
-        if(inputSum > 0) {
-            output(inputSum);
+
+        if(activationState.size() == inputs) {
+            this.sum = activationState.stream().mapToDouble(Double::doubleValue).sum();
+
+            if(sum > 0) {
+                output(sum);
+            }
+            else {
+                output(0);
+            }
         }
     }
 
     @Override
-    public double getError() {
-        return error;
+    public double getErrorByState() {
+        return errorByState;
     }
 
     @Override
-    public void setError(double error) {
-        this.error = error;
+    public void setErrorByState(double errorByState) {
+        this.errorByState = errorByState;
+    }
+
+    public double getSum() {
+        return sum;
     }
 
     private void output(double value) {
