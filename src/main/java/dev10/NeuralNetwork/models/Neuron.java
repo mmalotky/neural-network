@@ -57,7 +57,7 @@ public class Neuron implements Node {
                 output(sum);
             }
             else {
-                output(0);
+                output(0.01 * sum);
             }
         }
     }

@@ -157,7 +157,7 @@ class NetworkTest {
         input2.add(1);
         input2.add(0);
 
-        for(int i = 0; i < 40; i++) {
+        for(int i = 0; i < 100; i++) {
             boolean flip = i%2 == 1;
             test2.forward((flip? input1:input2));
             double probability1 = test2.getOptions().get((flip?1:0)).getLastProbability();

@@ -8,7 +8,7 @@ public class Network {
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
-    private double learningRate = 1.0;
+    private double learningRate = 0.5;
 
     private Option choice;
 
@@ -93,7 +93,7 @@ public class Network {
                     double change = synapse.getReceiver().getErrorByState() * synapse.getLastOut();
                     synapse.setWeight(synapse.getWeight() - learningRate * change);
 
-                    int active = neuron.getSum() > 0 ? 1 : 0;
+                    double active = neuron.getSum() > 0 ? 1 : 0.01;
                     errorByState += synapse.getReceiver().getErrorByState() * synapse.getWeight() * active;
                 }
                 neuron.setErrorByState(errorByState);
