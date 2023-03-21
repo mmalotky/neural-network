@@ -1,0 +1,89 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4293f630-a925-4698-97d2-169522d8348a\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"Interface\" />\r\n        <option value=\"JUnit5 Test Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2LjhcASSps4n0jd84aad94JCALC\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary\": \"JUnit5\",\r\n    \"com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5\": \"\",\r\n    \"last_opened_file_path\": \"C:/Users/Martin Malotky/Documents/Dev10/warm-ups/Oauth\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateTestDialog.Recents.Supers\">\r\n      <recent name=\"\" />\r\n    </key>\r\n    <key name=\"ExtractSuperBase.RECENT_KEYS\">\r\n      <recent name=\"dev10.NeuralNetwork.models\" />\r\n    </key>\r\n    <key name=\"CreateTestDialog.RecentsKey\">\r\n      <recent name=\"dev10.NeuralNetwork.models\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"JUnit.NetworkTest\">\r\n    <configuration name=\"NetworkTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"neural-network\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"dev10.NeuralNetwork.models.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"dev10.NeuralNetwork.models\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"dev10.NeuralNetwork.models.NetworkTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"NetworkTest.shouldInstantiateNeurons\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"neural-network\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"dev10.NeuralNetwork.models.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"dev10.NeuralNetwork.models\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"dev10.NeuralNetwork.models.NetworkTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"shouldInstantiateNeurons\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"NetworkTest.shouldInstantiateOptions\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"neural-network\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"dev10.NeuralNetwork.models.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"dev10.NeuralNetwork.models\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"dev10.NeuralNetwork.models.NetworkTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"shouldInstantiateOptions\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"NetworkTest.shouldInstantiateSynapses\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"neural-network\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"dev10.NeuralNetwork.models.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"dev10.NeuralNetwork.models\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"dev10.NeuralNetwork.models.NetworkTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"shouldInstantiateSynapses\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"NetworkTest.shouldPropagateForward\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"neural-network\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"dev10.NeuralNetwork.models.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"dev10.NeuralNetwork.models\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"dev10.NeuralNetwork.models.NetworkTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"shouldPropagateForward\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.NetworkTest\" />\r\n        <item itemvalue=\"JUnit.NetworkTest.shouldInstantiateNeurons\" />\r\n        <item itemvalue=\"JUnit.NetworkTest.shouldPropagateForward\" />\r\n        <item itemvalue=\"JUnit.NetworkTest.shouldInstantiateOptions\" />\r\n        <item itemvalue=\"JUnit.NetworkTest.shouldInstantiateSynapses\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4293f630-a925-4698-97d2-169522d8348a\" name=\"Changes\" comment=\"\" />\r\n      <created>1676390479042</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1676390479042</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Initial Commit\">\r\n      <created>1676390538301</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1676390538301</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Added Neuron and Synapse models\">\r\n      <created>1676394173295</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1676394173295</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Added Node, Option, and Network\">\r\n      <created>1676399625324</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1676399625324</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"+ last\">\r\n      <created>1676400779528</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1676400779528</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"added softmax\">\r\n      <created>1677014650726</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1677014650726</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"6\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Initial Commit\" />\r\n    <MESSAGE value=\"Added Neuron and Synapse models\" />\r\n    <MESSAGE value=\"Added Node, Option, and Network\" />\r\n    <MESSAGE value=\"+ last\" />\r\n    <MESSAGE value=\"added softmax\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"added softmax\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java</url>\r\n          <line>94</line>\r\n          <option name=\"timeStamp\" value=\"8\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java</url>\r\n          <line>84</line>\r\n          <option name=\"timeStamp\" value=\"12\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n    <pin-to-top-manager>\r\n      <pinned-members>\r\n        <PinnedItemInfo parentTag=\"dev10.NeuralNetwork.models.Option\" memberName=\"activationState\" />\r\n      </pinned-members>\r\n    </pin-to-top-manager>\r\n    <watches-manager>\r\n      <configuration name=\"JUnit\">\r\n        <watch expression=\"test3.layers.get(0)\" />\r\n        <watch expression=\"test3.layers.get(0)\" />\r\n        <watch expression=\"test3.layers.get(0)\" />\r\n      </configuration>\r\n    </watches-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 2ddb4ad02918d74858862abea08c9ca1c23b0c26)
++++ b/.idea/workspace.xml	(date 1677526995885)
+@@ -4,11 +4,14 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="4293f630-a925-4698-97d2-169522d8348a" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java" afterDir="false" />
++    <list default="true" id="4293f630-a925-4698-97d2-169522d8348a" name="Changes" comment="added tests for instantiation and forward propagation identified issues">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Network.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Neuron.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Node.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Option.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Synapse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev10/NeuralNetwork/models/Synapse.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -191,7 +194,21 @@
+       <option name="project" value="LOCAL" />
+       <updated>1677014650726</updated>
+     </task>
+-    <option name="localTasksCounter" value="6" />
++    <task id="LOCAL-00006" summary="added tests for instantiation and forward propagation identified issues">
++      <created>1677516142350</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1677516142350</updated>
++    </task>
++    <task id="LOCAL-00007" summary="added tests for instantiation and forward propagation identified issues">
++      <created>1677516157020</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1677516157020</updated>
++    </task>
++    <option name="localTasksCounter" value="8" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -211,34 +228,15 @@
+     <MESSAGE value="Added Node, Option, and Network" />
+     <MESSAGE value="+ last" />
+     <MESSAGE value="added softmax" />
+-    <option name="LAST_COMMIT_MESSAGE" value="added softmax" />
++    <MESSAGE value="added tests for instantiation and forward propagation identified issues" />
++    <option name="LAST_COMMIT_MESSAGE" value="added tests for instantiation and forward propagation identified issues" />
+   </component>
+   <component name="XDebuggerManager">
+-    <breakpoint-manager>
+-      <breakpoints>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java</url>
+-          <line>94</line>
+-          <option name="timeStamp" value="8" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/test/java/dev10/NeuralNetwork/models/NetworkTest.java</url>
+-          <line>84</line>
+-          <option name="timeStamp" value="12" />
+-        </line-breakpoint>
+-      </breakpoints>
+-    </breakpoint-manager>
+     <pin-to-top-manager>
+       <pinned-members>
+         <PinnedItemInfo parentTag="dev10.NeuralNetwork.models.Option" memberName="activationState" />
++        <PinnedItemInfo parentTag="dev10.NeuralNetwork.models.Network" memberName="layers" />
+       </pinned-members>
+     </pin-to-top-manager>
+-    <watches-manager>
+-      <configuration name="JUnit">
+-        <watch expression="test3.layers.get(0)" />
+-        <watch expression="test3.layers.get(0)" />
+-        <watch expression="test3.layers.get(0)" />
+-      </configuration>
+-    </watches-manager>
+   </component>
+ </project>
+\ No newline at end of file
