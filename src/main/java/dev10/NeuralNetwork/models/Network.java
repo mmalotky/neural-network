@@ -56,13 +56,13 @@ public class Network {
         this.learningRate = learningRate;
     }
 
-    public void forward(List<Integer> states) throws NetworkConfigurationException {
+    public void forward(List<Double> states) throws NetworkConfigurationException {
         if(states.size() != layers.get(0).size()) {
             throw new NetworkConfigurationException("Invalid Input", new Throwable().fillInStackTrace());
         }
         for(int i = 0; i < layers.get(0).size(); i++) {
             Neuron neuron = layers.get(0).get(i);
-            Integer state = states.get(i);
+            Double state = states.get(i);
             neuron.input(0, state);
         }
 
@@ -99,7 +99,6 @@ public class Network {
                 neuron.setErrorByState(errorByState);
             }
         }
-
     }
 
     private void optionErrorByState(Option option, int expectedId) {
