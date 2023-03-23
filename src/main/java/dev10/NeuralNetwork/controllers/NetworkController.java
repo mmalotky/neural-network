@@ -1,11 +1,17 @@
 package dev10.NeuralNetwork.controllers;
 
 import dev10.NeuralNetwork.models.Network;
+import dev10.NeuralNetwork.service.NetworkService;
 
 public class NetworkController {
-    private final Network network;
+    private Network network;
+    private NetworkService service;
 
-    public NetworkController(Network network) {
-        this.network = network;
+    public void saveNetwork() {
+
+    }
+
+    public void loadNetwork(String id) {
+
     }
 }

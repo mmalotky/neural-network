@@ -2,10 +2,11 @@ package dev10.NeuralNetwork.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 public class Network {
+    private String networkId = UUID.randomUUID().toString();
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
@@ -35,6 +36,14 @@ public class Network {
             }
         }
         Collections.reverse(this.layers);
+    }
+
+    public String getNetworkId() {
+        return networkId;
+    }
+
+    public void setNetworkId(String networkId) {
+        this.networkId = networkId;
     }
 
     public List<List<Neuron>> getLayers() {
