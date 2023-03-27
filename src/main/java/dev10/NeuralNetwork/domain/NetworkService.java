@@ -1,5 +1,6 @@
 package dev10.NeuralNetwork.domain;
 
+import dev10.NeuralNetwork.data.DataAccessException;
 import dev10.NeuralNetwork.data.NetworkFileRepository;
 import dev10.NeuralNetwork.data.NetworkRepository;
 import dev10.NeuralNetwork.models.Network;
@@ -12,12 +13,23 @@ public class NetworkService {
     NetworkRepository repository;
 
     public Result<Void> saveNetwork(Network network) {
-        boolean result = repository.saveNetwork(network);
-        return null;
+        Result<Void> result = new Result<>();
+        try {
+            repository.saveNetwork(network);
+        } catch (DataAccessException e) {
+            result.addError(e.getMessage());
+        }
+        return result;
     }
 
-    public Result<?> loadNetwork(String id) {
-        Network network = repository.loadNetwork(id);
-        return null;
+    public Result<Network> loadNetwork(String id) {
+        Result<Network> result = new Result<>();
+        try {
+            Network network = repository.loadNetwork(id);
+            result.setPayload(network);
+        } catch (DataAccessException e) {
+            result.addError(e.getMessage());
+        }
+        return result;
     }
 }
