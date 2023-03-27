@@ -39,5 +39,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-./testData/*.txt
-./saves/*.txt
+./saves/**
