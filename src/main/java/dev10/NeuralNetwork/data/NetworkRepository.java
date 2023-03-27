@@ -1,15 +1,9 @@
 package dev10.NeuralNetwork.data;
 
 import dev10.NeuralNetwork.models.Network;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class NetworkRepository {
-    public boolean saveNetwork(Network network) {
-        return false;
-    }
+public interface NetworkRepository {
+    boolean saveNetwork(Network network);
 
-    public Network loadNetwork(String id) {
-        return null;
-    }
+    Network loadNetwork(String id) throws DataAccessException;
 }
