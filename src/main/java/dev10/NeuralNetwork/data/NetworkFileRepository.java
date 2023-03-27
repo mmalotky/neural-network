@@ -8,7 +8,6 @@ import java.io.*;
 @Repository
 public class NetworkFileRepository implements NetworkRepository {
     private final String path;
-    private final String delimiter = ",";
 
     public NetworkFileRepository(String path) {
         this.path = path;
