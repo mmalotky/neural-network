@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Network {
-    private String networkId = UUID.randomUUID().toString();
+    private String networkId;
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
@@ -15,6 +15,8 @@ public class Network {
     private Option choice;
 
     public Network(int options, int[] layers) {
+        networkId = UUID.randomUUID().toString();
+
         for(int i = 0; i < options; i++) {
             this.options.add(new Option(i, layers[0]));
         }
