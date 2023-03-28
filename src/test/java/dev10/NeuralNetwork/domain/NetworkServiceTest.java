@@ -42,24 +42,24 @@ class NetworkServiceTest {
         assertFalse(result.isSuccess());
 
         network.setNetworkId("");
-        result = service.saveNetwork(network);
-        assertFalse(result.isSuccess());
+        Result<Void> result2 = service.saveNetwork(network);
+        assertFalse(result2.isSuccess());
 
         network.setNetworkId("a/i");
-        result = service.saveNetwork(network);
-        assertFalse(result.isSuccess());
+        Result<Void> result3 = service.saveNetwork(network);
+        assertFalse(result3.isSuccess());
 
         network.setNetworkId(".no");
-        result = service.saveNetwork(network);
-        assertFalse(result.isSuccess());
+        Result<Void> result4 = service.saveNetwork(network);
+        assertFalse(result4.isSuccess());
 
         network.setNetworkId("#no");
-        result = service.saveNetwork(network);
-        assertFalse(result.isSuccess());
+        Result<Void> result5 = service.saveNetwork(network);
+        assertFalse(result5.isSuccess());
 
         network.setNetworkId("\n");
-        result = service.saveNetwork(network);
-        assertFalse(result.isSuccess());
+        Result<Void> result6 = service.saveNetwork(network);
+        assertFalse(result6.isSuccess());
     }
 
     @Test
@@ -69,7 +69,59 @@ class NetworkServiceTest {
         assertFalse(result.isSuccess());
 
         network = new Network(1, new int[]{0});
-        result = service.saveNetwork(network);
+        Result<Void> result2 = service.saveNetwork(network);
+        assertFalse(result2.isSuccess());
+    }
+
+    @Test
+    void shouldCreateANewNetwork() {
+        Result<Network> result = service.newNetwork(1, new int[] {1});
+        assertTrue(result.isSuccess());
+        assertEquals(1, result.getPayload().getOptions().size());
+        assertEquals(1, result.getPayload().getLayers().size());
+    }
+
+    @Test
+    void shouldNotCreateAnInvalidNetwork() {
+        Result<Network> result = service.newNetwork(0, new int[] {1});
         assertFalse(result.isSuccess());
+
+        Result<Network> result2 = service.newNetwork(1, new int[] {0});
+        assertFalse(result2.isSuccess());
+
+        Result<Network> result3 = service.newNetwork(0, new int[0]);
+        assertFalse(result3.isSuccess());
+
+        Result<Network> result4 = service.newNetwork(0, null);
+        assertFalse(result4.isSuccess());
+
+        Result<Network> result5 = service.newNetwork(0, new int[] {-1});
+        assertFalse(result5.isSuccess());
+    }
+
+    @Test
+    void shouldLoadNetwork() {
+        Result<Network> result = service.loadNetwork("test");
+        assertTrue(result.isSuccess());
+        Result<Network> result2 = service.loadNetwork("test2");
+        assertTrue(result2.isSuccess());
+    }
+
+    @Test
+    void shouldNotLoadMissingNetwork() {
+        Result<Network> result = service.loadNetwork("missing");
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotLoadNullOrInvalid() {
+        Result<Network> result = service.loadNetwork(null);
+        assertFalse(result.isSuccess());
+
+        Result<Network> result2 = service.loadNetwork("");
+        assertFalse(result2.isSuccess());
+
+        Result<Network> result3 = service.loadNetwork(".no");
+        assertFalse(result3.isSuccess());
     }
 }
