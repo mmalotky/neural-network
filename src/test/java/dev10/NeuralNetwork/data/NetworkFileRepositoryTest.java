@@ -4,6 +4,7 @@ import dev10.NeuralNetwork.models.Network;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,5 +91,12 @@ class NetworkFileRepositoryTest {
         } catch(DataAccessException e) {
             assertEquals(e.getMessage(), "Error accessing file at: ./testData/networks/.txt");
         }
+    }
+
+    @Test
+    void shouldRetrieveSaveNames() throws DataAccessException {
+        List<String> networkIds = repository.getSavedNetworkIds();
+        assertEquals(networkIds.get(0), "test.txt");
+        assertEquals(networkIds.size(), 1);
     }
 }

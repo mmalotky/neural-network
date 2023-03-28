@@ -23,7 +23,7 @@ public class NetworkFileRepository implements NetworkRepository {
     public List<String> getSavedNetworkIds() throws DataAccessException {
         List<String> saveList = new ArrayList<>();
 
-        String filePath = pathFormat.substring(0, 7);
+        String filePath = pathFormat.substring(0, pathFormat.length() - 7);
         File saves = new File(filePath);
         if(saves.exists()) {
             if(saves.listFiles() == null) {
