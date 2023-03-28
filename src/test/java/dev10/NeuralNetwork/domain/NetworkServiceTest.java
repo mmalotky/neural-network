@@ -124,4 +124,28 @@ class NetworkServiceTest {
         Result<Network> result3 = service.loadNetwork(".no");
         assertFalse(result3.isSuccess());
     }
+
+    @Test
+    void shouldRename() {
+        Network network = new Network(1, new int[]{1});
+        Result<Void> result = service.rename("test", network);
+        assertTrue(result.isSuccess());
+        assertEquals("test", network.getNetworkId());
+    }
+
+    @Test
+    void shouldNotRenameInvalid() {
+        Network network = new Network(1, new int[]{1});
+        Result<Void> result = service.rename("", network);
+        assertFalse(result.isSuccess());
+
+        Result<Void> result2 = service.rename(null, network);
+        assertFalse(result2.isSuccess());
+
+        Result<Void> result3 = service.rename(".no", network);
+        assertFalse(result3.isSuccess());
+
+        Result<Void> result4 = service.rename("   ", network);
+        assertFalse(result4.isSuccess());
+    }
 }

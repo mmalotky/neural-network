@@ -110,4 +110,11 @@ public class NetworkService {
             }
         }
     }
+
+    public Result<Void> rename(String name, Network network) {
+        Result<Void> result = new Result<>();
+        checkNetworkId(name, result);
+        network.setNetworkId(name);
+        return result;
+    }
 }

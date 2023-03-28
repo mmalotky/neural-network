@@ -26,7 +26,7 @@ public class NetworkController {
     public ResponseEntity<List<String>> getSavedNetworkIds() {
         Result<List<String>> result = service.getSavedNetworkIds();
         if(result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(result.getErrors(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,10 +61,21 @@ public class NetworkController {
         Result<?> result = service.loadNetwork(id);
         if(result.isSuccess()) {
             this.network = (Network) result.getPayload();
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(result.getErrors(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/rename")
+    public ResponseEntity<List<String>> rename(String name) {
+        Result<Void> result = service.rename(name, network);
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
