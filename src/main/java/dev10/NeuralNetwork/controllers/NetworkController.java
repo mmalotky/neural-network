@@ -16,7 +16,11 @@ public class NetworkController {
     private Network network;
 
     @Autowired
-    private NetworkService service;
+    private final NetworkService service;
+
+    public NetworkController(NetworkService service) {
+        this.service = service;
+    }
 
     @GetMapping("/saves")
     public ResponseEntity<List<String>> getSavedNetworkIds() {
@@ -41,9 +45,15 @@ public class NetworkController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Void> newNetwork(@RequestBody int options, int[] layers) {
-        this.network = new Network(options, layers);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public ResponseEntity<List<String>> newNetwork(@RequestBody int options, int[] layers) {
+        Result<Network> result = service.newNetwork(options, layers);
+        if(result.isSuccess()) {
+            this.network = result.getPayload();
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        else {
+            return new ResponseEntity<>(result.getErrors(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/load")
@@ -54,7 +64,7 @@ public class NetworkController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         else {
-            return new ResponseEntity<>(result.getErrors(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(result.getErrors(), HttpStatus.BAD_REQUEST);
         }
     }
 }

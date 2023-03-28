@@ -13,6 +13,10 @@ public class NetworkService {
     @Autowired
     NetworkRepository repository;
 
+    public NetworkService(NetworkRepository repository) {
+        this.repository = repository;
+    }
+
     public Result<List<String>> getSavedNetworkIds() {
         Result<List<String>> result = new Result<>();
         try {
@@ -25,6 +29,23 @@ public class NetworkService {
     }
     public Result<Void> saveNetwork(Network network) {
         Result<Void> result = new Result<>();
+
+        if(network == null) {
+            result.addError("Network cannot be null");
+            return result;
+        }
+
+        checkNetworkId(network.getNetworkId(), result);
+        int[] layers = new int[network.getLayers().size()];
+        for(int i = 0; i < network.getLayers().size(); i++) {
+            layers[i] = network.getLayers().get(i).size();
+        }
+
+        checkNetworkComponents(network.getOptions().size(), layers, result);
+        if(!result.isSuccess()) {
+            return result;
+        }
+
         try {
             repository.saveNetwork(network);
         } catch (DataAccessException e) {
@@ -33,8 +54,26 @@ public class NetworkService {
         return result;
     }
 
+    public Result<Network> newNetwork(int options, int[] layers) {
+        Result<Network> result = new Result<>();
+
+        checkNetworkComponents(options, layers, result);
+        if(!result.isSuccess()) {
+            return result;
+        }
+
+        Network network = new Network(options, layers);
+        result.setPayload(network);
+        return result;
+    }
+
     public Result<Network> loadNetwork(String id) {
         Result<Network> result = new Result<>();
+        checkNetworkId(id, result);
+        if(!result.isSuccess()) {
+            return result;
+        }
+
         try {
             Network network = repository.loadNetwork(id);
             result.setPayload(network);
@@ -42,5 +81,33 @@ public class NetworkService {
             result.addError(e.getMessage());
         }
         return result;
+    }
+
+    private void checkNetworkId(String id, Result<?> result) {
+        if(id == null) {
+            result.addError("Network Id cannot be null");
+            return;
+        }
+
+        if(!id.matches("[a-zA-Z0-9-]+")) {
+            result.addError("Network Id is empty or contains illegal characters");
+        }
+    }
+
+    private void checkNetworkComponents(int options, int[] layers, Result<?> result) {
+        if(options < 1) {
+            result.addError("There must be at least one option.");
+        }
+        if(layers == null || layers.length == 0) {
+            result.addError("There must be at least one layer");
+        }
+        else {
+            for(int layer : layers) {
+                if(layer < 1) {
+                    result.addError("There must be at least one neuron in a layer");
+                    break;
+                }
+            }
+        }
     }
 }
