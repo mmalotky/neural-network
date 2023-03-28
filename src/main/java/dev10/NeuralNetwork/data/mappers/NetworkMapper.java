@@ -68,7 +68,7 @@ public class NetworkMapper {
                     connectionData.append(j == 0 ? weight : "," + weight);
                 }
                 connectionData.append("]");
-                layerData.append(connectionData.toString());
+                layerData.append(connectionData);
             }
             data.addLine(layerData.toString());
         }

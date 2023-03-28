@@ -27,11 +27,6 @@ public class Neuron implements Node {
         }
     }
 
-    public void addConnection(Synapse connection) {
-        connections.add(connection);
-        setInputs(inputs + 1);
-    }
-
     public List<Synapse> getConnections() {
         return connections;
     }
