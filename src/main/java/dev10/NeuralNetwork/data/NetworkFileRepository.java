@@ -5,6 +5,9 @@ import dev10.NeuralNetwork.models.Network;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public class NetworkFileRepository implements NetworkRepository {
@@ -14,6 +17,24 @@ public class NetworkFileRepository implements NetworkRepository {
 
     public NetworkFileRepository(String pathFormat) {
         this.pathFormat = pathFormat;
+    }
+
+    @Override
+    public List<String> getSavedNetworkIds() throws DataAccessException {
+        List<String> saveList = new ArrayList<>();
+
+        String filePath = pathFormat.substring(0, 7);
+        File saves = new File(filePath);
+        if(saves.exists()) {
+            if(saves.listFiles() == null) {
+                return saveList;
+            }
+            saveList = Arrays.stream(saves.listFiles()).map(File::getName).toList();
+        }
+        else {
+            throw new DataAccessException("File not found at: " + filePath, new FileNotFoundException());
+        }
+        return saveList;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NetworkFileRepositoryTest {
-    String pathFormat = "./testData/%s.txt";
+    String pathFormat = "./testData/networks/%s.txt";
     NetworkFileRepository repository = new NetworkFileRepository(pathFormat);
 
     private final Network test1 = new Network(1, new int[]{ 1 });
@@ -88,7 +88,7 @@ class NetworkFileRepositoryTest {
             Network network = repository.loadNetwork("");
             fail();
         } catch(DataAccessException e) {
-            assertEquals(e.getMessage(), "Error accessing file at: ./testData/.txt");
+            assertEquals(e.getMessage(), "Error accessing file at: ./testData/networks/.txt");
         }
     }
 }

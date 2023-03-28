@@ -1,7 +1,6 @@
 package dev10.NeuralNetwork.domain;
 
 import dev10.NeuralNetwork.data.DataAccessException;
-import dev10.NeuralNetwork.data.NetworkFileRepository;
 import dev10.NeuralNetwork.data.NetworkRepository;
 import dev10.NeuralNetwork.models.Network;
 import org.springframework.beans.factory.annotation.Autowired;
