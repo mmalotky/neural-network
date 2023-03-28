@@ -21,7 +21,7 @@ public class NetworkMapper {
         for(int i = 0; i < layersData.size(); i++) {
             String[] processedLayer = layersData.get(i).replaceAll("layer=\\[|]$", "").split("],\\[");
             processedLayers.add(i, processedLayer);
-            layers[i] = processedLayer.length;
+            layers[layers.length - 1 - i] = processedLayer.length;
         }
 
         Network network = new Network(options, layers);
@@ -41,7 +41,7 @@ public class NetworkMapper {
             }
         }
 
-        network.setLearningRate(Double.parseDouble(lines.get(lines.size() - 1)));
+        network.setLearningRate(Double.parseDouble(lines.get(lines.size() - 1).replace("learningRate=", "")));
 
         return network;
     }

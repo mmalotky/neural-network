@@ -3,7 +3,7 @@ package dev10.NeuralNetwork.data;
 import dev10.NeuralNetwork.models.Network;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,5 +51,44 @@ class NetworkFileRepositoryTest {
 
         File file = new File(String.format(pathFormat, test3.getNetworkId()));
         assertTrue(file.exists());
+
+        double expected = test3.getLayers().get(0).get(0).getConnections().get(0).getWeight();
+        try(BufferedReader reader = new BufferedReader(new FileReader(String.format(pathFormat, "test")))) {
+            reader.readLine();
+            reader.readLine();
+            double actual = Double.parseDouble(reader.readLine().replaceAll(",.+", "").substring(7));
+
+            assertEquals(expected,actual);
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void shouldLoadANetwork() throws DataAccessException {
+        Network network = repository.loadNetwork("test");
+        assertNotNull(network);
+
+        repository.saveNetwork(test1);
+        Network load = repository.loadNetwork(test1.getNetworkId());
+        double expected = test1.getLayers().get(0).get(0).getConnections().get(0).getWeight();
+        double actual = load.getLayers().get(0).get(0).getConnections().get(0).getWeight();
+
+        assertEquals(expected, actual);
+
+        File file1 = new File(String.format(pathFormat, test1.getNetworkId()));
+        if(!file1.delete()) {
+            fail("Failed to delete at path: " + String.format(pathFormat, test1.getNetworkId()));
+        }
+    }
+
+    @Test
+    void shouldNotLoadAMissingNetwork() {
+        try {
+            Network network = repository.loadNetwork("");
+            fail();
+        } catch(DataAccessException e) {
+            assertEquals(e.getMessage(), "Error accessing file at: ./testData/.txt");
+        }
     }
 }
