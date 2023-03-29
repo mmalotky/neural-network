@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -45,7 +46,14 @@ public class NetworkController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<List<String>> newNetwork(@RequestBody int options, int[] layers) {
+    public ResponseEntity<List<String>> newNetwork(@RequestBody int[] nodes) {
+        if(nodes == null || nodes.length < 2) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        int options = nodes[0];
+        int[] layers = new int[nodes.length -1];
+        System.arraycopy(nodes, 1, layers, 0, nodes.length - 1);
+
         Result<Network> result = service.newNetwork(options, layers);
         if(result.isSuccess()) {
             this.network = result.getPayload();
@@ -57,7 +65,7 @@ public class NetworkController {
     }
 
     @GetMapping("/load")
-    public ResponseEntity<List<String>> loadNetwork(String id) {
+    public ResponseEntity<List<String>> loadNetwork(@RequestBody String id) {
         Result<?> result = service.loadNetwork(id);
         if(result.isSuccess()) {
             this.network = (Network) result.getPayload();
