@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ann")
@@ -46,14 +46,9 @@ public class NetworkController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<List<String>> newNetwork(@RequestBody int[] nodes) {
-        if(nodes == null || nodes.length < 2) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        int options = nodes[0];
-        int[] layers = new int[nodes.length -1];
-        System.arraycopy(nodes, 1, layers, 0, nodes.length - 1);
-
+    public ResponseEntity<List<String>> newNetwork(@RequestBody Map<String, int[]> map) {
+        int options = map.get("options")[0];
+        int[] layers = map.get("layers");
         Result<Network> result = service.newNetwork(options, layers);
         if(result.isSuccess()) {
             this.network = result.getPayload();
@@ -64,8 +59,8 @@ public class NetworkController {
         }
     }
 
-    @GetMapping("/load")
-    public ResponseEntity<List<String>> loadNetwork(@RequestBody String id) {
+    @GetMapping("/load/{id}")
+    public ResponseEntity<List<String>> loadNetwork(@PathVariable String id) {
         Result<?> result = service.loadNetwork(id);
         if(result.isSuccess()) {
             this.network = (Network) result.getPayload();
@@ -77,7 +72,11 @@ public class NetworkController {
     }
 
     @PutMapping("/rename")
-    public ResponseEntity<List<String>> rename(String name) {
+    public ResponseEntity<List<String>> rename(@RequestBody String name) {
+        if(network == null) {
+            return new ResponseEntity<>(List.of("No network selected"), HttpStatus.BAD_REQUEST);
+        }
+
         Result<Void> result = service.rename(name, network);
         if(result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
