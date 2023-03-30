@@ -1,5 +1,7 @@
 package dev10.NeuralNetwork.controllers;
 
+import dev10.NeuralNetwork.data.NetworkData;
+import dev10.NeuralNetwork.data.mappers.NetworkMapper;
 import dev10.NeuralNetwork.domain.Result;
 import dev10.NeuralNetwork.models.Network;
 import dev10.NeuralNetwork.domain.NetworkService;
@@ -38,7 +40,7 @@ public class NetworkController {
     public ResponseEntity<List<String>> saveNetwork() {
         Result<Void> result = service.saveNetwork(network);
         if(result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         else {
             return new ResponseEntity<>(result.getErrors(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -52,7 +54,7 @@ public class NetworkController {
         Result<Network> result = service.newNetwork(options, layers);
         if(result.isSuccess()) {
             this.network = result.getPayload();
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         else {
             return new ResponseEntity<>(result.getErrors(), HttpStatus.BAD_REQUEST);
@@ -84,5 +86,24 @@ public class NetworkController {
         else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PutMapping("/configuration")
+    public ResponseEntity<List<String>> setLearningRate(@RequestBody double learningRate) {
+        if(learningRate <= 0 || learningRate > 1) {
+            return new ResponseEntity<>(List.of("Out of Bounds"), HttpStatus.BAD_REQUEST);
+        }
+        network.setLearningRate(learningRate);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/configuration")
+    public ResponseEntity<List<String>> getNetworkConfiguration() {
+        if(network == null) {
+            return new ResponseEntity<>(List.of("No network selected"), HttpStatus.BAD_REQUEST);
+        }
+
+        NetworkData data = new NetworkMapper().networkToData(network);
+        return new ResponseEntity<>(data.getLines(), HttpStatus.OK);
     }
 }
