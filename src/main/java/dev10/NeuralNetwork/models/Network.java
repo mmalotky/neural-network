@@ -14,6 +14,8 @@ public class Network {
 
     private Option choice;
 
+    private Option best;
+
     public Network(int options, int[] layers) {
         networkId = UUID.randomUUID().toString();
 
@@ -58,6 +60,10 @@ public class Network {
 
     public Option getChoice() {
         return choice;
+    }
+
+    public Option getBest() {
+        return best;
     }
 
     public double getLearningRate() {
@@ -133,5 +139,9 @@ public class Network {
                 this.choice = option;
             }
         }
+
+        best = options.stream()
+                .max((x,y)-> (int) Math.ceil(x.getSum() - y.getSum()))
+                .orElse(null);
     }
 }

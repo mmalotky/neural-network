@@ -175,10 +175,12 @@ class NetworkTest {
         //Note: 75% accuracy - random failure due to small network
         test2.forward(input1);
         assertTrue(test2.getOptions().get(1).getLastProbability() > 0.51);
+        assertEquals(test2.getBest(), test2.getOptions().get(1));
         test2.resetState();
 
         test2.forward(input2);
         assertTrue(test2.getOptions().get(0).getLastProbability() > 0.51);
+        assertEquals(test2.getBest(), test2.getOptions().get(0));
         test2.resetState();
     }
 
@@ -250,20 +252,24 @@ class NetworkTest {
         double a = test3.getOptions().get(0).getLastProbability();
         test3.resetState();
         assertTrue(a > 0.51);
+        assertEquals(test3.getBest(), test3.getOptions().get(0));
 
         test3.forward(input2);
         double b = test3.getOptions().get(1).getLastProbability();
         test3.resetState();
         assertTrue(b > 0.51);
+        assertEquals(test3.getBest(), test3.getOptions().get(1));
 
         test3.forward(input3);
         double c = test3.getOptions().get(2).getLastProbability();
         test3.resetState();
         assertTrue(c > 0.51);
+        assertEquals(test3.getBest(), test3.getOptions().get(2));
 
         test3.forward(input4);
         double d = test3.getOptions().get(0).getLastProbability();
         test3.resetState();
         assertTrue(d > 0.51);
+        assertEquals(test3.getBest(), test3.getOptions().get(0));
     }
 }
