@@ -5,6 +5,7 @@ import dev10.NeuralNetwork.data.mappers.NetworkMapper;
 import dev10.NeuralNetwork.domain.Result;
 import dev10.NeuralNetwork.models.Network;
 import dev10.NeuralNetwork.domain.NetworkService;
+import dev10.NeuralNetwork.models.NetworkConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -106,4 +107,28 @@ public class NetworkController {
         NetworkData data = new NetworkMapper().networkToData(network);
         return new ResponseEntity<>(data.getLines(), HttpStatus.OK);
     }
+
+    @PostMapping("/forward/{softmax}")
+    public ResponseEntity<?> forward(@RequestBody List<Double> inputs, @PathVariable boolean softmax) throws NetworkConfigurationException {
+        network.forward(inputs);
+        if(softmax) {
+            return new ResponseEntity<>(network.getChoice().getOptionId(), HttpStatus.ACCEPTED);
+        }
+        else {
+            return new ResponseEntity<>(network.getBest().getOptionId(), HttpStatus.ACCEPTED);
+        }
+    }
+
+    @PutMapping("/backward")
+    public ResponseEntity<?> backward(@RequestBody int optionId) {
+        network.reverse(optionId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> resetState() {
+        network.resetState();
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }
