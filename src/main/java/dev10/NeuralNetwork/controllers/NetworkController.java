@@ -120,8 +120,8 @@ public class NetworkController {
     }
 
     @PutMapping("/backward")
-    public ResponseEntity<?> backward(@RequestBody int optionId) {
-        network.reverse(optionId);
+    public ResponseEntity<?> backward(@RequestBody double[] reward) {
+        network.reverse(reward);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

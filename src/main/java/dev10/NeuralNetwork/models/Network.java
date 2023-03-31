@@ -7,7 +7,7 @@ public class Network {
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
-    private double learningRate = 0.5;
+    private double learningRate = 0.01;
 
     private Option choice;
 
@@ -96,9 +96,10 @@ public class Network {
         }
     }
 
-    public void reverse(int expectedId) {
+    public void reverse(double[] reward) {
         for (Option option : options) {
-            optionErrorByState(option, expectedId);
+            double errorByState = (option.getSum() - reward[option.getOptionId()]);
+            option.setErrorByState(errorByState);
         }
         for (int i = layers.size() - 1; i >= 0; i--) {
             List<Neuron> layer = layers.get(i);
@@ -116,6 +117,7 @@ public class Network {
         }
     }
 
+    /*
     private void optionErrorByState(Option option, int expectedId) {
         double errorByProb = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
         double outputSum = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
@@ -123,6 +125,8 @@ public class Network {
         double probByState = (outputSum - outputCurrent) * outputCurrent / Math.pow(outputSum, 2);
         option.setErrorByState(errorByProb * probByState);
     }
+    //for known choices
+    */
 
     private void softMax() {
         double rand = Math.random();
