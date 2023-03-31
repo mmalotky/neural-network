@@ -1,9 +1,6 @@
 package dev10.NeuralNetwork.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Network {
     private String networkId;
@@ -141,7 +138,7 @@ public class Network {
         }
 
         best = options.stream()
-                .max((x,y)-> (int) Math.ceil(x.getSum() - y.getSum()))
+                .max(Comparator.comparingDouble(Option::getLastProbability))
                 .orElse(null);
     }
 }
