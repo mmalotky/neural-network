@@ -108,11 +108,11 @@ public class Network {
             for (Neuron neuron : layer) {
                 double errorByState = 0;
                 for (Synapse synapse : neuron.getConnections()) {
-                    double change = synapse.getReceiver().getErrorByState() * synapse.getLastOut();
-                    synapse.setWeight(synapse.getWeight() - learningRate * change);
-
                     double active = neuron.getSum() > 0 ? 1 : 0.01;
                     errorByState += synapse.getReceiver().getErrorByState() * synapse.getWeight() * active;
+
+                    double change = synapse.getReceiver().getErrorByState() * synapse.getLastOut();
+                    synapse.setWeight(synapse.getWeight() - learningRate * change);
                 }
                 neuron.setErrorByState(errorByState);
             }
