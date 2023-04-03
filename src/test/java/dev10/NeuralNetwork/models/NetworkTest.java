@@ -166,7 +166,7 @@ class NetworkTest {
             test3.reverse((flip?reward1:reward2));
             test3.resetState();
         }
-        //10% failure due to network size
+        //10-20% failure due to network size
 
         test3.forward(input1);
         assertTrue(test3.getOptions().get(1).getLastProbability() > 0.5);

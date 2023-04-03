@@ -6,7 +6,8 @@ import java.util.List;
 public class Option implements Node {
     private final int optionId;
 
-    private int inputs;
+    private int inputSize;
+    private int inputCount = 0;
     private final List<Double> activationState = new ArrayList<>();
     private double sum = 0;
 
@@ -14,19 +15,19 @@ public class Option implements Node {
 
     private double errorByState;
 
-    public Option(int optionId, int inputs) {
+    public Option(int optionId, int inputSize) {
         this.optionId = optionId;
-        setInputs(inputs);
+        setInputSize(inputSize);
     }
 
     @Override
-    public int getInputs() {
-        return inputs;
+    public int getInputSize() {
+        return inputSize;
     }
 
-    private void setInputs(int inputs) {
-        this.inputs = inputs;
-        for(int i = 0; i < inputs; i++) {
+    private void setInputSize(int inputSize) {
+        this.inputSize = inputSize;
+        for(int i = 0; i < inputSize; i++) {
             activationState.add(0.0);
         }
     }
@@ -34,7 +35,7 @@ public class Option implements Node {
     @Override
     public void resetActivationState() {
         activationState.forEach(n -> n = 0.0);
-        sum = 0;
+        inputCount = 0;
     }
 
     @Override
@@ -45,7 +46,10 @@ public class Option implements Node {
     @Override
     public void input(int inputId, double state) {
         activationState.set(inputId, state);
-        sum = activationState.stream().mapToDouble(Double::doubleValue).sum();
+        inputCount++;
+        if(inputCount == inputSize) {
+            sum = activationState.stream().mapToDouble(Double::doubleValue).sum();
+        }
     }
 
     public int getOptionId() {

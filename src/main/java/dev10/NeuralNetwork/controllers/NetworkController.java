@@ -108,22 +108,22 @@ public class NetworkController {
         return new ResponseEntity<>(data.getLines(), HttpStatus.OK);
     }
 
-    @PostMapping("/forward/{softmax}")
-    public ResponseEntity<?> forward(@RequestBody List<Double> inputs, @PathVariable boolean softmax) throws NetworkConfigurationException {
+    @PutMapping("/learn")
+    public ResponseEntity<?> learn(@RequestBody List<List<Double>> testSet) throws NetworkConfigurationException {
+        List<Double> inputs = testSet.get(0);
+        double[] reward = testSet.get(1).stream().mapToDouble(Double::doubleValue).toArray();
+
         network.forward(inputs);
+        network.reverse(reward);
         network.resetState();
-        if(softmax) {
-            return new ResponseEntity<>(network.getChoice().getOptionId(), HttpStatus.ACCEPTED);
-        }
-        else {
-            return new ResponseEntity<>(network.getBest().getOptionId(), HttpStatus.ACCEPTED);
-        }
+
+        return new ResponseEntity<>(network.getChoice().getOptionId(), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/backward")
-    public ResponseEntity<?> backward(@RequestBody double[] reward) {
-        network.reverse(reward);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    @GetMapping("/run")
+    public ResponseEntity<?> run(@RequestBody List<Double> input) throws NetworkConfigurationException {
+        network.forward(input);
+        return new ResponseEntity<>(network.getBest().getOptionId(), HttpStatus.OK);
     }
 
 }
