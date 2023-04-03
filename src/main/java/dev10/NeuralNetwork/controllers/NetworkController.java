@@ -111,6 +111,7 @@ public class NetworkController {
     @PostMapping("/forward/{softmax}")
     public ResponseEntity<?> forward(@RequestBody List<Double> inputs, @PathVariable boolean softmax) throws NetworkConfigurationException {
         network.forward(inputs);
+        network.resetState();
         if(softmax) {
             return new ResponseEntity<>(network.getChoice().getOptionId(), HttpStatus.ACCEPTED);
         }
@@ -122,12 +123,6 @@ public class NetworkController {
     @PutMapping("/backward")
     public ResponseEntity<?> backward(@RequestBody double[] reward) {
         network.reverse(reward);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping
-    public ResponseEntity<?> resetState() {
-        network.resetState();
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

@@ -117,17 +117,6 @@ public class Network {
         }
     }
 
-    /*
-    private void optionErrorByState(Option option, int expectedId) {
-        double errorByProb = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
-        double outputSum = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
-        double outputCurrent = Math.exp(option.getSum());
-        double probByState = (outputSum - outputCurrent) * outputCurrent / Math.pow(outputSum, 2);
-        option.setErrorByState(errorByProb * probByState);
-    }
-    //for known choices
-    */
-
     private void softMax() {
         double rand = Math.random();
         double totalValues = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();

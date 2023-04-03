@@ -215,35 +215,19 @@ class NetworkTest {
 
         for (int i = 0; i < 100; i++) {
             test3.forward(input1);
-            double a1 = test3.getOptions().get(0).getLastProbability();
             test3.reverse(reward1);
             test3.resetState();
-            test3.forward(input1);
-            double a2 = test3.getOptions().get(0).getLastProbability();
-            test3.resetState();
 
             test3.forward(input2);
-            double b1 = test3.getOptions().get(1).getLastProbability();
             test3.reverse(reward2);
             test3.resetState();
-            test3.forward(input2);
-            double b2 = test3.getOptions().get(1).getLastProbability();
-            test3.resetState();
 
             test3.forward(input3);
-            double c1 = test3.getOptions().get(2).getLastProbability();
             test3.reverse(reward3);
             test3.resetState();
-            test3.forward(input3);
-            double c2 = test3.getOptions().get(2).getLastProbability();
-            test3.resetState();
 
             test3.forward(input4);
-            double d1 = test3.getOptions().get(0).getLastProbability();
             test3.reverse(reward4);
-            test3.resetState();
-            test3.forward(input4);
-            double d2 = test3.getOptions().get(0).getLastProbability();
             test3.resetState();
         }
 
