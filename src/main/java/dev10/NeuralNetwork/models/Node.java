@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Node {
 
-    int getInputs();
+    int getInputSize();
 
     void resetActivationState();
 

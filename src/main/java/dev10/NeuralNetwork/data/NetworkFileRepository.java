@@ -32,7 +32,9 @@ public class NetworkFileRepository implements NetworkRepository {
             if(saves.listFiles() == null) {
                 return saveList;
             }
-            saveList = Arrays.stream(saves.listFiles()).map(File::getName).toList();
+            else {
+                saveList = Arrays.stream(saves.listFiles()).map(File::getName).toList();
+            }
         }
         else {
             throw new DataAccessException("File not found at: " + filePath, new FileNotFoundException());

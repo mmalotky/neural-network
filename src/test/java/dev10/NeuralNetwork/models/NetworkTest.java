@@ -116,17 +116,15 @@ class NetworkTest {
         input2.add(.9);
         input2.add(.4);
 
-        double lastProb = 0;
+        double[] reward2 = {10, 0};
 
         for(int i = 0; i < 20; i++) {
             test2.forward(input2);
-            double probability = test2.getOptions().get(0).getLastProbability();
-            assertTrue(lastProb < probability);
-
-            test2.reverse(0);
-            lastProb = probability;
+            test2.reverse(reward2);
             test2.resetState();
         }
+        assertEquals(test2.getBest(), test2.getOptions().get(0));
+        assertTrue(test2.getBest().getLastProbability() > 0.9);
 
         List<Double> input3 = new ArrayList<>();
         input3.add(.9);
@@ -134,54 +132,51 @@ class NetworkTest {
         input3.add(-.1);
         input3.add(.9);
 
-        lastProb = 0;
+        double[] reward3 = {-1, 7, 2};
 
         for(int i = 0; i < 20; i++) {
             test3.forward(input3);
-            double probability = test3.getOptions().get(2).getLastProbability();
-            assertTrue(lastProb < probability);
-
-            test3.reverse(2);
-            lastProb = probability;
+            test3.reverse(reward3);
             test3.resetState();
         }
+        assertEquals(test3.getBest(), test3.getOptions().get(1));
+        assertTrue(test3.getBest().getLastProbability() > 0.9);
     }
 
     @Test
     void shouldBackPropagateMultipleInputs() throws NetworkConfigurationException {
         List<Double> input1 = new ArrayList<>();
         input1.add(0.1);
+        input1.add(.1);
         input1.add(.9);
+        input1.add(.5);
+
+        double[] reward1 = {0, 5, 1};
 
         List<Double> input2 = new ArrayList<>();
         input2.add(.8);
         input2.add(.2);
+        input2.add(.2);
+        input2.add(.5);
+        double[] reward2 = {3, -2, 0};
 
         for(int i = 0; i < 100; i++) {
             boolean flip = i%2 == 1;
-            test2.forward((flip? input1:input2));
-            double probability1 = test2.getOptions().get((flip?1:0)).getLastProbability();
-
-            test2.reverse((flip?1:0));
-            test2.resetState();
-
-            test2.forward((flip? input1:input2));
-            double probability2 = test2.getOptions().get((flip?1:0)).getLastProbability();
-            test2.resetState();
-
-            assertTrue(probability2 > probability1);
+            test3.forward((flip? input1:input2));
+            test3.reverse((flip?reward1:reward2));
+            test3.resetState();
         }
+        //10-20% failure due to network size
 
-        //Note: 75% accuracy - random failure due to small network
-        test2.forward(input1);
-        assertTrue(test2.getOptions().get(1).getLastProbability() > 0.51);
-        assertEquals(test2.getBest(), test2.getOptions().get(1));
-        test2.resetState();
+        test3.forward(input1);
+        assertTrue(test3.getOptions().get(1).getLastProbability() > 0.5);
+        assertEquals(test3.getBest(), test3.getOptions().get(1));
+        test3.resetState();
 
-        test2.forward(input2);
-        assertTrue(test2.getOptions().get(0).getLastProbability() > 0.51);
-        assertEquals(test2.getBest(), test2.getOptions().get(0));
-        test2.resetState();
+        test3.forward(input2);
+        assertTrue(test3.getOptions().get(0).getLastProbability() > 0.5);
+        assertEquals(test3.getBest(), test3.getOptions().get(0));
+        test3.resetState();
     }
 
     @Test
@@ -192,11 +187,15 @@ class NetworkTest {
         input1.add(.7);
         input1.add(.6);
 
+        double[] reward1 = {3, -1, -1};
+
         List<Double> input2 = new ArrayList<>();
         input2.add(.6);
         input2.add(.7);
         input2.add(.1);
         input2.add(.2);
+
+        double[] reward2 = {1, 5, 0};
 
         List<Double> input3 = new ArrayList<>();
         input3.add(.3);
@@ -204,48 +203,32 @@ class NetworkTest {
         input3.add(.9);
         input3.add(.8);
 
+        double[] reward3 = {-1, 0, 4};
+
         List<Double> input4 = new ArrayList<>();
         input4.add(.9);
         input4.add(.1);
         input4.add(.8);
         input4.add(.2);
 
+        double[] reward4 = {1, -3, -2};
+
         for (int i = 0; i < 100; i++) {
             test3.forward(input1);
-            double a1 = test3.getOptions().get(0).getLastProbability();
-            test3.reverse(0);
+            test3.reverse(reward1);
             test3.resetState();
-            test3.forward(input1);
-            double a2 = test3.getOptions().get(0).getLastProbability();
-            test3.resetState();
-            assertTrue(a2 > a1);
 
             test3.forward(input2);
-            double b1 = test3.getOptions().get(1).getLastProbability();
-            test3.reverse(1);
+            test3.reverse(reward2);
             test3.resetState();
-            test3.forward(input2);
-            double b2 = test3.getOptions().get(1).getLastProbability();
-            test3.resetState();
-            assertTrue(b2 > b1);
 
             test3.forward(input3);
-            double c1 = test3.getOptions().get(2).getLastProbability();
-            test3.reverse(2);
+            test3.reverse(reward3);
             test3.resetState();
-            test3.forward(input3);
-            double c2 = test3.getOptions().get(2).getLastProbability();
-            test3.resetState();
-            assertTrue(c2 > c1);
 
             test3.forward(input4);
-            double d1 = test3.getOptions().get(0).getLastProbability();
-            test3.reverse(0);
+            test3.reverse(reward4);
             test3.resetState();
-            test3.forward(input4);
-            double d2 = test3.getOptions().get(0).getLastProbability();
-            test3.resetState();
-            assertTrue(d2 > d1);
         }
 
         test3.forward(input1);

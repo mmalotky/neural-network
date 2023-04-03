@@ -1,16 +1,13 @@
 package dev10.NeuralNetwork.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Network {
     private String networkId;
     private final List<List<Neuron>> layers = new ArrayList<>();
     private final List<Option> options = new ArrayList<>();
 
-    private double learningRate = 0.5;
+    private double learningRate = 0.01;
 
     private Option choice;
 
@@ -99,32 +96,25 @@ public class Network {
         }
     }
 
-    public void reverse(int expectedId) {
+    public void reverse(double[] reward) {
         for (Option option : options) {
-            optionErrorByState(option, expectedId);
+            double errorByState = (option.getSum() - reward[option.getOptionId()]);
+            option.setErrorByState(errorByState);
         }
         for (int i = layers.size() - 1; i >= 0; i--) {
             List<Neuron> layer = layers.get(i);
             for (Neuron neuron : layer) {
                 double errorByState = 0;
                 for (Synapse synapse : neuron.getConnections()) {
-                    double change = synapse.getReceiver().getErrorByState() * synapse.getLastOut();
-                    synapse.setWeight(synapse.getWeight() - learningRate * change);
-
                     double active = neuron.getSum() > 0 ? 1 : 0.01;
                     errorByState += synapse.getReceiver().getErrorByState() * synapse.getWeight() * active;
+
+                    double change = synapse.getReceiver().getErrorByState() * synapse.getLastOut();
+                    synapse.setWeight(synapse.getWeight() - learningRate * change);
                 }
                 neuron.setErrorByState(errorByState);
             }
         }
-    }
-
-    private void optionErrorByState(Option option, int expectedId) {
-        double errorByProb = option.getLastProbability() - (option.getOptionId() == expectedId ? 1 : 0);
-        double outputSum = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
-        double outputCurrent = Math.exp(option.getSum());
-        double probByState = (outputSum - outputCurrent) * outputCurrent / Math.pow(outputSum, 2);
-        option.setErrorByState(errorByProb * probByState);
     }
 
     private void softMax() {
@@ -141,7 +131,7 @@ public class Network {
         }
 
         best = options.stream()
-                .max((x,y)-> (int) Math.ceil(x.getSum() - y.getSum()))
+                .max(Comparator.comparingDouble(Option::getLastProbability))
                 .orElse(null);
     }
 }

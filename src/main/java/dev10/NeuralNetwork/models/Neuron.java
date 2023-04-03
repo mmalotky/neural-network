@@ -5,24 +5,25 @@ import java.util.List;
 
 public class Neuron implements Node {
     private final List<Synapse> connections;
-    private int inputs;
+    private int inputSize;
+    private int inputCount = 0;
     private final List<Double> activationState = new ArrayList<>();
     private double errorByState;
     private double sum;
 
-    public Neuron(int inputs, List<Synapse> connections) {
+    public Neuron(int inputSize, List<Synapse> connections) {
         this.connections = connections;
-        setInputs(inputs);
+        setInputSize(inputSize);
     }
 
     @Override
-    public int getInputs() {
-        return inputs;
+    public int getInputSize() {
+        return inputSize;
     }
 
-    private void setInputs(int inputs) {
-        this.inputs = inputs;
-        for(int i = 0; i < inputs; i++) {
+    private void setInputSize(int inputSize) {
+        this.inputSize = inputSize;
+        for(int i = 0; i < inputSize; i++) {
             activationState.add(0.0);
         }
     }
@@ -34,6 +35,7 @@ public class Neuron implements Node {
     @Override
     public void resetActivationState() {
         activationState.forEach(n -> n = 0.0);
+        inputCount = 0;
     }
 
     @Override
@@ -44,8 +46,9 @@ public class Neuron implements Node {
     @Override
     public void input(int inputId, double state) {
         activationState.set(inputId, state);
+        inputCount++;
 
-        if(activationState.size() == inputs) {
+        if(inputCount == inputSize) {
             this.sum = activationState.stream().mapToDouble(Double::doubleValue).sum();
 
             if(sum > 0) {
