@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 @Controller
 public class GuiController {
@@ -16,5 +17,17 @@ public class GuiController {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public static void toNetworkMenu(ActionEvent actionEvent) {
+        System.out.println("Networks");
+    }
+
+    public static void toMapMenu(ActionEvent actionEvent) {
+        System.out.println("Maps");
+    }
+
+    public static void toRunScreen(ActionEvent actionEvent) {
+        System.out.println("Run");
     }
 }
