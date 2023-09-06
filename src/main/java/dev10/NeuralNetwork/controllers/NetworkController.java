@@ -9,13 +9,13 @@ import dev10.NeuralNetwork.models.NetworkConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/api/ann")
+@Controller
 public class NetworkController {
     private Network network;
 
@@ -26,7 +26,6 @@ public class NetworkController {
         this.service = service;
     }
 
-    @GetMapping("/saves")
     public ResponseEntity<List<String>> getSavedNetworkIds() {
         Result<List<String>> result = service.getSavedNetworkIds();
         if(result.isSuccess()) {
@@ -37,7 +36,6 @@ public class NetworkController {
         }
     }
 
-    @PostMapping("/save")
     public ResponseEntity<List<String>> saveNetwork() {
         Result<Void> result = service.saveNetwork(network);
         if(result.isSuccess()) {
@@ -48,8 +46,7 @@ public class NetworkController {
         }
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<List<String>> newNetwork(@RequestBody Map<String, int[]> map) {
+    public ResponseEntity<List<String>> newNetwork(Map<String, int[]> map) {
         int options = map.get("options")[0];
         int[] layers = map.get("layers");
         Result<Network> result = service.newNetwork(options, layers);
@@ -62,8 +59,7 @@ public class NetworkController {
         }
     }
 
-    @GetMapping("/load/{id}")
-    public ResponseEntity<List<String>> loadNetwork(@PathVariable String id) {
+    public ResponseEntity<List<String>> loadNetwork(String id) {
         Result<?> result = service.loadNetwork(id);
         if(result.isSuccess()) {
             this.network = (Network) result.getPayload();
@@ -74,8 +70,7 @@ public class NetworkController {
         }
     }
 
-    @PutMapping("/rename")
-    public ResponseEntity<List<String>> rename(@RequestBody String name) {
+    public ResponseEntity<List<String>> rename(String name) {
         if(network == null) {
             return new ResponseEntity<>(List.of("No network selected"), HttpStatus.BAD_REQUEST);
         }
@@ -89,8 +84,7 @@ public class NetworkController {
         }
     }
 
-    @PutMapping("/configuration")
-    public ResponseEntity<List<String>> setLearningRate(@RequestBody double learningRate) {
+    public ResponseEntity<List<String>> setLearningRate(double learningRate) {
         if(learningRate <= 0 || learningRate > 1) {
             return new ResponseEntity<>(List.of("Out of Bounds"), HttpStatus.BAD_REQUEST);
         }
@@ -98,7 +92,6 @@ public class NetworkController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/configuration")
     public ResponseEntity<List<String>> getNetworkConfiguration() {
         if(network == null) {
             return new ResponseEntity<>(List.of("No network selected"), HttpStatus.BAD_REQUEST);
@@ -108,8 +101,7 @@ public class NetworkController {
         return new ResponseEntity<>(data.getLines(), HttpStatus.OK);
     }
 
-    @PutMapping("/learn")
-    public ResponseEntity<?> learn(@RequestBody List<List<Double>> testSet) throws NetworkConfigurationException {
+    public ResponseEntity<?> learn(List<List<Double>> testSet) throws NetworkConfigurationException {
         List<Double> inputs = testSet.get(0);
         double[] reward = testSet.get(1).stream().mapToDouble(Double::doubleValue).toArray();
 
@@ -120,8 +112,7 @@ public class NetworkController {
         return new ResponseEntity<>(network.getChoice().getOptionId(), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/run")
-    public ResponseEntity<?> run(@RequestBody List<Double> input) throws NetworkConfigurationException {
+    public ResponseEntity<?> run(List<Double> input) throws NetworkConfigurationException {
         network.forward(input);
         return new ResponseEntity<>(network.getBest().getOptionId(), HttpStatus.OK);
     }
