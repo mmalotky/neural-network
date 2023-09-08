@@ -17,7 +17,7 @@ public class NewNetworkForm extends JPanel implements GuiNavigation {
     public NewNetworkForm(NetworkController networkController) {
         this.setBorder(BorderFactory.createEmptyBorder(500,300,100,300));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new Label(NEW_NETWORK_FORM, Label.CENTER));
+        this.add(new Label("New Network", Label.CENTER));
 
         this.add(new Label("Options"));
 
@@ -29,7 +29,8 @@ public class NewNetworkForm extends JPanel implements GuiNavigation {
         saveButton.addActionListener(this::save);
         this.add(saveButton);
 
-        Button networkMenuButton = new Button(NETWORK_MENU);
+        Button networkMenuButton = new Button("Exit");
+        networkMenuButton.setActionCommand(NETWORK_MENU);
         networkMenuButton.addActionListener(this::navigate);
         this.add(networkMenuButton);
 
@@ -42,7 +43,7 @@ public class NewNetworkForm extends JPanel implements GuiNavigation {
         data.put("Layers", layers.stream().mapToInt(Integer::intValue).toArray());
 
         //networkController.newNetwork(data);
-        this.navigate(new ActionEvent(e.getSource(), e.getID(), MAIN_MENU));
+        this.navigate(new ActionEvent(e.getSource(), e.getID(), NETWORK_MENU));
     }
 
 

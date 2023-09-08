@@ -25,10 +25,12 @@ public class NetworkMenu extends JPanel implements GuiNavigation {
         }
 
         Button newNetworkButton = new Button("New Network");
+        newNetworkButton.setActionCommand(NEW_NETWORK_FORM);
         newNetworkButton.addActionListener(this::navigate);
         this.add(newNetworkButton);
 
-        Button mainMenuButton = new Button("Main Menu");
+        Button mainMenuButton = new Button("Exit");
+        mainMenuButton.setActionCommand(MAIN_MENU);
         mainMenuButton.addActionListener(this::navigate);
         this.add(mainMenuButton);
     }

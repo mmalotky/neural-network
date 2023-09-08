@@ -7,9 +7,10 @@ public class MapMenu extends JPanel implements GuiNavigation {
     public MapMenu() {
         this.setBorder(BorderFactory.createEmptyBorder(300,300,100,300));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new Label(MAP_MENU, Label.CENTER));
+        this.add(new Label("Maps", Label.CENTER));
 
-        Button mainMenuButton = new Button(MAIN_MENU);
+        Button mainMenuButton = new Button("Exit");
+        mainMenuButton.setActionCommand(MAIN_MENU);
         mainMenuButton.addActionListener(this::navigate);
         this.add(mainMenuButton);
     }
