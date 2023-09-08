@@ -2,7 +2,6 @@ package dev10.NeuralNetwork.gui;
 
 
 import dev10.NeuralNetwork.controllers.NetworkController;
-import dev10.NeuralNetwork.domain.NetworkService;
 
 import javax.swing.*;
 import java.awt.*;
