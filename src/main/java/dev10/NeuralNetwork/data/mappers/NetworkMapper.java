@@ -7,13 +7,14 @@ import dev10.NeuralNetwork.models.Synapse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NetworkMapper {
     public Network dataToNetwork(NetworkData data) {
         List<String> lines = data.getLines();
         int options = Integer.parseInt(lines.get(1).replaceAll("options=", ""));
 
-        List<String> layersData = lines.stream().filter(line -> line.contains("layer=")).toList();
+        List<String> layersData = lines.stream().filter(line -> line.contains("layer=")).collect(Collectors.toList());
         int numberOfLayers = layersData.size();
 
         int[] layers = new int[numberOfLayers];

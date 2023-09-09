@@ -1,8 +1,5 @@
 package dev10.NeuralNetwork.gui;
 
-import dev10.NeuralNetwork.controllers.GuiController;
-import dev10.NeuralNetwork.controllers.NetworkController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,27 +11,27 @@ public class NewNetworkForm extends JPanel implements GuiNavigation {
     private int options = 1;
     private List<Integer> layers = new ArrayList<>();
 
-    public NewNetworkForm(NetworkController networkController) {
-        this.setBorder(BorderFactory.createEmptyBorder(500,300,100,300));
+    public NewNetworkForm() {
+        this.setBorder(BorderFactory.createEmptyBorder(300,300,100,300));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(new Label("New Network", Label.CENTER));
 
         this.add(new Label("Options"));
-
+        JSpinner optionsSpinner = new JSpinner(new SpinnerNumberModel(1,1,null,1));
+        this.add(optionsSpinner);
 
         this.add(new Label("Layers"));
-
+        JSpinner layersSpinner = new JSpinner(new SpinnerNumberModel(1,1,null,1));
+        this.add(layersSpinner);
 
         Button saveButton = new Button("Save");
         saveButton.addActionListener(this::save);
         this.add(saveButton);
 
-        Button networkMenuButton = new Button("Exit");
-        networkMenuButton.setActionCommand(NETWORK_MENU);
-        networkMenuButton.addActionListener(this::navigate);
-        this.add(networkMenuButton);
-
-        GuiController.panel.repaint();
+        Button mainMenuButton = new Button("Exit");
+        mainMenuButton.setActionCommand(NETWORK_MENU);
+        mainMenuButton.addActionListener(this::navigate);
+        this.add(mainMenuButton);
     }
 
     private void save(ActionEvent e) {

@@ -16,7 +16,7 @@ public class GuiController extends JFrame {
         panel.add(new MapMenu(), GuiNavigation.MAP_MENU);
         panel.add(new RunScreen(), GuiNavigation.RUN_SCREEN);
         panel.add(new NetworkMenu(networkController), GuiNavigation.NETWORK_MENU);
-        panel.add(new NewNetworkForm(networkController), GuiNavigation.NEW_NETWORK_FORM);
+        panel.add(new NewNetworkForm(), GuiNavigation.NEW_NETWORK_FORM);
         layout.show(panel, GuiNavigation.MAIN_MENU);
 
         add(panel, BorderLayout.CENTER);

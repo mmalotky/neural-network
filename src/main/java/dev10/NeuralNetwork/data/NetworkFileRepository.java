@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class NetworkFileRepository implements NetworkRepository {
@@ -33,7 +34,7 @@ public class NetworkFileRepository implements NetworkRepository {
                 return saveList;
             }
             else {
-                saveList = Arrays.stream(saves.listFiles()).map(File::getName).toList();
+                saveList = Arrays.stream(saves.listFiles()).map(File::getName).collect(Collectors.toList());
             }
         }
         else {
