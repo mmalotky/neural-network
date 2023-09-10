@@ -10,8 +10,9 @@ public class NetworkTab extends JPanel {
 
     public NetworkTab(NetworkController controller) {
         setLayout(layout);
-        add(new NetworkMenu(controller), "menu");
-        add(new NewNetworkForm(), "form");
+        NetworkMenu menu = new NetworkMenu(controller);
+        add(menu, "menu");
+        add(new NewNetworkForm(controller, menu), "form");
         layout.show(this, "menu");
     }
 }

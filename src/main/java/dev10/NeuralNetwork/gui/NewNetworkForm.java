@@ -1,5 +1,7 @@
 package dev10.NeuralNetwork.gui;
 
+import dev10.NeuralNetwork.controllers.NetworkController;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
@@ -7,13 +9,17 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 
 public class NewNetworkForm extends JPanel {
-
+    private final NetworkController controller;
+    private final NetworkMenu menu;
     private final JPanel layersPanel = new JPanel();
     private final JSpinner optionsField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
     private final JSpinner layersField = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
 
 
-    public NewNetworkForm() {
+    public NewNetworkForm(NetworkController controller, NetworkMenu menu) {
+        this.controller = controller;
+        this.menu = menu;
+
         setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(new Label("New Network", Label.CENTER));
@@ -57,12 +63,14 @@ public class NewNetworkForm extends JPanel {
                 .map(c -> (JSpinner) c)
                 .mapToInt(c -> (int) c.getValue())
                 .toArray();
-
         Map<String, int[]> data = new HashMap<>();
-        data.put("Options", new int[]{options});
-        data.put("Layers", layers);
+        data.put("options", new int[]{options});
+        data.put("layers", layers);
 
-        //networkController.newNetwork(data);
+        controller.newNetwork(data);
+        menu.refresh();
+        menu.updateUI();
+        NetworkTab.layout.show(getParent(), "menu");
     }
 
     private void addLayer() {

@@ -51,6 +51,7 @@ public class NetworkController {
         Result<Network> result = service.newNetwork(options, layers);
         if(result.isSuccess()) {
             this.network = result.getPayload();
+            saveNetwork();
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         else {
