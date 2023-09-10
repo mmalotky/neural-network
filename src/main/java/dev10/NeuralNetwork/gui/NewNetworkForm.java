@@ -1,47 +1,81 @@
 package dev10.NeuralNetwork.gui;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
-import java.util.List;
 
-public class NewNetworkForm extends JPanel implements GuiNavigation {
+public class NewNetworkForm extends JPanel {
 
-    private int options = 1;
-    private List<Integer> layers = new ArrayList<>();
+    private final JPanel layersPanel = new JPanel();
+    private final JSpinner optionsField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
+    private final JSpinner layersField = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
+
 
     public NewNetworkForm() {
-        this.setBorder(BorderFactory.createEmptyBorder(300,300,100,300));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new Label("New Network", Label.CENTER));
+        setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(new Label("New Network", Label.CENTER));
 
-        this.add(new Label("Options"));
-        JSpinner optionsSpinner = new JSpinner(new SpinnerNumberModel(1,1,null,1));
-        this.add(optionsSpinner);
+        add(new Label("Options"));
+        add(optionsField);
 
-        this.add(new Label("Layers"));
-        JSpinner layersSpinner = new JSpinner(new SpinnerNumberModel(1,1,null,1));
-        this.add(layersSpinner);
+        add(new Label("Layers"));
+        layersField.addChangeListener(this::handleLayersChange);
+        add(layersField);
+
+        addLayer();
+        add(new JScrollPane(layersPanel));
 
         Button saveButton = new Button("Save");
         saveButton.addActionListener(this::save);
-        this.add(saveButton);
+        add(saveButton);
 
-        Button mainMenuButton = new Button("Exit");
-        mainMenuButton.setActionCommand(NETWORK_MENU);
-        mainMenuButton.addActionListener(this::navigate);
-        this.add(mainMenuButton);
+        Button exitButton = new Button("Exit");
+        exitButton.addActionListener(this::exit);
+        add(exitButton);
+    }
+
+    private void handleLayersChange(ChangeEvent changeEvent) {
+        int value = (int) layersField.getValue();
+        if(value > layersPanel.getComponentCount()/2) {
+            while(value > layersPanel.getComponentCount()/2) addLayer();
+        } else if (value < layersPanel.getComponentCount()/2) {
+            while(value < layersPanel.getComponentCount()/2) removeLayer();
+        }
+    }
+
+    private void exit(ActionEvent actionEvent) {
+        NetworkTab.layout.show(this.getParent(), "menu");
     }
 
     private void save(ActionEvent e) {
+        int options = (int) optionsField.getValue();
+        int[] layers = Arrays.stream(layersPanel.getComponents())
+                .filter(c -> c instanceof JSpinner)
+                .map(c -> (JSpinner) c)
+                .mapToInt(c -> (int) c.getValue())
+                .toArray();
+
         Map<String, int[]> data = new HashMap<>();
         data.put("Options", new int[]{options});
-        data.put("Layers", layers.stream().mapToInt(Integer::intValue).toArray());
+        data.put("Layers", layers);
 
         //networkController.newNetwork(data);
-        this.navigate(new ActionEvent(e.getSource(), e.getID(), NETWORK_MENU));
     }
 
+    private void addLayer() {
+        int i = layersPanel.getComponentCount()/2;
+        layersPanel.add(new Label(String.format("%s", i + 1)));
+        JSpinner layerField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
+        layersPanel.add(layerField);
+        layersPanel.updateUI();
+    }
 
+    private void removeLayer() {
+        layersPanel.remove(layersPanel.getComponentCount() - 1);
+        layersPanel.remove(layersPanel.getComponentCount() -1);
+        layersPanel.updateUI();
+    }
 }

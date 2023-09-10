@@ -5,34 +5,33 @@ import dev10.NeuralNetwork.controllers.NetworkController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class NetworkMenu extends JPanel implements GuiNavigation {
+public class NetworkMenu extends JPanel {
     public NetworkMenu(NetworkController networkController) {
-        this.setBorder(BorderFactory.createEmptyBorder(300,300,100,300));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new Label("Networks", Label.CENTER));
+        setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(new Label("Networks", Label.CENTER));
 
 
         List<String> networks = networkController.getSavedNetworkIds().getBody();
         if(networks == null || networks.size() == 0) {
-            this.add(new Label("No Saved Networks", Label.CENTER));
+            add(new Label("No Saved Networks", Label.CENTER));
         }
         else {
             for(String network : networks) {
-                this.add(new JRadioButton(network));
+                add(new JRadioButton(network));
             }
         }
 
         Button newNetworkButton = new Button("New Network");
-        newNetworkButton.setActionCommand(NEW_NETWORK_FORM);
-        newNetworkButton.addActionListener(this::navigate);
-        this.add(newNetworkButton);
+        newNetworkButton.addActionListener(this::newNetwork);
+        add(newNetworkButton);
+    }
 
-        Button mainMenuButton = new Button("Exit");
-        mainMenuButton.setActionCommand(MAIN_MENU);
-        mainMenuButton.addActionListener(this::navigate);
-        this.add(mainMenuButton);
+    private void newNetwork(ActionEvent actionEvent) {
+        NetworkTab.layout.show(this.getParent(), "form");
     }
 
 }

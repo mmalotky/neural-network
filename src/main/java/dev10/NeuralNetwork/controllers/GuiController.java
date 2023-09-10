@@ -8,18 +8,14 @@ import java.awt.*;
 
 @Controller
 public class GuiController extends JFrame {
-    public static final CardLayout layout = new CardLayout();
-    public static final JPanel panel = new JPanel(layout);
 
     public GuiController(NetworkController networkController) {
-        panel.add(new MainMenu(), GuiNavigation.MAIN_MENU);
-        panel.add(new MapMenu(), GuiNavigation.MAP_MENU);
-        panel.add(new RunScreen(), GuiNavigation.RUN_SCREEN);
-        panel.add(new NetworkMenu(networkController), GuiNavigation.NETWORK_MENU);
-        panel.add(new NewNetworkForm(), GuiNavigation.NEW_NETWORK_FORM);
-        layout.show(panel, GuiNavigation.MAIN_MENU);
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.addTab("Run", new RunScreen());
+        tabs.addTab("Networks", new NetworkTab(networkController));
+        tabs.addTab("Maps", new MapTab());
 
-        add(panel, BorderLayout.CENTER);
+        add(tabs, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
