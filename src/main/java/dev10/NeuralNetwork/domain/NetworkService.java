@@ -117,4 +117,15 @@ public class NetworkService {
         network.setNetworkId(name);
         return result;
     }
+
+    public Result<Void> delete(String name) {
+        Result<Void> result = new Result<>();
+        try {
+            if(!repository.getSavedNetworkIds().contains(name)) result.addError("File Not Found");
+        } catch (DataAccessException e) {
+            result.addError(e.getMessage());
+        }
+        if(!repository.deleteNetwork(name)) result.addError("Failed to Delete");
+        return result;
+    }
 }

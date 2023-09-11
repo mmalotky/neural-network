@@ -96,7 +96,21 @@ class NetworkFileRepositoryTest {
     @Test
     void shouldRetrieveSaveNames() throws DataAccessException {
         List<String> networkIds = repository.getSavedNetworkIds();
-        assertEquals(networkIds.get(0), "test.txt");
-        assertEquals(networkIds.size(), 1);
+        assertTrue(networkIds.contains("test"));
+        assertEquals(networkIds.size(), 2);
+    }
+
+    @Test
+    void shouldDeleteSave() throws IOException {
+        assertTrue(repository.deleteNetwork("deleteTest"));
+        File file = new File("./testData/networks/deleteTest.txt");
+        assertFalse(file.exists());
+        assertTrue(file.createNewFile());
+    }
+
+    @Test
+    void shouldNotDeleteMissing() throws DataAccessException {
+        assertFalse(repository.deleteNetwork("NaN"));
+        assertTrue(repository.getSavedNetworkIds().size() >= 1);
     }
 }

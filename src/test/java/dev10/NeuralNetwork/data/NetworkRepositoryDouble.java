@@ -17,7 +17,7 @@ public class NetworkRepositoryDouble implements NetworkRepository {
 
     @Override
     public List<String> getSavedNetworkIds() throws DataAccessException {
-        return List.of("test.txt", "test2.txt");
+        return List.of("test", "test2");
     }
 
     @Override
@@ -34,5 +34,10 @@ public class NetworkRepositoryDouble implements NetworkRepository {
         else {
             throw new DataAccessException("Error accessing file at: {filePath}");
         }
+    }
+
+    @Override
+    public boolean deleteNetwork(String id) {
+        return true;
     }
 }

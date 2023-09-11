@@ -17,8 +17,8 @@ class NetworkServiceTest {
     void shouldGetNetworkIds() throws DataAccessException {
         Result<List<String>> result = service.getSavedNetworkIds();
         assertTrue(result.isSuccess());
-        assertEquals(result.getPayload().get(0), "test.txt");
-        assertEquals(result.getPayload().get(1), "test2.txt");
+        assertEquals(result.getPayload().get(0), "test");
+        assertEquals(result.getPayload().get(1), "test2");
     }
 
     @Test
@@ -147,5 +147,15 @@ class NetworkServiceTest {
 
         Result<Void> result4 = service.rename("   ", network);
         assertFalse(result4.isSuccess());
+    }
+
+    @Test
+    void shouldDelete() {
+        assertTrue(service.delete("test").isSuccess());
+    }
+
+    @Test
+    void shouldNotDeleteMissing() {
+        assertFalse(service.delete("NaN").isSuccess());
     }
 }

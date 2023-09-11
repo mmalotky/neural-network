@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -115,6 +116,13 @@ public class NetworkController {
     public ResponseEntity<?> run(List<Double> input) throws NetworkConfigurationException {
         network.forward(input);
         return new ResponseEntity<>(network.getBest().getOptionId(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<String>> delete(String name) {
+        Result<Void> result = service.delete(name);
+        return result.isSuccess() ?
+                new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK) :
+                new ResponseEntity<>(result.getErrors(), HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -34,7 +34,10 @@ public class NetworkFileRepository implements NetworkRepository {
                 return saveList;
             }
             else {
-                saveList = Arrays.stream(saves.listFiles()).map(File::getName).collect(Collectors.toList());
+                saveList = Arrays.stream(saves.listFiles())
+                        .map(File::getName)
+                        .map(s -> s.substring(0, s.length() - 4))
+                        .toList();
             }
         }
         else {
@@ -78,5 +81,12 @@ public class NetworkFileRepository implements NetworkRepository {
             throw new DataAccessException("Error accessing file at: " + filePath, e);
         }
         return network;
+    }
+
+    @Override
+    public boolean deleteNetwork(String id) {
+        String filePath = String.format(pathFormat, id);
+        File networkFile = new File(filePath);
+        return networkFile.delete();
     }
 }

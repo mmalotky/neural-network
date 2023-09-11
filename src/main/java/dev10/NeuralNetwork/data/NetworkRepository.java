@@ -10,4 +10,6 @@ public interface NetworkRepository {
     void saveNetwork(Network network) throws DataAccessException;
 
     Network loadNetwork(String id) throws DataAccessException;
+
+    boolean deleteNetwork(String id);
 }
