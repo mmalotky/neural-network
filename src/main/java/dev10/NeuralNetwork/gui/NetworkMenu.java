@@ -6,10 +6,12 @@ import dev10.NeuralNetwork.controllers.NetworkController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import java.util.List;
 
 public class NetworkMenu extends JPanel {
     private final JPanel networksPanel = new JPanel();
+    private final ButtonGroup networksGroup = new ButtonGroup();
     private final NetworkController controller;
     public NetworkMenu(NetworkController controller) {
         this.controller = controller;
@@ -22,11 +24,18 @@ public class NetworkMenu extends JPanel {
         refresh();
         add(new JScrollPane(networksPanel));
 
+        Button deleteButton = new Button("Delete Network");
+        deleteButton.addActionListener(this::deleteNetwork);
+        add(deleteButton);
+
         Button newNetworkButton = new Button("New Network");
         newNetworkButton.addActionListener(this::newNetwork);
         add(newNetworkButton);
     }
     public void refresh() {
+        Arrays.stream(networksPanel.getComponents())
+                .filter(b -> b instanceof AbstractButton)
+                .forEach(b -> networksGroup.remove((AbstractButton) b));
         networksPanel.removeAll();
 
         List<String> networks = controller.getSavedNetworkIds().getBody();
@@ -35,12 +44,24 @@ public class NetworkMenu extends JPanel {
         }
         else {
             for(String network : networks) {
-                networksPanel.add(new JRadioButton(network));
+                JRadioButton button = new JRadioButton(network);
+                button.setActionCommand(network);
+                networksPanel.add(button);
+                networksGroup.add(button);
             }
         }
+        networksPanel.updateUI();
     }
 
     private void newNetwork(ActionEvent actionEvent) {
         NetworkTab.layout.show(this.getParent(), "form");
+    }
+
+    private void deleteNetwork(ActionEvent actionEvent) {
+        ButtonModel selection = networksGroup.getSelection();
+        if(selection == null) return;
+        String selected = selection.getActionCommand();
+        controller.delete(selected);
+        refresh();
     }
 }
