@@ -8,20 +8,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
-public class NewNetworkForm extends JPanel {
+public class NewNetworkForm extends Screen {
     private final NetworkController controller;
-    private final NetworkMenu menu;
+    private final NetworkTab tab;
     private final JPanel layersPanel = new JPanel();
     private final JSpinner optionsField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
     private final JSpinner layersField = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
 
 
-    public NewNetworkForm(NetworkController controller, NetworkMenu menu) {
+    public NewNetworkForm(NetworkController controller, NetworkTab tab) {
         this.controller = controller;
-        this.menu = menu;
+        this.tab = tab;
 
-        setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(new Label("New Network", Label.CENTER));
 
         add(new Label("Options"));
@@ -53,10 +51,10 @@ public class NewNetworkForm extends JPanel {
     }
 
     private void exit(ActionEvent actionEvent) {
-        NetworkTab.layout.show(this.getParent(), "menu");
+        tab.navigate(NetworkTab.MENU);
     }
 
-    private void save(ActionEvent e) {
+    private void save(ActionEvent actionEvent) {
         int options = (int) optionsField.getValue();
         int[] layers = Arrays.stream(layersPanel.getComponents())
                 .filter(c -> c instanceof JSpinner)
@@ -68,9 +66,8 @@ public class NewNetworkForm extends JPanel {
         data.put("layers", layers);
 
         controller.newNetwork(data);
-        menu.refresh();
-        menu.updateUI();
-        NetworkTab.layout.show(getParent(), "menu");
+        tab.refresh();
+        exit(actionEvent);
     }
 
     private void addLayer() {

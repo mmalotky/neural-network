@@ -6,19 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class EditNetworkForm extends JPanel {
+public class EditNetworkForm extends Screen {
     private final NetworkController controller;
-    private final NetworkMenu menu;
+    private final NetworkTab tab;
+    private final JTextField idField = new JTextField();
+    private final JSpinner lrField = new JSpinner(new SpinnerNumberModel(0,0,1,0.01));
 
-    private static final JTextField idField = new JTextField();
-    private static final JSpinner lrField = new JSpinner(new SpinnerNumberModel(0,0,1,0.01));
-
-    public EditNetworkForm(NetworkController controller, NetworkMenu menu) {
+    public EditNetworkForm(NetworkController controller, NetworkTab tab) {
         this.controller = controller;
-        this.menu = menu;
+        this.tab = tab;
 
-        setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(new Label("Edit Network", Label.CENTER));
 
         add(new Label("ID"));
@@ -34,13 +31,13 @@ public class EditNetworkForm extends JPanel {
         exitButton.addActionListener(this::exit);
         add(exitButton);
     }
-    public static void refresh(String id, double lr) {
-        idField.setText(id);
-        lrField.setValue(lr);
+    public void refresh() {
+        idField.setText(controller.getNetworkId());
+        lrField.setValue(controller.getLearningRate());
     }
 
     private void exit(ActionEvent actionEvent) {
-        NetworkTab.layout.show(this.getParent(), "menu");
+        tab.navigate(NetworkTab.MENU);
     }
 
     private void save(ActionEvent actionEvent) {
@@ -50,7 +47,7 @@ public class EditNetworkForm extends JPanel {
         controller.setLearningRate(lr);
         controller.saveNetwork();
 
-        menu.refresh();
+        tab.refresh();
         exit(actionEvent);
     }
 }

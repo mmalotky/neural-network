@@ -9,15 +9,15 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 
-public class NetworkMenu extends JPanel {
+public class NetworkMenu extends Screen {
     private final JPanel networksPanel = new JPanel();
     private final ButtonGroup networksGroup = new ButtonGroup();
     private final NetworkController controller;
-    public NetworkMenu(NetworkController controller) {
+    private final NetworkTab tab;
+    public NetworkMenu(NetworkController controller, NetworkTab tab) {
         this.controller = controller;
+        this.tab = tab;
 
-        setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(new Label("Networks", Label.CENTER));
 
         networksPanel.setLayout(new BoxLayout(networksPanel, BoxLayout.Y_AXIS));
@@ -63,15 +63,12 @@ public class NetworkMenu extends JPanel {
     }
 
     private void newNetwork(ActionEvent actionEvent) {
-        NetworkTab.layout.show(this.getParent(), "form");
+        tab.navigate(NetworkTab.FORM);
     }
 
     private void editNetwork(ActionEvent actionEvent) {
         loadNetwork(actionEvent);
-        String id = controller.getNetworkId();
-        double lr = controller.getLearningRate();
-        EditNetworkForm.refresh(id, lr);
-        NetworkTab.layout.show(this.getParent(), "edit");
+        tab.navigate(NetworkTab.EDIT);
     }
 
     private void deleteNetwork(ActionEvent actionEvent) {
