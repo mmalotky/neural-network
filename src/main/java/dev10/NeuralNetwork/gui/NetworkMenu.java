@@ -32,6 +32,10 @@ public class NetworkMenu extends JPanel {
         loadButton.addActionListener(this::loadNetwork);
         add(loadButton);
 
+        Button editButton = new Button("Edit Network");
+        editButton.addActionListener(this::editNetwork);
+        add(editButton);
+
         Button newNetworkButton = new Button("New Network");
         newNetworkButton.addActionListener(this::newNetwork);
         add(newNetworkButton);
@@ -62,20 +66,28 @@ public class NetworkMenu extends JPanel {
         NetworkTab.layout.show(this.getParent(), "form");
     }
 
+    private void editNetwork(ActionEvent actionEvent) {
+        loadNetwork(actionEvent);
+        String id = controller.getNetworkId();
+        double lr = controller.getLearningRate();
+        EditNetworkForm.refresh(id, lr);
+        NetworkTab.layout.show(this.getParent(), "edit");
+    }
+
     private void deleteNetwork(ActionEvent actionEvent) {
-        ButtonModel selection = networksGroup.getSelection();
-        if(selection == null) return;
-        String selected = selection.getActionCommand();
+        String selected = getSelection();
         controller.delete(selected);
         refresh();
     }
 
     private void loadNetwork(ActionEvent actionEvent) {
-        ButtonModel selection = networksGroup.getSelection();
-        if(selection == null) return;
-        String selected = selection.getActionCommand();
-        System.out.println(selected);
+        String selected = getSelection();
         controller.loadNetwork(selected);
         refresh();
+    }
+
+    private String getSelection() {
+        ButtonModel selection = networksGroup.getSelection();
+        return selection != null ? selection.getActionCommand() : null;
     }
 }

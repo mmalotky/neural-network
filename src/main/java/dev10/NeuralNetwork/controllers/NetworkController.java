@@ -71,7 +71,7 @@ public class NetworkController {
         }
     }
 
-    public ResponseEntity<List<String>> rename(String name) {
+    public ResponseEntity<List<String>> setNetworkId(String name) {
         if(network == null) {
             return new ResponseEntity<>(List.of("No network selected"), HttpStatus.BAD_REQUEST);
         }
@@ -127,5 +127,10 @@ public class NetworkController {
 
     public String getNetworkId() {
         return network != null ? network.getNetworkId() : null;
+    }
+
+
+    public double getLearningRate() {
+        return network != null ? network.getLearningRate() : 0;
     }
 }

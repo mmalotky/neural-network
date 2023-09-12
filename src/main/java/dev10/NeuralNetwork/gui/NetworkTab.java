@@ -13,6 +13,7 @@ public class NetworkTab extends JPanel {
         NetworkMenu menu = new NetworkMenu(controller);
         add(menu, "menu");
         add(new NewNetworkForm(controller, menu), "form");
+        add(new EditNetworkForm(controller, menu), "edit");
         layout.show(this, "menu");
     }
 }
