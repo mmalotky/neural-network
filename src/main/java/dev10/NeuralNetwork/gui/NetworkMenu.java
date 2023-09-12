@@ -28,6 +28,10 @@ public class NetworkMenu extends JPanel {
         deleteButton.addActionListener(this::deleteNetwork);
         add(deleteButton);
 
+        Button loadButton = new Button("Load Network");
+        loadButton.addActionListener(this::loadNetwork);
+        add(loadButton);
+
         Button newNetworkButton = new Button("New Network");
         newNetworkButton.addActionListener(this::newNetwork);
         add(newNetworkButton);
@@ -44,7 +48,8 @@ public class NetworkMenu extends JPanel {
         }
         else {
             for(String network : networks) {
-                JRadioButton button = new JRadioButton(network);
+                String status = (network.equals(controller.getNetworkId())) ? "Active" : "";
+                JRadioButton button = new JRadioButton(network + "     " + status);
                 button.setActionCommand(network);
                 networksPanel.add(button);
                 networksGroup.add(button);
@@ -62,6 +67,15 @@ public class NetworkMenu extends JPanel {
         if(selection == null) return;
         String selected = selection.getActionCommand();
         controller.delete(selected);
+        refresh();
+    }
+
+    private void loadNetwork(ActionEvent actionEvent) {
+        ButtonModel selection = networksGroup.getSelection();
+        if(selection == null) return;
+        String selected = selection.getActionCommand();
+        System.out.println(selected);
+        controller.loadNetwork(selected);
         refresh();
     }
 }

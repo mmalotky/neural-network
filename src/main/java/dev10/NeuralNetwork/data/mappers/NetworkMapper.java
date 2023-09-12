@@ -26,6 +26,7 @@ public class NetworkMapper {
         }
 
         Network network = new Network(options, layers);
+        network.setNetworkId(lines.get(0).substring(3));
         for(int i = 0; i < network.getLayers().size(); i++) {
             List<Neuron> layer = network.getLayers().get(i);
             String[] processedLayer = processedLayers.get(i);

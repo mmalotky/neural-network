@@ -125,4 +125,7 @@ public class NetworkController {
                 new ResponseEntity<>(result.getErrors(), HttpStatus.BAD_REQUEST);
     }
 
+    public String getNetworkId() {
+        return network != null ? network.getNetworkId() : null;
+    }
 }
