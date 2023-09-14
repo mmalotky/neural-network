@@ -80,7 +80,7 @@ public class NetworkMenu extends Screen {
     private void loadNetwork(ActionEvent actionEvent) {
         String selected = getSelection();
         controller.loadNetwork(selected);
-        refresh();
+        tab.refresh();
     }
 
     private String getSelection() {

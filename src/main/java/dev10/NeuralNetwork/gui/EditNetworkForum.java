@@ -3,7 +3,6 @@ package dev10.NeuralNetwork.gui;
 import dev10.NeuralNetwork.controllers.NetworkController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class EditNetworkForum extends Screen {
@@ -16,18 +15,18 @@ public class EditNetworkForum extends Screen {
         this.controller = controller;
         this.tab = tab;
 
-        add(new Label("Edit Network", Label.CENTER));
+        add(new JLabel("Edit Network", JLabel.CENTER));
 
-        add(new Label("ID"));
+        add(new JLabel("ID", JLabel.LEFT));
         add(idField);
-        add(new Label("Learning Rate"));
+        add(new JLabel("Learning Rate", JLabel.LEFT));
         add(lrField);
 
-        Button saveButton = new Button("Save");
+        JButton saveButton = new JButton("Save");
         saveButton.addActionListener(this::save);
         add(saveButton);
 
-        Button exitButton = new Button("Exit");
+        JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(this::exit);
         add(exitButton);
     }
