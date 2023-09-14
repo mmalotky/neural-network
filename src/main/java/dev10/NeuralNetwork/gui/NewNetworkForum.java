@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
-public class NewNetworkForm extends Screen {
+public class NewNetworkForum extends Screen {
     private final NetworkController controller;
     private final NetworkTab tab;
     private final JPanel layersPanel = new JPanel();
@@ -16,7 +16,7 @@ public class NewNetworkForm extends Screen {
     private final JSpinner layersField = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
 
 
-    public NewNetworkForm(NetworkController controller, NetworkTab tab) {
+    public NewNetworkForum(NetworkController controller, NetworkTab tab) {
         this.controller = controller;
         this.tab = tab;
 

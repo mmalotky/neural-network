@@ -63,7 +63,7 @@ public class NetworkMenu extends Screen {
     }
 
     private void newNetwork(ActionEvent actionEvent) {
-        tab.navigate(NetworkTab.FORM);
+        tab.navigate(NetworkTab.FORUM);
     }
 
     private void editNetwork(ActionEvent actionEvent) {

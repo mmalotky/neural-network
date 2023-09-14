@@ -6,13 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class EditNetworkForm extends Screen {
+public class EditNetworkForum extends Screen {
     private final NetworkController controller;
     private final NetworkTab tab;
     private final JTextField idField = new JTextField();
     private final JSpinner lrField = new JSpinner(new SpinnerNumberModel(0,0,1,0.01));
 
-    public EditNetworkForm(NetworkController controller, NetworkTab tab) {
+    public EditNetworkForum(NetworkController controller, NetworkTab tab) {
         this.controller = controller;
         this.tab = tab;
 

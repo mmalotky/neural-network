@@ -9,11 +9,11 @@ import java.awt.*;
 @Controller
 public class GuiController extends JFrame {
 
-    public GuiController(NetworkController networkController) {
+    public GuiController(NetworkController networkController, MapController mapController) {
         JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Run", new RunScreen());
         tabs.addTab("Networks", new NetworkTab(networkController));
-        tabs.addTab("Maps", new MapTab());
+        tabs.addTab("Maps", new MapTab(mapController));
 
         add(tabs, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
