@@ -27,13 +27,6 @@ public class NetworkTab extends JPanel {
 
     public void navigate (String destination) {
         layout.show(this, destination);
-        switch (destination) {
-            case MENU -> menuScreen.updateUI();
-            case FORUM -> forumScreen.updateUI();
-            case EDIT -> editScreen.updateUI();
-        }
-        this.revalidate();
-        this.updateUI();
     }
 
     public void refresh() {

@@ -18,25 +18,25 @@ public class NetworkMenu extends Screen {
         this.controller = controller;
         this.tab = tab;
 
-        add(new Label("Networks", Label.CENTER));
+        add(new JLabel("Networks", JLabel.CENTER));
 
         networksPanel.setLayout(new BoxLayout(networksPanel, BoxLayout.Y_AXIS));
         refresh();
         add(new JScrollPane(networksPanel));
 
-        Button deleteButton = new Button("Delete Network");
+        JButton deleteButton = new JButton("Delete Network");
         deleteButton.addActionListener(this::deleteNetwork);
         add(deleteButton);
 
-        Button loadButton = new Button("Load Network");
+        JButton loadButton = new JButton("Load Network");
         loadButton.addActionListener(this::loadNetwork);
         add(loadButton);
 
-        Button editButton = new Button("Edit Network");
+        JButton editButton = new JButton("Edit Network");
         editButton.addActionListener(this::editNetwork);
         add(editButton);
 
-        Button newNetworkButton = new Button("New Network");
+        JButton newNetworkButton = new JButton("New Network");
         newNetworkButton.addActionListener(this::newNetwork);
         add(newNetworkButton);
     }

@@ -1,9 +1,9 @@
 package dev10.NeuralNetwork.gui;
 
-import java.awt.*;
+import javax.swing.*;
 
 public class RunScreen extends Screen {
     public RunScreen() {
-        add(new Label("Run Network"));
+        add(new JLabel("Run Network", JLabel.CENTER));
     }
 }

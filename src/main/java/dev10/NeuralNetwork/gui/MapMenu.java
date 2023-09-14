@@ -2,7 +2,7 @@ package dev10.NeuralNetwork.gui;
 
 import dev10.NeuralNetwork.controllers.MapController;
 
-import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class MapMenu extends Screen {
@@ -13,15 +13,15 @@ public class MapMenu extends Screen {
         this.controller = controller;
         this.tab = tab;
 
-        Button deleteButton = new Button("Delete Map");
+        JButton deleteButton = new JButton("Delete Map");
         deleteButton.addActionListener(this::deleteMap);
         add(deleteButton);
 
-        Button loadButton = new Button("Load Map");
+        JButton loadButton = new JButton("Load Map");
         loadButton.addActionListener(this::loadMap);
         add(loadButton);
 
-        Button newMapButton = new Button("New Map");
+        JButton newMapButton = new JButton("New Map");
         newMapButton.addActionListener(this::newMap);
         add(newMapButton);
     }
