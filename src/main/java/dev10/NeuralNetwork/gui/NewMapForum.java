@@ -3,6 +3,7 @@ package dev10.NeuralNetwork.gui;
 import dev10.NeuralNetwork.controllers.MapController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class NewMapForum extends Screen {
@@ -14,20 +15,20 @@ public class NewMapForum extends Screen {
         this.controller = controller;
         this.tab = tab;
 
-        add(new JLabel("New Map", JLabel.CENTER));
+        add(new Title("New Map"));
 
-        add(new JLabel("Height", JLabel.LEFT));
-        add(heightField);
+        add(new Field("Height", heightField));
 
-        add(new JLabel("Width", JLabel.LEFT));
-        add(widthField);
+        add(new Field("Width", widthField));
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(this::save);
+        saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(saveButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(this::exit);
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(exitButton);
     }
 

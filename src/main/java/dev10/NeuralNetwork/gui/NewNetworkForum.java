@@ -4,6 +4,7 @@ import dev10.NeuralNetwork.controllers.NetworkController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
@@ -19,24 +20,24 @@ public class NewNetworkForum extends Screen {
         this.controller = controller;
         this.tab = tab;
 
-        add(new JLabel("New Network", JLabel.CENTER));
+        add(new Title("New Network"));
 
-        add(new JLabel("Options", JLabel.LEFT));
-        add(optionsField);
+        add(new Field("Options", optionsField));
 
-        add(new JLabel("Layers", JLabel.LEFT));
         layersField.addChangeListener(this::handleLayersChange);
-        add(layersField);
+        add(new Field("Layers", layersField));
 
         addLayer();
         add(new JScrollPane(layersPanel));
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(this::save);
+        saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(saveButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(this::exit);
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(exitButton);
     }
 
@@ -71,7 +72,7 @@ public class NewNetworkForum extends Screen {
 
     private void addLayer() {
         int i = layersPanel.getComponentCount()/2;
-        layersPanel.add(new JLabel(String.format("%s", i + 1), JLabel.LEFT));
+        layersPanel.add(new JLabel(String.format("%s", i + 1)));
         JSpinner layerField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
         layersPanel.add(layerField);
         layersPanel.updateUI();

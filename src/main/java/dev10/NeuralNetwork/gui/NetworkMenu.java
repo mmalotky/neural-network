@@ -18,7 +18,7 @@ public class NetworkMenu extends Screen {
         this.controller = controller;
         this.tab = tab;
 
-        add(new JLabel("Networks", JLabel.CENTER));
+        add(new Title("Networks"));
 
         networksPanel.setLayout(new BoxLayout(networksPanel, BoxLayout.Y_AXIS));
         refresh();
@@ -26,18 +26,22 @@ public class NetworkMenu extends Screen {
 
         JButton deleteButton = new JButton("Delete Network");
         deleteButton.addActionListener(this::deleteNetwork);
+        deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(deleteButton);
 
         JButton loadButton = new JButton("Load Network");
         loadButton.addActionListener(this::loadNetwork);
+        loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(loadButton);
 
         JButton editButton = new JButton("Edit Network");
         editButton.addActionListener(this::editNetwork);
+        editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(editButton);
 
         JButton newNetworkButton = new JButton("New Network");
         newNetworkButton.addActionListener(this::newNetwork);
+        newNetworkButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(newNetworkButton);
     }
     public void refresh() {
@@ -48,7 +52,10 @@ public class NetworkMenu extends Screen {
 
         List<String> networks = controller.getSavedNetworkIds().getBody();
         if(networks == null || networks.size() == 0) {
-            networksPanel.add(new Label("No Saved Networks", Label.CENTER));
+            JLabel message = new JLabel("No Saved Networks");
+            message.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 12));
+            message.setAlignmentX(Component.CENTER_ALIGNMENT);
+            networksPanel.add(message);
         }
         else {
             for(String network : networks) {
