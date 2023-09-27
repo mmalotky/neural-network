@@ -1,6 +1,6 @@
 package dev10.NeuralNetwork.models;
 
-public enum MazeElement {
+public enum MapElement {
     FLOOR,
     WALL,
     START,

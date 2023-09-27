@@ -18,9 +18,10 @@ public class EditNetworkForum extends Screen {
 
         add(new Title("Edit Network"));
 
-        add(new Field("ID", idField));
-
-        add(new Field("Learning Rate", lrField));
+        JPanel fields = new JPanel();
+        fields.add(new Field("Network ID", idField));
+        fields.add(new Field("Learning Rate", lrField));
+        add(fields);
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(this::save);

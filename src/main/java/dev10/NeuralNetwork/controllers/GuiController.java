@@ -15,7 +15,8 @@ public class GuiController extends JFrame {
         tabs.addTab("Networks", new NetworkTab(networkController));
         tabs.addTab("Maps", new MapTab(mapController));
 
-        add(tabs, BorderLayout.CENTER);
+        tabs.setPreferredSize(new Dimension(500,500));
+        add(tabs);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);

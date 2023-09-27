@@ -22,13 +22,17 @@ public class NewNetworkForum extends Screen {
 
         add(new Title("New Network"));
 
-        add(new Field("Options", optionsField));
+
+        JPanel fields = new JPanel();
+        fields.add(new Field("Options", optionsField));
 
         layersField.addChangeListener(this::handleLayersChange);
-        add(new Field("Layers", layersField));
+        fields.add(new Field("Layers", layersField));
+        add(fields);
 
         addLayer();
-        add(new JScrollPane(layersPanel));
+        JScrollPane scroll = new JScrollPane(layersPanel);
+        add(scroll);
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(this::save);

@@ -6,12 +6,14 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewMapForum extends Screen {
     private final MapController controller;
     private final MapTab tab;
-    private final JSpinner heightField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
-    private final JSpinner widthField = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
+    private final JSpinner heightField = new JSpinner(new SpinnerNumberModel(1,1,100,1));
+    private final JSpinner widthField = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
     private final JPanel mapField = new JPanel();
     public NewMapForum(MapController controller, MapTab tab) {
         this.controller = controller;
@@ -19,17 +21,18 @@ public class NewMapForum extends Screen {
 
         add(new Title("New Map"));
 
+        JPanel fields = new JPanel();
         heightField.addChangeListener(this::changeRows);
-        add(new Field("Height", heightField));
-
+        fields.add(new Field("Height", heightField));
         widthField.addChangeListener(this::changeColumns);
-        add(new Field("Width", widthField));
+        fields.add(new Field("Width", widthField));
+        add(fields);
 
         JPanel row = new JPanel();
         row.add(new MapSegment());
-        mapField.setLayout(new BoxLayout(mapField, BoxLayout.Y_AXIS));
+        mapField.setLayout(new GridLayout(100,1,0,0));
         mapField.add(row);
-        add(mapField);
+        add(new JScrollPane(mapField));
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(this::save);
@@ -86,5 +89,18 @@ public class NewMapForum extends Screen {
     }
 
     private void save(ActionEvent actionEvent) {
+        List<List<Boolean>> result = new ArrayList<>();
+        for(Component r : mapField.getComponents()) {
+            List<Boolean> rowList = new ArrayList<>();
+            JPanel row = (JPanel) r;
+            for(Component c : row.getComponents()) {
+                MapSegment mapSegment = (MapSegment) c;
+                rowList.add(mapSegment.isActive());
+            }
+            result.add(rowList);
+        }
+
+        controller.newMap(result);
+        tab.navigate(MapTab.MENU);
     }
 }
