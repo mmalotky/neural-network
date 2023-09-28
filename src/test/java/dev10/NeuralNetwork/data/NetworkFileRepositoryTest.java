@@ -23,7 +23,7 @@ class NetworkFileRepositoryTest {
 
     @Test
     void shouldSaveToNewFile() throws DataAccessException {
-        repository.saveNetwork(test1);
+        repository.save(test1, test1.getNetworkId());
 
         File file = new File(String.format(pathFormat, test1.getNetworkId()));
 
@@ -33,8 +33,8 @@ class NetworkFileRepositoryTest {
 
     @Test
     void shouldSaveMultipleFiles() throws DataAccessException {
-        repository.saveNetwork(test1);
-        repository.saveNetwork(test2);
+        repository.save(test1, test1.getNetworkId());
+        repository.save(test2, test2.getNetworkId());
 
         File file1 = new File(String.format(pathFormat, test1.getNetworkId()));
         File file2 = new File(String.format(pathFormat, test2.getNetworkId()));
@@ -48,7 +48,7 @@ class NetworkFileRepositoryTest {
 
     @Test
     void shouldOverwriteExistingFile() throws DataAccessException {
-        repository.saveNetwork(test3);
+        repository.save(test3, test3.getNetworkId());
 
         File file = new File(String.format(pathFormat, test3.getNetworkId()));
         assertTrue(file.exists());
@@ -67,11 +67,11 @@ class NetworkFileRepositoryTest {
 
     @Test
     void shouldLoadANetwork() throws DataAccessException {
-        Network network = repository.loadNetwork("test");
+        Network network = repository.load("test");
         assertNotNull(network);
 
-        repository.saveNetwork(test1);
-        Network load = repository.loadNetwork(test1.getNetworkId());
+        repository.save(test1, test1.getNetworkId());
+        Network load = repository.load(test1.getNetworkId());
         double expected = test1.getLayers().get(0).get(0).getConnections().get(0).getWeight();
         double actual = load.getLayers().get(0).get(0).getConnections().get(0).getWeight();
 
@@ -86,7 +86,7 @@ class NetworkFileRepositoryTest {
     @Test
     void shouldNotLoadAMissingNetwork() {
         try {
-            Network network = repository.loadNetwork("");
+            repository.load("");
             fail();
         } catch(DataAccessException e) {
             assertEquals(e.getMessage(), "Error accessing file at: ./testData/networks/.txt");
@@ -95,14 +95,14 @@ class NetworkFileRepositoryTest {
 
     @Test
     void shouldRetrieveSaveNames() throws DataAccessException {
-        List<String> networkIds = repository.getSavedNetworkIds();
+        List<String> networkIds = repository.getSavedIds();
         assertTrue(networkIds.contains("test"));
         assertEquals(networkIds.size(), 2);
     }
 
     @Test
     void shouldDeleteSave() throws IOException {
-        assertTrue(repository.deleteNetwork("deleteTest"));
+        assertTrue(repository.delete("deleteTest"));
         File file = new File("./testData/networks/deleteTest.txt");
         assertFalse(file.exists());
         assertTrue(file.createNewFile());
@@ -110,7 +110,7 @@ class NetworkFileRepositoryTest {
 
     @Test
     void shouldNotDeleteMissing() throws DataAccessException {
-        assertFalse(repository.deleteNetwork("NaN"));
-        assertTrue(repository.getSavedNetworkIds().size() >= 1);
+        assertFalse(repository.delete("NaN"));
+        assertTrue(repository.getSavedIds().size() >= 1);
     }
 }

@@ -1,7 +1,7 @@
 package dev10.NeuralNetwork.domain;
 
 import dev10.NeuralNetwork.data.DataAccessException;
-import dev10.NeuralNetwork.data.NetworkRepository;
+import dev10.NeuralNetwork.data.FileRepository;
 import dev10.NeuralNetwork.models.Network;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,16 +11,16 @@ import java.util.List;
 @Service
 public class NetworkService {
     @Autowired
-    NetworkRepository repository;
+    FileRepository<Network> repository;
 
-    public NetworkService(NetworkRepository repository) {
+    public NetworkService(FileRepository<Network> repository) {
         this.repository = repository;
     }
 
     public Result<List<String>> getSavedNetworkIds() {
         Result<List<String>> result = new Result<>();
         try {
-            List<String> networkIds = repository.getSavedNetworkIds();
+            List<String> networkIds = repository.getSavedIds();
             result.setPayload(networkIds);
         } catch (DataAccessException e) {
             result.addError(e.getMessage());
@@ -47,7 +47,7 @@ public class NetworkService {
         }
 
         try {
-            repository.saveNetwork(network);
+            repository.save(network, network.getNetworkId());
         } catch (DataAccessException e) {
             result.addError(e.getMessage());
         }
@@ -75,7 +75,7 @@ public class NetworkService {
         }
 
         try {
-            Network network = repository.loadNetwork(id);
+            Network network = repository.load(id);
             result.setPayload(network);
         } catch (DataAccessException e) {
             result.addError(e.getMessage());
@@ -121,11 +121,11 @@ public class NetworkService {
     public Result<Void> delete(String name) {
         Result<Void> result = new Result<>();
         try {
-            if(!repository.getSavedNetworkIds().contains(name)) result.addError("File Not Found");
+            if(!repository.getSavedIds().contains(name)) result.addError("File Not Found");
         } catch (DataAccessException e) {
             result.addError(e.getMessage());
         }
-        if(!repository.deleteNetwork(name)) result.addError("Failed to Delete");
+        if(!repository.delete(name)) result.addError("Failed to Delete");
         return result;
     }
 }

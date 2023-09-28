@@ -3,7 +3,7 @@ package dev10.NeuralNetwork.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NetworkData {
+public class FileData {
     private final List<String> lines = new ArrayList<>();
 
     public void addLine(String line) {

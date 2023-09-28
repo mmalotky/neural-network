@@ -1,6 +1,5 @@
 package dev10.NeuralNetwork.domain;
 
-import dev10.NeuralNetwork.data.DataAccessException;
 import dev10.NeuralNetwork.data.NetworkRepositoryDouble;
 import dev10.NeuralNetwork.models.Network;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ class NetworkServiceTest {
     NetworkService service = new NetworkService(repository);
 
     @Test
-    void shouldGetNetworkIds() throws DataAccessException {
+    void shouldGetNetworkIds() {
         Result<List<String>> result = service.getSavedNetworkIds();
         assertTrue(result.isSuccess());
         assertEquals(result.getPayload().get(0), "test");

@@ -1,6 +1,6 @@
 package dev10.NeuralNetwork.controllers;
 
-import dev10.NeuralNetwork.data.NetworkData;
+import dev10.NeuralNetwork.data.FileData;
 import dev10.NeuralNetwork.data.mappers.NetworkMapper;
 import dev10.NeuralNetwork.domain.Result;
 import dev10.NeuralNetwork.models.Network;
@@ -98,7 +98,7 @@ public class NetworkController {
             return new ResponseEntity<>(List.of("No network selected"), HttpStatus.BAD_REQUEST);
         }
 
-        NetworkData data = new NetworkMapper().networkToData(network);
+        FileData data = new NetworkMapper().objectToData(network);
         return new ResponseEntity<>(data.getLines(), HttpStatus.OK);
     }
 

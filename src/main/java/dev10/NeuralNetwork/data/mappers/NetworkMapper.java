@@ -1,6 +1,6 @@
 package dev10.NeuralNetwork.data.mappers;
 
-import dev10.NeuralNetwork.data.NetworkData;
+import dev10.NeuralNetwork.data.FileData;
 import dev10.NeuralNetwork.models.Network;
 import dev10.NeuralNetwork.models.Neuron;
 import dev10.NeuralNetwork.models.Synapse;
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NetworkMapper {
-    public Network dataToNetwork(NetworkData data) {
+public class NetworkMapper implements Mapper<Network> {
+    @Override
+    public Network dataToObject(FileData data) {
         List<String> lines = data.getLines();
         int options = Integer.parseInt(lines.get(1).replaceAll("options=", ""));
 
@@ -48,13 +49,14 @@ public class NetworkMapper {
         return network;
     }
 
-    public NetworkData networkToData(Network network) {
+    @Override
+    public FileData objectToData(Network network) {
         String id = network.getNetworkId();
         String options = String.valueOf(network.getOptions().size());
         List<List<Neuron>> layers = network.getLayers();
         double learningRate = network.getLearningRate();
 
-        NetworkData data = new NetworkData();
+        FileData data = new FileData();
         data.addLine("id="+id);
         data.addLine("options="+options);
 
