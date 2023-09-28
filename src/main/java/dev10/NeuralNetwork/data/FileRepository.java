@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class FileRepository<T> {
-    final String pathFormat;
-    final Mapper<T> mapper;
+    private final String pathFormat;
+    private final Mapper<T> mapper;
 
-    protected FileRepository(String pathFormat, Mapper<T> mapper) throws DataAccessException {
+    public FileRepository(String pathFormat, Mapper<T> mapper) throws DataAccessException {
         this.pathFormat = pathFormat;
         this.mapper = mapper;
         buildFileTree();
@@ -82,7 +82,7 @@ public abstract class FileRepository<T> {
         return networkFile.delete();
     }
 
-    void buildFileTree() throws DataAccessException {
+    private void buildFileTree() throws DataAccessException {
         String[] tree = pathFormat.split("/");
         String url = "";
         for(String branch : tree) {

@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-    @Bean
+    @Bean(name = "networkPathFormat")
     public String getNetworkPathFormat() {
         return "./saves/networks/%s.txt";
     }
-    @Bean
+    @Bean(name = "mapPathFormat")
     public String getMapPathFormat() {
         return "./saves/maps/%s.txt";
     }
