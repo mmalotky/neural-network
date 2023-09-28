@@ -11,6 +11,7 @@ import java.util.Objects;
 public abstract class FileRepository<T> {
     String pathFormat;
     Mapper<T> mapper;
+
     public List<String> getSavedIds() throws DataAccessException {
         List<String> saveList = new ArrayList<>();
 
@@ -72,5 +73,17 @@ public abstract class FileRepository<T> {
         String filePath = String.format(pathFormat, id);
         File networkFile = new File(filePath);
         return networkFile.delete();
+    }
+
+    void buildFileTree() throws DataAccessException {
+        String[] tree = pathFormat.split("/");
+        String url = "";
+        for(String branch : tree) {
+            if(branch.contains("%s")) break;
+            url+=branch;
+            File folder = new File(url);
+            if(!folder.exists() && !folder.mkdir()) throw new DataAccessException(String.format("Could not make file at %s", url));
+            url+="/";
+        }
     }
 }

@@ -17,7 +17,7 @@ class NetworkFileRepositoryTest {
 
     private final Network test3 = new Network(3, new int[]{ 5, 4 });
 
-    public NetworkFileRepositoryTest() {
+    public NetworkFileRepositoryTest() throws DataAccessException {
         test3.setNetworkId("test");
     }
 
@@ -97,15 +97,16 @@ class NetworkFileRepositoryTest {
     void shouldRetrieveSaveNames() throws DataAccessException {
         List<String> networkIds = repository.getSavedIds();
         assertTrue(networkIds.contains("test"));
-        assertEquals(networkIds.size(), 2);
+        assertEquals(networkIds.size(), 1);
     }
 
     @Test
     void shouldDeleteSave() throws IOException {
-        assertTrue(repository.delete("deleteTest"));
         File file = new File("./testData/networks/deleteTest.txt");
+        assertTrue(file.exists() || file.createNewFile());
+
+        assertTrue(repository.delete("deleteTest"));
         assertFalse(file.exists());
-        assertTrue(file.createNewFile());
     }
 
     @Test

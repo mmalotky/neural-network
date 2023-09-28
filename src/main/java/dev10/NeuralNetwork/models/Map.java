@@ -5,10 +5,16 @@ import java.util.UUID;
 
 public class Map {
     private String mapId;
-    private final HashMap<String, MapElement> map = new HashMap<>();
+    private HashMap<String, MapElement> map;
 
-    public Map() {
+    public Map(HashMap<String, MapElement> map) {
         mapId = UUID.randomUUID().toString();
+        this.map = map;
+    }
+
+    public Map(HashMap<String, MapElement> map, String id) {
+        this.mapId = id;
+        this.map = map;
     }
 
     public String getMapId() {

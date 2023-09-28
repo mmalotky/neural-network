@@ -4,6 +4,9 @@ import dev10.NeuralNetwork.data.FileData;
 import dev10.NeuralNetwork.models.Map;
 import dev10.NeuralNetwork.models.MapElement;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class MapMapper implements Mapper<Map> {
     @Override
     public FileData objectToData(Map map) {
@@ -18,6 +21,16 @@ public class MapMapper implements Mapper<Map> {
 
     @Override
     public Map dataToObject(FileData data) {
-        return null;
+        List<String> lines = data.getLines();
+        String id = lines.get(0).replaceAll("id=", "");
+
+        HashMap<String, MapElement> map = new HashMap<>();
+        for(int i = 1; i < lines.size(); i++) {
+            String[] set = lines.get(i).split(";");
+            MapElement el = MapElement.valueOf(set[1]);
+            map.put(set[0], el);
+        }
+
+        return new Map(map, id);
     }
 }

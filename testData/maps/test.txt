@@ -1,0 +1,7 @@
+id=test
+0,0;START
+0,1;FLOOR
+1,0;WALL
+0,2;WALL
+1,1;FLOOR
+1,2;END
