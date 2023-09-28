@@ -1,5 +1,6 @@
 package dev10.NeuralNetwork.data;
 
+import dev10.NeuralNetwork.data.mappers.NetworkMapper;
 import dev10.NeuralNetwork.models.Network;
 
 import java.util.List;
@@ -10,7 +11,8 @@ public class NetworkRepositoryDouble extends FileRepository<Network> {
     private final Network test = new Network(2, new int[]{ 2, 2 });
     private final Network test2 = new Network(1, new int[]{1});
 
-    public NetworkRepositoryDouble() {
+    public NetworkRepositoryDouble() throws DataAccessException {
+        super("./testData/error", new NetworkMapper());
         test.setNetworkId("test");
         test2.setNetworkId("test2");
     }

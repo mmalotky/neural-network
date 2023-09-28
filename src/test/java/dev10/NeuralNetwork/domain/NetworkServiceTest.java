@@ -1,5 +1,6 @@
 package dev10.NeuralNetwork.domain;
 
+import dev10.NeuralNetwork.data.DataAccessException;
 import dev10.NeuralNetwork.data.NetworkRepositoryDouble;
 import dev10.NeuralNetwork.models.Network;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class NetworkServiceTest {
     NetworkRepositoryDouble repository = new NetworkRepositoryDouble();
     NetworkService service = new NetworkService(repository);
+
+    NetworkServiceTest() throws DataAccessException {
+    }
 
     @Test
     void shouldGetNetworkIds() {

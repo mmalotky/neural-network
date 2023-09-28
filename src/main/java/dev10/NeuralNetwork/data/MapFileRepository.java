@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 public class MapFileRepository extends FileRepository<Map> {
 
     public MapFileRepository(String mapPathFormat) throws DataAccessException {
-        super.pathFormat = mapPathFormat;
-        super.mapper = new MapMapper();
-        super.buildFileTree();
+        super(mapPathFormat, new MapMapper());
     }
 }

@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class NetworkFileRepository extends FileRepository<Network> {
     public NetworkFileRepository(String networkPathFormat) throws DataAccessException {
-        super.pathFormat = networkPathFormat;
-        super.mapper = new NetworkMapper();
-        super.buildFileTree();
+        super(networkPathFormat, new NetworkMapper());
     }
 
 }

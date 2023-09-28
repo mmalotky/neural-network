@@ -9,8 +9,15 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class FileRepository<T> {
-    String pathFormat;
-    Mapper<T> mapper;
+    final String pathFormat;
+    final Mapper<T> mapper;
+
+    protected FileRepository(String pathFormat, Mapper<T> mapper) throws DataAccessException {
+        this.pathFormat = pathFormat;
+        this.mapper = mapper;
+        buildFileTree();
+    }
+
 
     public List<String> getSavedIds() throws DataAccessException {
         List<String> saveList = new ArrayList<>();
