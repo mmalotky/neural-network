@@ -1,11 +1,10 @@
 package dev10.NeuralNetwork.models;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class Map {
     private String mapId;
-    private HashMap<String, MapElement> map;
+    private final HashMap<String, MapElement> map;
 
     public Map(HashMap<String, MapElement> map) {
         mapId = UUID.randomUUID().toString();
@@ -27,5 +26,22 @@ public class Map {
 
     public HashMap<String, MapElement> getMap() {
         return map;
+    }
+
+    public int[] getStart() {
+        String start = map.keySet().stream()
+                .filter(k -> map.get(k) == MapElement.START)
+                .findFirst().orElse(null);
+        return keyToCoordinates(start);
+    }
+
+    public int[] keyToCoordinates(String key) {
+        if(key == null || !key.matches("^[0-9]+,[0-9]+$")) return null;
+        return Arrays.stream(key.split(",")).mapToInt(Integer::parseInt).toArray();
+    }
+
+    public String coordinatesToKey(int[] coordinates) {
+        if(coordinates == null || coordinates.length != 2) return null;
+        return Arrays.toString(coordinates).substring(1,coordinates.length - 1);
     }
 }

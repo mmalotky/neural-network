@@ -18,7 +18,7 @@ class NetworkServiceTest {
 
     @Test
     void shouldGetNetworkIds() {
-        Result<List<String>> result = service.getSavedNetworkIds();
+        Result<List<String>> result = service.getSavedIds();
         assertTrue(result.isSuccess());
         assertEquals(result.getPayload().get(0), "test");
         assertEquals(result.getPayload().get(1), "test2");
@@ -27,13 +27,13 @@ class NetworkServiceTest {
     @Test
     void shouldSaveNetwork() {
         Network network = new Network(1, new int[]{1});
-        Result<Void> result = service.saveNetwork(network);
+        Result<Void> result = service.save(network);
         assertTrue(result.isSuccess());
     }
 
     @Test
     void shouldNotSaveNull() {
-        Result<Void> result = service.saveNetwork(null);
+        Result<Void> result = service.save(null);
         assertFalse(result.isSuccess());
     }
 
@@ -41,38 +41,38 @@ class NetworkServiceTest {
     void shouldNotSaveInvalidId() {
         Network network = new Network(1, new int[]{1});
         network.setNetworkId(null);
-        Result<Void> result = service.saveNetwork(network);
+        Result<Void> result = service.save(network);
         assertFalse(result.isSuccess());
 
         network.setNetworkId("");
-        Result<Void> result2 = service.saveNetwork(network);
+        Result<Void> result2 = service.save(network);
         assertFalse(result2.isSuccess());
 
         network.setNetworkId("a/i");
-        Result<Void> result3 = service.saveNetwork(network);
+        Result<Void> result3 = service.save(network);
         assertFalse(result3.isSuccess());
 
         network.setNetworkId(".no");
-        Result<Void> result4 = service.saveNetwork(network);
+        Result<Void> result4 = service.save(network);
         assertFalse(result4.isSuccess());
 
         network.setNetworkId("#no");
-        Result<Void> result5 = service.saveNetwork(network);
+        Result<Void> result5 = service.save(network);
         assertFalse(result5.isSuccess());
 
         network.setNetworkId("\n");
-        Result<Void> result6 = service.saveNetwork(network);
+        Result<Void> result6 = service.save(network);
         assertFalse(result6.isSuccess());
     }
 
     @Test
     void shouldNotSaveInvalidComponents() {
         Network network = new Network(0, new int[]{1});
-        Result<Void> result = service.saveNetwork(network);
+        Result<Void> result = service.save(network);
         assertFalse(result.isSuccess());
 
         network = new Network(1, new int[]{0});
-        Result<Void> result2 = service.saveNetwork(network);
+        Result<Void> result2 = service.save(network);
         assertFalse(result2.isSuccess());
     }
 
@@ -104,27 +104,27 @@ class NetworkServiceTest {
 
     @Test
     void shouldLoadNetwork() {
-        Result<Network> result = service.loadNetwork("test");
+        Result<Network> result = service.load("test");
         assertTrue(result.isSuccess());
-        Result<Network> result2 = service.loadNetwork("test2");
+        Result<Network> result2 = service.load("test2");
         assertTrue(result2.isSuccess());
     }
 
     @Test
     void shouldNotLoadMissingNetwork() {
-        Result<Network> result = service.loadNetwork("missing");
+        Result<Network> result = service.load("missing");
         assertFalse(result.isSuccess());
     }
 
     @Test
     void shouldNotLoadNullOrInvalid() {
-        Result<Network> result = service.loadNetwork(null);
+        Result<Network> result = service.load(null);
         assertFalse(result.isSuccess());
 
-        Result<Network> result2 = service.loadNetwork("");
+        Result<Network> result2 = service.load("");
         assertFalse(result2.isSuccess());
 
-        Result<Network> result3 = service.loadNetwork(".no");
+        Result<Network> result3 = service.load(".no");
         assertFalse(result3.isSuccess());
     }
 

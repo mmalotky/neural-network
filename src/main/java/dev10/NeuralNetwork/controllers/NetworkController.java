@@ -27,7 +27,7 @@ public class NetworkController {
     }
 
     public ResponseEntity<List<String>> getSavedNetworkIds() {
-        Result<List<String>> result = service.getSavedNetworkIds();
+        Result<List<String>> result = service.getSavedIds();
         if(result.isSuccess()) {
             return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
         }
@@ -37,7 +37,7 @@ public class NetworkController {
     }
 
     public ResponseEntity<List<String>> saveNetwork() {
-        Result<Void> result = service.saveNetwork(network);
+        Result<Void> result = service.save(network);
         if(result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -61,7 +61,7 @@ public class NetworkController {
     }
 
     public ResponseEntity<List<String>> loadNetwork(String id) {
-        Result<?> result = service.loadNetwork(id);
+        Result<?> result = service.load(id);
         if(result.isSuccess()) {
             this.network = (Network) result.getPayload();
             return new ResponseEntity<>(HttpStatus.OK);
