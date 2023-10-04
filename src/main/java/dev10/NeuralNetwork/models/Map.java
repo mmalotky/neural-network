@@ -42,6 +42,6 @@ public class Map {
 
     public String coordinatesToKey(int[] coordinates) {
         if(coordinates == null || coordinates.length != 2) return null;
-        return Arrays.toString(coordinates).substring(1,coordinates.length - 1);
+        return String.format("%s,%s", coordinates[0], coordinates[1]);
     }
 }

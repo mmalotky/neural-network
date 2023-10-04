@@ -12,7 +12,7 @@ public class NetworkRepositoryDouble extends FileRepository<Network> {
     private final Network test2 = new Network(1, new int[]{1});
 
     public NetworkRepositoryDouble() throws DataAccessException {
-        super("./testData/error", new NetworkMapper());
+        super("./testData/null", new NetworkMapper());
         test.setNetworkId("test");
         test2.setNetworkId("test2");
     }

@@ -19,8 +19,8 @@ public class MapService extends AppService<Map> {
     @Override
     Result<Void> save(Map map) {
         Result<Void> result = new Result<>();
-        if(map == null) {
-            result.addError("Map cannot be null");
+        if(map == null || map.getMap() == null || map.getMapId() == null) {
+            result.addError("Null pointer");
             return result;
         }
 
@@ -68,6 +68,7 @@ public class MapService extends AppService<Map> {
     private boolean checkDirection(Map map, List<String> checked, String direction) {
         if(!checked.contains(direction)) {
             MapElement el = map.getMap().get(direction);
+            if(el == null) return false;
             switch (el) {
                 case END -> {
                     return true;
