@@ -17,7 +17,7 @@ public class MapService extends AppService<Map> {
     }
 
     @Override
-    Result<Void> save(Map map) {
+    public Result<Void> save(Map map) {
         Result<Void> result = new Result<>();
         if(map == null || map.getMap() == null || map.getMapId() == null) {
             result.addError("Null pointer");

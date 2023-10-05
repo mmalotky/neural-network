@@ -1,13 +1,13 @@
 package dev10.NeuralNetwork.gui;
 
 import dev10.NeuralNetwork.controllers.MapController;
+import dev10.NeuralNetwork.models.MapElement;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class NewMapForum extends Screen {
     private final MapController controller;
@@ -89,17 +89,16 @@ public class NewMapForum extends Screen {
     }
 
     private void save(ActionEvent actionEvent) {
-        List<List<Boolean>> result = new ArrayList<>();
-        for(Component r : mapField.getComponents()) {
-            List<Boolean> rowList = new ArrayList<>();
-            JPanel row = (JPanel) r;
-            for(Component c : row.getComponents()) {
-                MapSegment mapSegment = (MapSegment) c;
-                rowList.add(mapSegment.isActive());
+        HashMap<String, MapElement> result = new HashMap<>();
+        for(int i = 0; i < mapField.getComponentCount(); i++) {
+            JPanel row = (JPanel) mapField.getComponents()[i];
+            for(int j = 0; j < row.getComponentCount(); j++) {
+                MapSegment segment = (MapSegment) row.getComponents()[j];
+                String key = String.format("%s,%s", i, j);
+                MapElement el = segment.getElement();
+                result.put(key, el);
             }
-            result.add(rowList);
         }
-
         controller.newMap(result);
         tab.navigate(MapTab.MENU);
     }
