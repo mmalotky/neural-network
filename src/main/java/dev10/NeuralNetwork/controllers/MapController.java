@@ -25,9 +25,19 @@ public class MapController {
         this.service = service;
     }
 
-    public void newMap(HashMap<String, MapElement> map) {
+    public ResponseEntity<List<String>> getMapIds() {
+        Result<List<String>> result = service.getSavedIds();
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(result.getErrors(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<String>> newMap(HashMap<String, MapElement> map) {
         this.map = new Map(map);
-        saveMap();
+        return saveMap();
     }
 
     public ResponseEntity<List<String>> saveMap() {

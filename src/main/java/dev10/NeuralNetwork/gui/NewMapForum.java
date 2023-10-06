@@ -101,5 +101,6 @@ public class NewMapForum extends Screen {
         }
         controller.newMap(result);
         tab.navigate(MapTab.MENU);
+        tab.refresh();
     }
 }
