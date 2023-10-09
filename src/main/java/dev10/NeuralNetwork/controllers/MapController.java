@@ -17,6 +17,7 @@ import java.util.List;
 public class MapController {
 
     private Map map;
+    private int[] coordinates;
 
     @Autowired
     private final MapService service;
@@ -37,6 +38,7 @@ public class MapController {
 
     public ResponseEntity<List<String>> newMap(HashMap<String, MapElement> map) {
         this.map = new Map(map);
+        coordinates = this.map.getStart();
         return saveMap();
     }
 
@@ -54,6 +56,7 @@ public class MapController {
         Result<Map> result = service.load(id);
         if(result.isSuccess()) {
             map = result.getPayload();
+            coordinates = map.getStart();
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else {
@@ -73,5 +76,16 @@ public class MapController {
 
     public String getMapID() {
         return map == null ? null : map.getMapId();
+    }
+
+    public int[] getCoordinates() {
+        return coordinates;
+    }
+
+    public MapElement navigate(Direction direction) {
+        int[] location = {coordinates[0] + direction.value[0], coordinates[1] + direction.value[1]};
+        MapElement el = map.getCoordinatesElement(location);
+        if(el != null && el != MapElement.WALL) coordinates = location;
+        return el;
     }
 }

@@ -44,4 +44,13 @@ public class Map {
         if(coordinates == null || coordinates.length != 2) return null;
         return String.format("%s,%s", coordinates[0], coordinates[1]);
     }
+
+    public MapElement getCoordinatesElement(String key) {
+        return map.get(key);
+    }
+
+    public MapElement getCoordinatesElement(int[] coordinates) {
+        String key = coordinatesToKey(coordinates);
+        return map.get(key);
+    }
 }

@@ -102,11 +102,8 @@ public class NetworkController {
         return new ResponseEntity<>(data.getLines(), HttpStatus.OK);
     }
 
-    public ResponseEntity<?> learn(List<List<Double>> testSet) throws NetworkConfigurationException {
-        List<Double> inputs = testSet.get(0);
-        double[] reward = testSet.get(1).stream().mapToDouble(Double::doubleValue).toArray();
-
-        network.forward(inputs);
+    public ResponseEntity<?> learn(List<Double> testRewards) {
+        double[] reward = testRewards.stream().mapToDouble(Double::doubleValue).toArray();
         network.reverse(reward);
         network.resetState();
 
