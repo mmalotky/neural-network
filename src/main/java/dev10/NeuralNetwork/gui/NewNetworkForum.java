@@ -30,6 +30,9 @@ public class NewNetworkForum extends Screen {
         fields.add(new Field("Layers", layersField));
         add(fields);
 
+        JLabel nodesLabel = new JLabel("Nodes (from last to first)");
+        nodesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(nodesLabel);
         addLayer();
         JScrollPane scroll = new JScrollPane(layersPanel);
         add(scroll);
