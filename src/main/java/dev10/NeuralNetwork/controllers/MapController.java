@@ -82,10 +82,22 @@ public class MapController {
         return coordinates;
     }
 
-    public MapElement navigate(Direction direction) {
+    public void navigate(Direction direction) {
         int[] location = {coordinates[0] + direction.value[0], coordinates[1] + direction.value[1]};
-        MapElement el = map.getCoordinatesElement(location);
+        MapElement el =  map.getCoordinatesElement(location);
         if(el != null && el != MapElement.WALL) coordinates = location;
-        return el;
+    }
+
+    public double calculateReward(Direction direction) {
+        int[] location = {coordinates[0] + direction.value[0], coordinates[1] + direction.value[1]};
+        MapElement el =  map.getCoordinatesElement(location);
+        double reward = el == null ? -1.0 : el.reward;
+
+        int[] end = map.getEnd();
+        int xDiff = Math.abs(end[0] - coordinates[0]) - Math.abs(end[0] - location[0]);
+        int yDiff = Math.abs(end[1] - coordinates[1]) - Math.abs(end[1] - location[1]);
+        reward += (xDiff + yDiff)/10f;
+
+        return reward;
     }
 }

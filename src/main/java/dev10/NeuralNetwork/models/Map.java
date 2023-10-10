@@ -35,6 +35,13 @@ public class Map {
         return keyToCoordinates(start);
     }
 
+    public int[] getEnd() {
+        String end = map.keySet().stream()
+                .filter(k -> map.get(k) == MapElement.END)
+                .findFirst().orElse(null);
+        return keyToCoordinates(end);
+    }
+
     public int[] keyToCoordinates(String key) {
         if(key == null || !key.matches("^[0-9]+,[0-9]+$")) return null;
         return Arrays.stream(key.split(",")).mapToInt(Integer::parseInt).toArray();
