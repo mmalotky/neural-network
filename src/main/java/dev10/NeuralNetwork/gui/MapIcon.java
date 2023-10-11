@@ -4,7 +4,7 @@ package dev10.NeuralNetwork.gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class MapIcons {
+public class MapIcon {
     static Icon WALL = new Icon() {
         @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {

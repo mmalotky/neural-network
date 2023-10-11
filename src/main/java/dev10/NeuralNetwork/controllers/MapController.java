@@ -84,13 +84,13 @@ public class MapController {
 
     public void navigate(Direction direction) {
         int[] location = {coordinates[0] + direction.value[0], coordinates[1] + direction.value[1]};
-        MapElement el =  map.getCoordinatesElement(location);
+        MapElement el =  getCoordinatesElement(location);
         if(el != null && el != MapElement.WALL) coordinates = location;
     }
 
     public double calculateReward(Direction direction) {
         int[] location = {coordinates[0] + direction.value[0], coordinates[1] + direction.value[1]};
-        MapElement el =  map.getCoordinatesElement(location);
+        MapElement el =  getCoordinatesElement(location);
         double reward = el == null ? -1.0 : el.reward;
 
         int[] end = map.getEnd();
@@ -99,5 +99,9 @@ public class MapController {
         reward += (xDiff + yDiff)/10f;
 
         return reward;
+    }
+
+    public MapElement getCoordinatesElement(int[] coordinates) {
+        return map.getCoordinatesElement(coordinates);
     }
 }

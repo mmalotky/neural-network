@@ -13,7 +13,7 @@ public class MapSegment extends JButton {
         setPreferredSize(new Dimension(10, 10));
 
         el = MapElement.FLOOR;
-        setIcon(MapIcons.FLOOR);
+        setIcon(MapIcon.FLOOR);
         addActionListener(e -> rotateElements());
     }
 
@@ -29,10 +29,10 @@ public class MapSegment extends JButton {
             case END -> MapElement.FLOOR;
         };
         setIcon(switch (el) {
-            case FLOOR -> MapIcons.FLOOR;
-            case WALL -> MapIcons.WALL;
-            case START -> MapIcons.START;
-            case END -> MapIcons.END;
+            case FLOOR -> MapIcon.FLOOR;
+            case WALL -> MapIcon.WALL;
+            case START -> MapIcon.START;
+            case END -> MapIcon.END;
         });
     }
 }

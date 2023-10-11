@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.*;
+import java.util.List;
 
 public class NewNetworkForum extends Screen {
     private final NetworkController controller;
@@ -30,7 +31,7 @@ public class NewNetworkForum extends Screen {
         fields.add(new Field("Layers", layersField));
         add(fields);
 
-        JLabel nodesLabel = new JLabel("Nodes (from last to first)");
+        JLabel nodesLabel = new JLabel("Nodes (from first to last)");
         nodesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(nodesLabel);
         addLayer();
@@ -63,11 +64,13 @@ public class NewNetworkForum extends Screen {
 
     private void save(ActionEvent actionEvent) {
         int options = (int) optionsField.getValue();
-        int[] layers = Arrays.stream(layersPanel.getComponents())
+        List<Integer> layersList = new ArrayList<>(Arrays.stream(layersPanel.getComponents())
                 .filter(c -> c instanceof JSpinner)
                 .map(c -> (JSpinner) c)
-                .mapToInt(c -> (int) c.getValue())
-                .toArray();
+                .map(c -> (int) c.getValue())
+                .toList());
+        Collections.reverse(layersList);
+        int[] layers = layersList.stream().mapToInt(Integer::valueOf).toArray();
         Map<String, int[]> data = new HashMap<>();
         data.put("options", new int[]{options});
         data.put("layers", layers);
