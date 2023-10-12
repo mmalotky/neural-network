@@ -7,8 +7,6 @@ import dev10.NeuralNetwork.models.MapElement;
 import dev10.NeuralNetwork.models.NetworkConfigurationException;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -18,7 +16,6 @@ public class RunScreen extends Screen {
     private final AIConfig ai;
     private final JLabel networkLabel = new JLabel();
     private final JLabel mapLabel = new JLabel();
-    private final JTable mapTable = new JTable();
 
     JPanel runPanel = new JPanel();
     public RunScreen(NetworkController networkController, MapController mapController) {
@@ -33,8 +30,9 @@ public class RunScreen extends Screen {
         mapLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(mapLabel);
 
-        runPanel.add(mapTable);
-        add(runPanel);
+        BoxLayout runPanelLayout = new BoxLayout(runPanel, BoxLayout.Y_AXIS);
+        runPanel.setLayout(runPanelLayout);
+        add(new JScrollPane(runPanel));
 
         JButton runButton = new JButton("Run");
         runButton.addActionListener(this::run);
@@ -64,21 +62,23 @@ public class RunScreen extends Screen {
     }
 
     private void drawMap() {
-        mapTable.removeAll();
-        boolean rangingY = true;
-        for(int y = 0; rangingY; y++) {
-            boolean rangingX = true;
-            for(int x = 0; rangingX; x++) {
-                int cols = mapTable.getColumnCount();
-                if(x < cols - 1) mapTable.addColumn(new TableColumn());
+        runPanel.removeAll();
 
+        boolean rangingX = true;
+        for(int x = 0; rangingX; x++) {
+            JPanel row = new JPanel();
+            row.setLayout(new GridBagLayout());
+            row.getInsets().set(0,0,0,0);
+            row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10));
+
+            boolean rangingY = true;
+            for(int y = 0; rangingY; y++) {
                 MapElement el = mapController.getCoordinatesElement(new int[]{x,y});
                 if(el == null) {
-                    rangingX = false;
-                    if(x == 0) rangingY = false;
+                    rangingY = false;
+                    if(y == 0) rangingX = false;
                     continue;
                 }
-
                 Icon icon = switch (el) {
                     case FLOOR -> MapIcon.FLOOR;
                     case WALL -> MapIcon.WALL;
@@ -86,9 +86,12 @@ public class RunScreen extends Screen {
                     case END -> MapIcon.END;
                 };
 
-                mapTable.add(new JLabel(icon));
+                JLabel iconLabel = new JLabel(icon);
+                iconLabel.setIconTextGap(0);
+                row.add(iconLabel);
             }
+            runPanel.add(row);
         }
-        mapTable.updateUI();
+        runPanel.updateUI();
     }
 }
