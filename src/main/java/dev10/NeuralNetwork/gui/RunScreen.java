@@ -86,12 +86,31 @@ public class RunScreen extends Screen {
                     case END -> MapIcon.END;
                 };
 
+                CardLayout iconCard = new CardLayout(0,0);
+                JPanel iconPanel = new JPanel(iconCard);
+
                 JLabel iconLabel = new JLabel(icon);
                 iconLabel.setIconTextGap(0);
-                row.add(iconLabel);
+                iconPanel.add(iconLabel, "unoccupied");
+
+                JLabel occupiedLabel = new JLabel(MapIcon.POSITION);
+                occupiedLabel.setIconTextGap(0);
+                iconPanel.add(occupiedLabel, "occupied");
+
+                iconCard.show(iconPanel, "unoccupied");
+                row.add(iconPanel);
             }
             runPanel.add(row);
         }
+        updatePosition();
         runPanel.updateUI();
+    }
+
+    private void updatePosition() {
+        int[] coordinates = mapController.getCoordinates();
+        JPanel row = (JPanel) runPanel.getComponent(coordinates[0]);
+        JPanel iconPanel = (JPanel) row.getComponent(coordinates[1]);
+        CardLayout iconCard = (CardLayout) iconPanel.getLayout();
+        iconCard.show(iconPanel, "occupied");
     }
 }

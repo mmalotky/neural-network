@@ -127,6 +127,7 @@ public class Network {
             currentProbability += prob;
             if(rand <= currentProbability) {
                 this.choice = option;
+                break;
             }
         }
 

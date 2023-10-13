@@ -1,6 +1,7 @@
 package dev10.NeuralNetwork.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Neuron implements Node {
@@ -21,6 +22,12 @@ public class Neuron implements Node {
         return inputSize;
     }
 
+    @Override
+    public void resetActivationState() {
+        Collections.fill(activationState, 0.0);
+        inputCount = 0;
+    }
+
     private void setInputSize(int inputSize) {
         this.inputSize = inputSize;
         for(int i = 0; i < inputSize; i++) {
@@ -30,12 +37,6 @@ public class Neuron implements Node {
 
     public List<Synapse> getConnections() {
         return connections;
-    }
-
-    @Override
-    public void resetActivationState() {
-        activationState.forEach(n -> n = 0.0);
-        inputCount = 0;
     }
 
     @Override

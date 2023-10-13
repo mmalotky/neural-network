@@ -22,24 +22,22 @@ public class AIConfig {
 
     public void train() throws NetworkConfigurationException {
         List<Double> coordinates = Arrays.stream(mapController.getCoordinates())
-                .mapToObj(c -> (double) c)
+                .mapToObj(c -> (double) c + 1)
                 .toList();
         List<Double> rewards = new ArrayList<>();
         for(Direction direction : Direction.values()) rewards.add(mapController.calculateReward(direction));
 
-        ResponseEntity<?> result = networkController.run(coordinates);
+        ResponseEntity<?> result = networkController.learn(rewards, coordinates);
 
-        if(result.getStatusCode() != HttpStatus.OK) return;
+        if(result.getStatusCode() != HttpStatus.ACCEPTED) return;
         int optionId = (int) result.getBody();
         Direction direction = switch (optionId) {
-            case 0 -> Direction.RIGHT;
-            case 1 -> Direction.LEFT;
-            case 2 -> Direction.UP;
-            case 3 -> Direction.DOWN;
+            case 0 -> Direction.DOWN;
+            case 1 -> Direction.UP;
+            case 2 -> Direction.LEFT;
+            case 3 -> Direction.RIGHT;
             default -> throw new NetworkConfigurationException("Incompatible Network", new Exception());
         };
         mapController.navigate(direction);
-
-        networkController.learn(rewards);
     }
 }

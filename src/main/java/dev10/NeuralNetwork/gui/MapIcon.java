@@ -75,4 +75,22 @@ public class MapIcon {
             return 10;
         }
     };
+
+    static Icon POSITION = new Icon() {
+        @Override
+        public void paintIcon(Component c, Graphics g, int x, int y) {
+            g.setColor(Color.YELLOW);
+            g.fillRect(x, y, getIconWidth(), getIconHeight());
+        }
+
+        @Override
+        public int getIconWidth() {
+            return 10;
+        }
+
+        @Override
+        public int getIconHeight() {
+            return 10;
+        }
+    };
 }
