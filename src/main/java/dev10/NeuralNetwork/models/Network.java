@@ -121,13 +121,14 @@ public class Network {
         double rand = Math.random();
         double totalValues = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
         double currentProbability = 0.0;
+        boolean choosing = true;
         for(Option option : options) {
             double prob = Math.exp(option.getSum()) / totalValues;
             option.setLastProbability(prob);
             currentProbability += prob;
-            if(rand <= currentProbability) {
+            if(rand <= currentProbability && choosing) {
                 this.choice = option;
-                break;
+                choosing = false;
             }
         }
 

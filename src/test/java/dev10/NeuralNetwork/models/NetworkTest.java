@@ -79,7 +79,7 @@ class NetworkTest {
         test1.forward(input1);
         assertTrue(0 < test1.getOptions().get(0).getSum());
         test1.resetState();
-        assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
+        assertFalse(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
 
         List<Double> input2 = new ArrayList<>();
         input2.add(.8);
@@ -87,7 +87,7 @@ class NetworkTest {
         test2.forward(input2);
         assertTrue(0 < test2.getOptions().get(0).getSum());
         test2.resetState();
-        assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
+        assertFalse(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
 
         List<Double> input3 = new ArrayList<>();
         input3.add(.8);
@@ -97,7 +97,7 @@ class NetworkTest {
         test3.forward(input3);
         assertTrue(0 < test3.getOptions().get(0).getSum());
         test3.resetState();
-        assertTrue(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
+        assertFalse(test1.getChoice().getActivationState().stream().anyMatch(n -> n != 0.0));
     }
 
     @Test
