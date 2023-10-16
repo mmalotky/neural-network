@@ -16,6 +16,10 @@ public class RunScreen extends Screen {
     private final AIConfig ai;
     private final JLabel networkLabel = new JLabel();
     private final JLabel mapLabel = new JLabel();
+    private final JSpinner iterationsField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
+    private boolean isRunning = false;
+
+    private final JLabel runningLabel = new JLabel("Not Running");
 
     JPanel runPanel = new JPanel();
     public RunScreen(NetworkController networkController, MapController mapController) {
@@ -25,29 +29,49 @@ public class RunScreen extends Screen {
         refresh();
 
         add(new Title("Run Network"));
-        networkLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        networkLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(networkLabel);
-        mapLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mapLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(mapLabel);
+        runningLabel.setAlignmentX(CENTER_ALIGNMENT);
+        runningLabel.setForeground(Color.RED);
+        add(runningLabel);
 
         BoxLayout runPanelLayout = new BoxLayout(runPanel, BoxLayout.Y_AXIS);
         runPanel.setLayout(runPanelLayout);
         add(new JScrollPane(runPanel));
 
+        Field itField = new Field("Iterations", iterationsField);
+        itField.setAlignmentX(CENTER_ALIGNMENT);
+        itField.setMaximumSize(new Dimension(500, 20));
+        add(itField);
+
         JButton runButton = new JButton("Run");
         runButton.addActionListener(this::run);
-        runButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        runButton.setAlignmentX(CENTER_ALIGNMENT);
         add(runButton);
     }
 
     private void run(ActionEvent actionEvent) {
-        if(refresh()){
-            try {
-                ai.train();
-            } catch (NetworkConfigurationException e) {
-                e.printStackTrace();
+        if(isRunning || networkController.getNetworkId() == null || mapController.getMapID() == null) return;
+        isRunning = true;
+
+        Thread runThread = new Thread(() -> {
+            int iterations = (int) iterationsField.getValue();
+            for(int i = 0; i < iterations; i++) {
+                if(refresh()) {
+                    try {
+                        ai.train();
+                        Thread.sleep(500);
+                    } catch (NetworkConfigurationException | InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
-        }
+            isRunning = false;
+            refresh();
+        });
+        runThread.start();
     }
 
     public boolean refresh() {
@@ -57,6 +81,9 @@ public class RunScreen extends Screen {
         mapLabel.setText(String.format("Current Map: %s", mapId));
 
         if(mapId != null) drawMap();
+
+        runningLabel.setText(isRunning ? "Running" : "Not Running");
+        runningLabel.setForeground(isRunning ? Color.GREEN : Color.RED);
 
         return networkId != null && mapId != null;
     }
