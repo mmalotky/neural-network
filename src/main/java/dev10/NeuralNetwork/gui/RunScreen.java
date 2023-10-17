@@ -18,8 +18,8 @@ public class RunScreen extends Screen {
     private final JLabel mapLabel = new JLabel();
     private final JSpinner iterationsField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
     private boolean isRunning = false;
-
     private final JLabel runningLabel = new JLabel("Not Running");
+    private boolean stopping = false;
 
     JPanel runPanel = new JPanel();
     public RunScreen(NetworkController networkController, MapController mapController) {
@@ -50,28 +50,35 @@ public class RunScreen extends Screen {
         runButton.addActionListener(this::run);
         runButton.setAlignmentX(CENTER_ALIGNMENT);
         add(runButton);
+
+        JButton stopButton = new JButton("Stop");
+        stopButton.addActionListener(a -> stopping = true);
+        stopButton.setAlignmentX(CENTER_ALIGNMENT);
+        add(stopButton);
     }
 
     private void run(ActionEvent actionEvent) {
         if(isRunning || networkController.getNetworkId() == null || mapController.getMapID() == null) return;
         isRunning = true;
+        Thread runThread = new Thread(this::runAction);
+        runThread.start();
+    }
 
-        Thread runThread = new Thread(() -> {
-            int iterations = (int) iterationsField.getValue();
-            for(int i = 0; i < iterations; i++) {
-                if(refresh()) {
-                    try {
-                        ai.train();
-                        Thread.sleep(500);
-                    } catch (NetworkConfigurationException | InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
+    private void runAction() {
+        int iterations = (int) iterationsField.getValue();
+        for(int i = 0; i < iterations; i++) {
+            if(refresh() && !stopping) {
+                try {
+                    ai.train();
+                    Thread.sleep(500);
+                } catch (NetworkConfigurationException | InterruptedException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
-            isRunning = false;
-            refresh();
-        });
-        runThread.start();
+        }
+        stopping = false;
+        isRunning = false;
+        refresh();
     }
 
     public boolean refresh() {
