@@ -85,7 +85,8 @@ public class MapController {
     public void navigate(Direction direction) {
         int[] location = {coordinates[0] + direction.value[0], coordinates[1] + direction.value[1]};
         MapElement el =  getCoordinatesElement(location);
-        if(el != null && el != MapElement.WALL) coordinates = location;
+        if(el == MapElement.END) coordinates = map.getStart();
+        else if(el != null && el != MapElement.WALL) coordinates = location;
     }
 
     public double calculateReward(Direction direction) {

@@ -13,6 +13,8 @@ public class Network {
 
     private Option best;
 
+    private double lastError;
+
     public Network(int options, int[] layers) {
         networkId = UUID.randomUUID().toString();
 
@@ -97,10 +99,13 @@ public class Network {
     }
 
     public void reverse(double[] reward) {
+        lastError = 0;
         for (Option option : options) {
             double errorByState = (option.getSum() - reward[option.getOptionId()]);
             option.setErrorByState(errorByState);
+            lastError += errorByState;
         }
+
         for (int i = layers.size() - 1; i >= 0; i--) {
             List<Neuron> layer = layers.get(i);
             for (Neuron neuron : layer) {
@@ -135,5 +140,9 @@ public class Network {
         best = options.stream()
                 .max(Comparator.comparingDouble(Option::getLastProbability))
                 .orElse(null);
+    }
+
+    public double getLastError() {
+        return lastError;
     }
 }

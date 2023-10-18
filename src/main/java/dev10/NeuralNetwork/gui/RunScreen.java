@@ -9,6 +9,8 @@ import dev10.NeuralNetwork.models.NetworkConfigurationException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RunScreen extends Screen {
     private final NetworkController networkController;
@@ -20,8 +22,10 @@ public class RunScreen extends Screen {
     private boolean isRunning = false;
     private final JLabel runningLabel = new JLabel("Not Running");
     private boolean stopping = false;
-
     JPanel runPanel = new JPanel();
+    JPanel dataPanel = new JPanel();
+    List<Double> errorList = new ArrayList<>();
+
     public RunScreen(NetworkController networkController, MapController mapController) {
         this.networkController = networkController;
         this.mapController = mapController;
@@ -37,9 +41,18 @@ public class RunScreen extends Screen {
         runningLabel.setForeground(Color.RED);
         add(runningLabel);
 
+        JPanel graphicsPanel = new JPanel();
+        graphicsPanel.setPreferredSize(new Dimension(400,400));
+        graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.X_AXIS));
+        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+        dataPanel.setPreferredSize(new Dimension(200, 400));
+        graphicsPanel.add(dataPanel);
+
         BoxLayout runPanelLayout = new BoxLayout(runPanel, BoxLayout.Y_AXIS);
         runPanel.setLayout(runPanelLayout);
-        add(new JScrollPane(runPanel));
+        graphicsPanel.add(new JScrollPane(runPanel));
+
+        add(graphicsPanel);
 
         Field itField = new Field("Iterations", iterationsField);
         itField.setAlignmentX(CENTER_ALIGNMENT);
@@ -91,6 +104,8 @@ public class RunScreen extends Screen {
 
         runningLabel.setText(isRunning ? "Running" : "Not Running");
         runningLabel.setForeground(isRunning ? Color.GREEN : Color.RED);
+
+        updateErrorList();
 
         return networkId != null && mapId != null;
     }
@@ -146,5 +161,15 @@ public class RunScreen extends Screen {
         JPanel iconPanel = (JPanel) row.getComponent(coordinates[1]);
         CardLayout iconCard = (CardLayout) iconPanel.getLayout();
         iconCard.show(iconPanel, "occupied");
+    }
+
+    private void updateErrorList() {
+        double lastError = networkController.getError();
+        if(lastError == 0) errorList.clear();
+        else errorList.add(lastError);
+        if(errorList.size() > 20) errorList.remove(0);
+
+        dataPanel.removeAll();
+        dataPanel.add(new JLabel(String.valueOf(lastError)));
     }
 }

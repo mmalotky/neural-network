@@ -131,4 +131,8 @@ public class NetworkController {
     public double getLearningRate() {
         return network != null ? network.getLearningRate() : 0;
     }
+
+    public double getError() {
+        return network == null ? 0 : network.getLastError();
+    }
 }
