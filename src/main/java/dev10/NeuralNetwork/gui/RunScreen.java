@@ -44,12 +44,13 @@ public class RunScreen extends Screen {
         JPanel graphicsPanel = new JPanel();
         graphicsPanel.setPreferredSize(new Dimension(400,400));
         graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.X_AXIS));
+
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
         dataPanel.setPreferredSize(new Dimension(200, 400));
         graphicsPanel.add(dataPanel);
 
-        BoxLayout runPanelLayout = new BoxLayout(runPanel, BoxLayout.Y_AXIS);
-        runPanel.setLayout(runPanelLayout);
+        runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.Y_AXIS));
+        runPanel.setPreferredSize(new Dimension(200, 400));
         graphicsPanel.add(new JScrollPane(runPanel));
 
         add(graphicsPanel);
@@ -92,6 +93,7 @@ public class RunScreen extends Screen {
         stopping = false;
         isRunning = false;
         refresh();
+        updateErrorList();
     }
 
     public boolean refresh() {
@@ -104,8 +106,6 @@ public class RunScreen extends Screen {
 
         runningLabel.setText(isRunning ? "Running" : "Not Running");
         runningLabel.setForeground(isRunning ? Color.GREEN : Color.RED);
-
-        updateErrorList();
 
         return networkId != null && mapId != null;
     }
@@ -170,6 +170,7 @@ public class RunScreen extends Screen {
         if(errorList.size() > 20) errorList.remove(0);
 
         dataPanel.removeAll();
-        dataPanel.add(new JLabel(String.valueOf(lastError)));
+        dataPanel.add(new ErrorGraph(errorList));
+        dataPanel.add(new JLabel(String.format("Error: %s", lastError)));
     }
 }
