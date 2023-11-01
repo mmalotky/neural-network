@@ -84,6 +84,7 @@ public class RunScreen extends Screen {
             if(refresh() && !stopping) {
                 try {
                     ai.train();
+                    updateErrorList();
                     Thread.sleep(500);
                 } catch (NetworkConfigurationException | InterruptedException ex) {
                     throw new RuntimeException(ex);
@@ -93,7 +94,6 @@ public class RunScreen extends Screen {
         stopping = false;
         isRunning = false;
         refresh();
-        updateErrorList();
     }
 
     public boolean refresh() {
@@ -170,7 +170,26 @@ public class RunScreen extends Screen {
         if(errorList.size() > 20) errorList.remove(0);
 
         dataPanel.removeAll();
-        dataPanel.add(new ErrorGraph(errorList));
-        dataPanel.add(new JLabel(String.format("Error: %s", lastError)));
+        ErrorGraph graph = new ErrorGraph(errorList);
+
+        JLabel yLabel = new JLabel("Error");
+        yLabel.setFont(new Font(Font.SERIF, Font.ITALIC, yLabel.getFont().getSize()));
+        dataPanel.add(yLabel);
+
+        String max = String.format("%s",graph.MAX);
+        int E = max.indexOf("E");
+        String maxFormatted = E != -1 ?
+                (E > 3 ? max.substring(0, 4) + max.substring(E) : max)
+                : (max.length() > 6 ? max.substring(0,6) : max);
+        dataPanel.add(new JLabel(maxFormatted));
+
+        dataPanel.add(graph);
+
+        JLabel xLabel = new JLabel("Iterations");
+        xLabel.setAlignmentY(CENTER_ALIGNMENT);
+        xLabel.setFont(new Font(Font.SERIF, Font.ITALIC, xLabel.getFont().getSize()));
+        dataPanel.add(xLabel);
+
+        dataPanel.add(new JLabel(String.format("Last: %s", lastError)));
     }
 }

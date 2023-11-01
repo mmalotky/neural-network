@@ -101,6 +101,7 @@ public class Network {
     public void reverse(double[] reward) {
         lastError = 0;
         double rSum = Arrays.stream(reward).map(Math::exp).sum();
+
         for (Option option : options) {
             double rValue = Math.exp(reward[option.getOptionId()]);
             double expectedProbability = rValue/rSum;

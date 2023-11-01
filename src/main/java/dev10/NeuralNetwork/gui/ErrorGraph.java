@@ -1,21 +1,19 @@
 package dev10.NeuralNetwork.gui;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 
 public class ErrorGraph extends JPanel {
     private final int MARGIN = 10;
     private final List<Double> data;
-    private final double YMAX;
+    protected final double MAX;
 
     public ErrorGraph(List<Double> data) {
         this.data = data;
-        YMAX = data.stream()
+        MAX = data.stream()
                 .max((a, b) -> BigDecimal.valueOf(a - b).setScale(0, RoundingMode.UP).intValue())
                 .orElse(1.0);
     }
@@ -36,15 +34,18 @@ public class ErrorGraph extends JPanel {
         }
 
         for(int i = 0; i < data.size(); i++) {
+            graphics.setColor(Color.RED);
             int x = getWidth() - (((20 - i) * (getWidth() - MARGIN * 2)) / 20 + MARGIN);
-            int y = (int) (getHeight() - Math.round((getHeight() - MARGIN * 2) * (data.get(i)/YMAX)) - MARGIN);
+            int y = (int) (getHeight() - Math.round((getHeight() - MARGIN * 2) * (data.get(i)/ MAX)) - MARGIN);
             graphics.fillOval(x - 3, y - 3, 6, 6);
 
             if(i < data.size() - 1) {
+                graphics.setColor(Color.BLUE);
                 int x2 = getWidth() - (((20 - i - 1) * (getWidth() - MARGIN * 2)) / 20 + MARGIN);
-                int y2 = (int) (getHeight() - Math.round((getHeight() - MARGIN * 2) * (data.get(i + 1)/YMAX)) - MARGIN);
+                int y2 = (int) (getHeight() - Math.round((getHeight() - MARGIN * 2) * (data.get(i + 1)/ MAX)) - MARGIN);
                 graphics.drawLine(x, y, x2, y2);
             }
         }
+        graphics.setColor(Color.BLACK);
     }
 }
