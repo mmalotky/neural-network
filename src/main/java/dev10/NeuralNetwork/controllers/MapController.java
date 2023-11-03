@@ -93,4 +93,8 @@ public class MapController {
     }
 
     public int[] getEnd() { return map.getEnd(); }
+
+    public int[] getDimensions() {
+        return new int[] {map.getWidth(), map.getHeight()};
+    }
 }

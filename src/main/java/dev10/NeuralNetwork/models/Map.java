@@ -60,4 +60,16 @@ public class Map {
         String key = coordinatesToKey(coordinates);
         return map.get(key);
     }
+
+    public int getWidth() {
+        return map.keySet().stream()
+                .mapToInt(key -> keyToCoordinates(key)[0])
+                .max().orElse(0);
+    }
+
+    public int getHeight() {
+        return map.keySet().stream()
+                .mapToInt(key -> keyToCoordinates(key)[1])
+                .max().orElse(0);
+    }
 }

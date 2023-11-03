@@ -103,11 +103,11 @@ public class Network {
         double rSum = Arrays.stream(reward).map(Math::exp).sum();
 
         for (Option option : options) {
-            double rValue = Math.exp(reward[option.getOptionId()]);
+            double rValue = reward[option.getOptionId()];
             double expectedProbability = rValue/rSum;
             double lastProbability = option.getLastProbability();
 
-            double stateByProbability = lastProbability * (1- lastProbability);
+            double stateByProbability = lastProbability * (1 - lastProbability);
             double errorByState = stateByProbability * (lastProbability - expectedProbability);
 
             option.setErrorByState(errorByState);

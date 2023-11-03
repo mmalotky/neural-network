@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AIConfig {
@@ -22,14 +21,17 @@ public class AIConfig {
     }
 
     public void train() throws NetworkConfigurationException {
-        List<Double> coordinates = Arrays.stream(mapController.getCoordinates())
-                .mapToObj(c -> (double) c + 1)
-                .toList();
+        int[] coordinates = mapController.getCoordinates();
+        int[] dimensions = mapController.getDimensions();
+        List<Double> input = List.of(
+                (coordinates[0] + 1d)/(dimensions[0] + 1d),
+                (coordinates[1] + 1d)/(dimensions[1] + 1d)
+        );
 
         List<Double> rewards = new ArrayList<>();
         for(Direction direction : Direction.values()) rewards.add(calculateReward(direction));
 
-        ResponseEntity<?> result = networkController.learn(rewards, coordinates);
+        ResponseEntity<?> result = networkController.learn(rewards, input);
 
         if(result.getStatusCode() != HttpStatus.ACCEPTED) return;
         int optionId = (int) result.getBody();
