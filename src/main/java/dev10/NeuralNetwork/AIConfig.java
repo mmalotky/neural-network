@@ -54,7 +54,7 @@ public class AIConfig {
         int[] end = mapController.getEnd();
         int xDiff = Math.abs(end[0] - coordinates[0]) - Math.abs(end[0] - location[0]);
         int yDiff = Math.abs(end[1] - coordinates[1]) - Math.abs(end[1] - location[1]);
-        reward += (xDiff + yDiff)/2f;
+        reward += (xDiff + yDiff);
 
         return reward;
     }

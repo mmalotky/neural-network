@@ -69,6 +69,11 @@ public class RunScreen extends Screen {
         stopButton.addActionListener(a -> stopping = true);
         stopButton.setAlignmentX(CENTER_ALIGNMENT);
         add(stopButton);
+
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(a -> networkController.saveNetwork());
+        saveButton.setAlignmentX(CENTER_ALIGNMENT);
+        add(saveButton);
     }
 
     private void run(ActionEvent actionEvent) {

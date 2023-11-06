@@ -100,15 +100,10 @@ public class Network {
 
     public void reverse(double[] reward) {
         lastError = 0;
-        double rSum = Arrays.stream(reward).map(Math::exp).sum();
 
         for (Option option : options) {
             double rValue = reward[option.getOptionId()];
-            double expectedProbability = rValue/rSum;
-            double lastProbability = option.getLastProbability();
-
-            double stateByProbability = lastProbability * (1 - lastProbability);
-            double errorByState = stateByProbability * (lastProbability - expectedProbability);
+            double errorByState = option.getSum() - rValue;
 
             option.setErrorByState(errorByState);
             lastError += 0.5 * Math.pow(errorByState, 2);
