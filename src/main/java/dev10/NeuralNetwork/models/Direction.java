@@ -1,5 +1,8 @@
-package dev10.NeuralNetwork.controllers;
+package dev10.NeuralNetwork.models;
 
+/**
+ * Valid choices for movement on a Map object
+ */
 public enum Direction {
     DOWN(new int[]{1, 0}),
     UP(new int[]{-1, 0}),

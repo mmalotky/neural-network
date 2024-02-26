@@ -1,12 +1,15 @@
 package dev10.NeuralNetwork.gui;
 
 import dev10.NeuralNetwork.controllers.MapController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MapMenu extends Screen {
 
@@ -63,15 +66,24 @@ public class MapMenu extends Screen {
                 .forEach(mapsPanel::remove);
         mapsPanel.removeAll();
 
-        List<String> maps = controller.getMapIds().getBody();
-        if(maps == null || maps.size() == 0) {
+        ResponseEntity<List<String>> mapGetter = controller.getMapIds();
+        List<String> data = mapGetter.getBody();
+
+        if(data == null || data.size() == 0) {
             JLabel message = new JLabel("No Saved Maps");
             message.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 12));
             message.setAlignmentX(Component.CENTER_ALIGNMENT);
             mapsPanel.add(message);
         }
+        else if(mapGetter.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+            String errors = String.join("\n", data);
+            JLabel message = new JLabel("Error collecting data: \n" + errors);
+            message.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 12));
+            message.setAlignmentX(Component.CENTER_ALIGNMENT);
+            mapsPanel.add(message);
+        }
         else {
-            for(String map : maps) {
+            for(String map : data) {
                 String status = (map.equals(controller.getMapID())) ? "Active" : "";
                 JRadioButton button = new JRadioButton(map + "     " + status);
                 button.setActionCommand(map);

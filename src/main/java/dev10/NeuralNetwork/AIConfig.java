@@ -1,6 +1,6 @@
 package dev10.NeuralNetwork;
 
-import dev10.NeuralNetwork.controllers.Direction;
+import dev10.NeuralNetwork.models.Direction;
 import dev10.NeuralNetwork.controllers.MapController;
 import dev10.NeuralNetwork.controllers.NetworkController;
 import dev10.NeuralNetwork.models.MapElement;

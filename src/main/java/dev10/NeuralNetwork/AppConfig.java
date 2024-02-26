@@ -3,6 +3,9 @@ package dev10.NeuralNetwork;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Bean Configuration for data paths
+ */
 @Configuration
 public class AppConfig {
     @Bean(name = "networkPathFormat")
