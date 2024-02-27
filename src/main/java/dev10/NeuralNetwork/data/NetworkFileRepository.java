@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-
+/**
+ * Accesses file data for Network objects
+ */
 @Repository
 public class NetworkFileRepository extends FileRepository<Network> {
     public NetworkFileRepository(@Autowired @Qualifier("networkPathFormat") String networkPathFormat) throws DataAccessException {

@@ -8,6 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Data layer for managing persistent data stored in files
+ * @param <T> The object to be stored in a file
+ */
 public abstract class FileRepository<T> {
     private final String pathFormat;
     private final Mapper<T> mapper;
@@ -18,7 +22,11 @@ public abstract class FileRepository<T> {
         buildFileTree();
     }
 
-
+    /**
+     * Get the ids of the objects in persistent storage
+     * @return A list of ids from persistent data
+     * @throws DataAccessException
+     */
     public List<String> getSavedIds() throws DataAccessException {
         List<String> saveList = new ArrayList<>();
 
@@ -41,6 +49,12 @@ public abstract class FileRepository<T> {
         return saveList;
     }
 
+    /**
+     * Saves an object to persistent storage
+     * @param object The object to be stored
+     * @param id The id of the object
+     * @throws DataAccessException
+     */
     public void save(T object, String id) throws DataAccessException {
         String filePath = String.format(pathFormat, id);
         FileData data = mapper.objectToData(object);
@@ -61,6 +75,12 @@ public abstract class FileRepository<T> {
         }
     }
 
+    /**
+     * Loads an object from persistent data
+     * @param id The id of the object to be loaded
+     * @return The object loaded from persistent storage
+     * @throws DataAccessException
+     */
     public T load(String id) throws DataAccessException {
         String filePath = String.format(pathFormat, id);
         T object;
@@ -76,12 +96,21 @@ public abstract class FileRepository<T> {
         return object;
     }
 
+    /**
+     * Remove an object from persistent storage
+     * @param id The id of the object to be removed
+     * @return Boolean value indicating success or failure
+     */
     public boolean delete(String id) {
         String filePath = String.format(pathFormat, id);
         File networkFile = new File(filePath);
         return networkFile.delete();
     }
 
+    /**
+     * Builds the file path for persistent data storage if it doesn't exist
+     * @throws DataAccessException
+     */
     private void buildFileTree() throws DataAccessException {
         String[] tree = pathFormat.split("/");
         String url = "";

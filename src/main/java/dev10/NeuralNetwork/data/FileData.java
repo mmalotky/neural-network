@@ -3,6 +3,9 @@ package dev10.NeuralNetwork.data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Object to store raw file data in before parsing
+ */
 public class FileData {
     private final List<String> lines = new ArrayList<>();
 

@@ -36,6 +36,11 @@ public class MapService extends AppService<Map> {
         return result;
     }
 
+    /**
+     * Validate Map object components
+     * @param map The object to be validated
+     * @param result Result object for error collection
+     */
     private void checkMap(Map map, Result<?> result) {
         if(!map.getMap().containsValue(MapElement.START)) result.addError("Map missing start");
         if(!map.getMap().containsValue(MapElement.END)) result.addError("Map missing end");
@@ -46,11 +51,23 @@ public class MapService extends AppService<Map> {
         if(!findPath(map)) result.addError("No paths found");
     }
 
+    /**
+     * Implements checkPath to determine whether a map is navigable from start to finish.
+     * @param map The Map to be checked
+     * @return Boolean value determining whether navigable
+     */
     private boolean findPath(Map map) {
         int[] start = map.getStart();
         return checkPath(map, new ArrayList<>(), start);
     }
 
+    /**
+     * Recursive function in loop with checkDirection; establishes positions to be checked.
+     * @param map  The Map object
+     * @param checked List of positions already checked
+     * @param position Current position
+     * @return Boolean value indicating the navigability of the current position and all checked positions
+     */
     private boolean checkPath(Map map, List<String> checked, int[] position) {
         String right = map.coordinatesToKey(new int[]{position[0] + 1, position[1]});
         if(checkDirection(map, checked, right)) return true;
@@ -65,6 +82,14 @@ public class MapService extends AppService<Map> {
         return checkDirection(map, checked, down);
     }
 
+    /**
+     * Recursive function in loop with check path, determines whether the pathing algorithm has a way forward
+     * and/or has reached the end.
+     * @param map The Map object
+     * @param checked Positions already checked.
+     * @param direction Direction to be checked from current position.
+     * @return Boolean value determining the navigability og the current direction and all past checked positions
+     */
     private boolean checkDirection(Map map, List<String> checked, String direction) {
         if(!checked.contains(direction)) {
             MapElement el = map.getMap().get(direction);
