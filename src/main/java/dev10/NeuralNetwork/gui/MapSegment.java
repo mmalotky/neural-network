@@ -5,9 +5,11 @@ import dev10.NeuralNetwork.models.MapElement;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Specialized button format for drawing new maps based on the displayed MapIcon
+ */
 public class MapSegment extends JButton {
     private MapElement el;
-
     public MapSegment() {
         setMargin(new Insets(0,0,0,0));
         setPreferredSize(new Dimension(10, 10));
@@ -17,10 +19,17 @@ public class MapSegment extends JButton {
         addActionListener(e -> rotateElements());
     }
 
+    /**
+     * Get the current element selection
+     * @return MapElement based on current selection
+     */
     public MapElement getElement() {
         return el;
     }
 
+    /**
+     * Rotates the selected element to the next type of MapElement
+     */
     private void rotateElements() {
         el = switch(el) {
             case FLOOR -> MapElement.WALL;

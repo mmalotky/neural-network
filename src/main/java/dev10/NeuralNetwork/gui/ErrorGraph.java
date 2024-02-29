@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+/**
+ * Paints a graph based on a list of error data
+ */
 public class ErrorGraph extends JPanel {
     private final int MARGIN = 10;
     private final List<Double> data;

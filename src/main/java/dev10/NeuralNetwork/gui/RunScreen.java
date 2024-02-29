@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Screen for running a network on a selected map
+ */
 public class RunScreen extends Screen {
     private final NetworkController networkController;
     private final MapController mapController;
@@ -76,6 +79,10 @@ public class RunScreen extends Screen {
         add(saveButton);
     }
 
+    /**
+     * Run a thread for training the network
+     * @param actionEvent ActionEvent Trigger
+     */
     private void run(ActionEvent actionEvent) {
         if(isRunning || networkController.getNetworkId() == null || mapController.getMapID() == null) return;
         isRunning = true;
@@ -83,6 +90,9 @@ public class RunScreen extends Screen {
         runThread.start();
     }
 
+    /**
+     * Action to be run on the thread for network training
+     */
     private void runAction() {
         int iterations = (int) iterationsField.getValue();
         for(int i = 0; i < iterations; i++) {
@@ -101,6 +111,7 @@ public class RunScreen extends Screen {
         refresh();
     }
 
+    @Override
     public boolean refresh() {
         String networkId = networkController.getNetworkId();
         networkLabel.setText(String.format("Current Network: %s", networkId));
@@ -115,6 +126,9 @@ public class RunScreen extends Screen {
         return networkId != null && mapId != null;
     }
 
+    /**
+     * Draws the current map and position
+     */
     private void drawMap() {
         runPanel.removeAll();
 
@@ -160,6 +174,9 @@ public class RunScreen extends Screen {
         runPanel.updateUI();
     }
 
+    /**
+     * Updates the current position on the Map
+     */
     private void updatePosition() {
         int[] coordinates = mapController.getCoordinates();
         JPanel row = (JPanel) runPanel.getComponent(coordinates[0]);
@@ -168,6 +185,9 @@ public class RunScreen extends Screen {
         iconCard.show(iconPanel, "occupied");
     }
 
+    /**
+     * Updates the error list and draws the Error Graph
+     */
     private void updateErrorList() {
         double lastError = networkController.getError();
         if(lastError == 0) errorList.clear();

@@ -3,6 +3,9 @@ package dev10.NeuralNetwork.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Presets for JPanel in data field components
+ */
 public class Field extends JPanel {
     public Field(String text, Component component) {
         JLabel label = new JLabel(text);

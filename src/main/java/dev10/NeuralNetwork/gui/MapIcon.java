@@ -4,6 +4,9 @@ package dev10.NeuralNetwork.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * List of icons used to paint Map Segments and the run screen
+ */
 public class MapIcon {
     static Icon WALL = new Icon() {
         @Override

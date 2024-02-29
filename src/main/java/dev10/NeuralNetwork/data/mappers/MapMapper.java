@@ -7,6 +7,9 @@ import dev10.NeuralNetwork.models.MapElement;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Convert Map objects into data file and vice versa
+ */
 public class MapMapper implements Mapper<Map> {
     @Override
     public FileData objectToData(Map map) {

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Converts Network objects to data files and vice versa
+ */
 public class NetworkMapper implements Mapper<Network> {
     @Override
     public Network dataToObject(FileData data) {

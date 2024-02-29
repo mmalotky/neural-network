@@ -2,6 +2,8 @@ package dev10.NeuralNetwork.gui;
 
 
 import dev10.NeuralNetwork.controllers.NetworkController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,89 +11,88 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 
-public class NetworkMenu extends Screen {
-    private final JPanel networksPanel = new JPanel();
-    private final ButtonGroup networksGroup = new ButtonGroup();
+/**
+ * Menu for selecting and managing active networks
+ */
+public class NetworkMenu extends Menu {
     private final NetworkController controller;
-    private final NetworkTab tab;
     public NetworkMenu(NetworkController controller, NetworkTab tab) {
+        super(tab);
         this.controller = controller;
-        this.tab = tab;
 
         add(new Title("Networks"));
 
-        networksPanel.setLayout(new BoxLayout(networksPanel, BoxLayout.Y_AXIS));
         refresh();
-        add(new JScrollPane(networksPanel));
 
         JButton deleteButton = new JButton("Delete Network");
-        deleteButton.addActionListener(this::deleteNetwork);
+        deleteButton.addActionListener(this::delete);
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(deleteButton);
 
         JButton loadButton = new JButton("Load Network");
-        loadButton.addActionListener(this::loadNetwork);
+        loadButton.addActionListener(this::load);
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(loadButton);
 
         JButton editButton = new JButton("Edit Network");
-        editButton.addActionListener(this::editNetwork);
+        editButton.addActionListener(this::edit);
         editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(editButton);
 
         JButton newNetworkButton = new JButton("New Network");
-        newNetworkButton.addActionListener(this::newNetwork);
+        newNetworkButton.addActionListener(this::create);
         newNetworkButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(newNetworkButton);
     }
-    public void refresh() {
-        Arrays.stream(networksPanel.getComponents())
-                .filter(b -> b instanceof AbstractButton)
-                .forEach(b -> networksGroup.remove((AbstractButton) b));
-        networksPanel.removeAll();
 
-        List<String> networks = controller.getSavedNetworkIds().getBody();
-        if(networks == null || networks.size() == 0) {
+    @Override
+    public boolean refresh() {
+        Arrays.stream(optionsPanel.getComponents())
+                .filter(b -> b instanceof AbstractButton)
+                .forEach(b -> buttonGroup.remove((AbstractButton) b));
+        optionsPanel.removeAll();
+
+        ResponseEntity<List<String>> networksResponse = controller.getSavedNetworkIds();
+        List<String> data = networksResponse.getBody();
+        boolean success = networksResponse.getStatusCode() == HttpStatus.OK;
+
+        if(data == null || data.size() == 0) {
             JLabel message = new JLabel("No Saved Networks");
             message.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 12));
             message.setAlignmentX(Component.CENTER_ALIGNMENT);
-            networksPanel.add(message);
+            optionsPanel.add(message);
+        }
+        else if(!success) {
+            String errors = String.join("\n", data);
+            JLabel message = new JLabel("Error collecting data: \n" + errors);
+            message.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 12));
+            message.setAlignmentX(Component.CENTER_ALIGNMENT);
+            optionsPanel.add(message);
         }
         else {
-            for(String network : networks) {
+            for(String network : data) {
                 String status = (network.equals(controller.getNetworkId())) ? "Active" : "";
                 JRadioButton button = new JRadioButton(network + "     " + status);
                 button.setActionCommand(network);
-                networksPanel.add(button);
-                networksGroup.add(button);
+                optionsPanel.add(button);
+                buttonGroup.add(button);
             }
         }
-        networksPanel.updateUI();
+        optionsPanel.updateUI();
+        return success;
     }
 
-    private void newNetwork(ActionEvent actionEvent) {
-        tab.navigate(NetworkTab.FORUM);
-    }
-
-    private void editNetwork(ActionEvent actionEvent) {
-        loadNetwork(actionEvent);
-        tab.navigate(NetworkTab.EDIT);
-    }
-
-    private void deleteNetwork(ActionEvent actionEvent) {
+    @Override
+    void delete(ActionEvent actionEvent) {
         String selected = getSelection();
         controller.delete(selected);
         refresh();
     }
 
-    private void loadNetwork(ActionEvent actionEvent) {
+    @Override
+    void load(ActionEvent actionEvent) {
         String selected = getSelection();
         controller.loadNetwork(selected);
         tab.refresh();
-    }
-
-    private String getSelection() {
-        ButtonModel selection = networksGroup.getSelection();
-        return selection != null ? selection.getActionCommand() : null;
     }
 }

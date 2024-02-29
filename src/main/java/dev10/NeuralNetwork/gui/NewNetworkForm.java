@@ -9,17 +9,19 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
 
-public class NewNetworkForum extends Screen {
+/**
+ * Form for creating a new Network
+ */
+public class NewNetworkForm extends Form {
     private final NetworkController controller;
-    private final NetworkTab tab;
     private final JPanel layersPanel = new JPanel();
     private final JSpinner optionsField = new JSpinner(new SpinnerNumberModel(1,1,Integer.MAX_VALUE,1));
     private final JSpinner layersField = new JSpinner(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
 
 
-    public NewNetworkForum(NetworkController controller, NetworkTab tab) {
+    public NewNetworkForm(NetworkController controller, NetworkTab tab) {
+        super(tab);
         this.controller = controller;
-        this.tab = tab;
 
         add(new Title("New Network"));
 
@@ -49,6 +51,10 @@ public class NewNetworkForum extends Screen {
         add(exitButton);
     }
 
+    /**
+     * Adjusts the number of fields in the layers panel by changes in the layers field
+     * @param changeEvent ChangeEvent trigger
+     */
     private void handleLayersChange(ChangeEvent changeEvent) {
         int value = (int) layersField.getValue();
         if(value > layersPanel.getComponentCount()/2) {
@@ -58,11 +64,8 @@ public class NewNetworkForum extends Screen {
         }
     }
 
-    private void exit(ActionEvent actionEvent) {
-        tab.navigate(NetworkTab.MENU);
-    }
-
-    private void save(ActionEvent actionEvent) {
+    @Override
+    public void save(ActionEvent actionEvent) {
         int options = (int) optionsField.getValue();
         List<Integer> layersList = new ArrayList<>(Arrays.stream(layersPanel.getComponents())
                 .filter(c -> c instanceof JSpinner)
@@ -80,6 +83,9 @@ public class NewNetworkForum extends Screen {
         exit(actionEvent);
     }
 
+    /**
+     * Adds a layer to the layers panel
+     */
     private void addLayer() {
         int i = layersPanel.getComponentCount()/2;
         layersPanel.add(new JLabel(String.format("%s", i + 1)));
@@ -88,9 +94,17 @@ public class NewNetworkForum extends Screen {
         layersPanel.updateUI();
     }
 
+    /**
+     * Removes a layer from the layers panel
+     */
     private void removeLayer() {
         layersPanel.remove(layersPanel.getComponentCount() - 1);
         layersPanel.remove(layersPanel.getComponentCount() -1);
         layersPanel.updateUI();
+    }
+
+    @Override
+    boolean refresh() {
+        return true;
     }
 }

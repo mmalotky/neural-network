@@ -9,15 +9,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
-public class NewMapForum extends Screen {
+/**
+ * Form for creating new maps
+ */
+public class NewMapForm extends Form {
     private final MapController controller;
-    private final MapTab tab;
     private final JSpinner heightField = new JSpinner(new SpinnerNumberModel(1,1,100,1));
     private final JSpinner widthField = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
     private final JPanel mapField = new JPanel();
-    public NewMapForum(MapController controller, MapTab tab) {
+    public NewMapForm(MapController controller, MapTab tab) {
+        super(tab);
         this.controller = controller;
-        this.tab = tab;
 
         add(new Title("New Map"));
 
@@ -45,6 +47,10 @@ public class NewMapForum extends Screen {
         add(exitButton);
     }
 
+    /**
+     * Adjusts the number of rows in the map field
+     * @param changeEvent ChangeEvent trigger
+     */
     private void changeRows(ChangeEvent changeEvent) {
         int value = (int) heightField.getValue();
         int rows = mapField.getComponentCount();
@@ -65,6 +71,10 @@ public class NewMapForum extends Screen {
         mapField.updateUI();
     }
 
+    /**
+     * Adjusts the number of columns in the map field
+     * @param changeEvent ChangeEvent Trigger
+     */
     private void changeColumns(ChangeEvent changeEvent) {
         int value = (int) widthField.getValue();
         for(Component component : mapField.getComponents()) {
@@ -83,12 +93,8 @@ public class NewMapForum extends Screen {
         }
         mapField.updateUI();
     }
-
-    private void exit(ActionEvent actionEvent) {
-        tab.navigate(MapTab.MENU);
-    }
-
-    private void save(ActionEvent actionEvent) {
+    @Override
+    public void save(ActionEvent actionEvent) {
         HashMap<String, MapElement> result = new HashMap<>();
         for(int i = 0; i < mapField.getComponentCount(); i++) {
             JPanel row = (JPanel) mapField.getComponents()[i];
@@ -102,5 +108,10 @@ public class NewMapForum extends Screen {
         controller.newMap(result);
         tab.navigate(MapTab.MENU);
         tab.refresh();
+    }
+
+    @Override
+    boolean refresh() {
+        return true;
     }
 }
