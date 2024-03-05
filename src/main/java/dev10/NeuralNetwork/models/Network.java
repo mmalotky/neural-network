@@ -2,6 +2,9 @@ package dev10.NeuralNetwork.models;
 
 import java.util.*;
 
+/**
+ * Artificial neural network composed of Nodes and Synapses. Facilitates forward and backpropagation
+ */
 public class Network {
     private String networkId;
     private final List<List<Neuron>> layers = new ArrayList<>();
@@ -41,38 +44,75 @@ public class Network {
         Collections.reverse(this.layers);
     }
 
+    /**
+     * Gets the identifier for the network
+     * @return String id
+     */
     public String getNetworkId() {
         return networkId;
     }
 
+    /**
+     * Sets the identifier for the network
+     * @param networkId String id
+     */
     public void setNetworkId(String networkId) {
         this.networkId = networkId;
     }
 
+    /**
+     * Gets the hidden layers composed of Neurons
+     * @return List of Lists of Neurons, each representing a separate layer
+     */
     public List<List<Neuron>> getLayers() {
         return layers;
     }
 
+    /**
+     * Gets a list of the options for the output of the neural network
+     * @return List of Option Nodes
+     */
     public List<Option> getOptions() {
         return options;
     }
 
+    /**
+     * Gets the option selected by Markovian decision-making
+     * @return Option selected
+     */
     public Option getChoice() {
         return choice;
     }
 
+    /**
+     * Gets the Option with the highest probability
+     * @return Option selected
+     */
     public Option getBest() {
         return best;
     }
 
+    /**
+     * Gets the current learning rate of the network
+     * @return double value for learning modifier
+     */
     public double getLearningRate() {
         return learningRate;
     }
 
+    /**
+     * Sets the learning rate of the network to modulate the rate of change due to backpropagation
+     * @param learningRate double learning rate to be set
+     */
     public void setLearningRate(double learningRate) {
         this.learningRate = learningRate;
     }
 
+    /**
+     * Propagates a set of inputs forward through the Network, then determines the result with softmax
+     * @param states List of Double values for inputs
+     * @throws NetworkConfigurationException
+     */
     public void forward(List<Double> states) throws NetworkConfigurationException {
         if(states.size() != layers.get(0).size()) {
             throw new NetworkConfigurationException("Invalid Input", new Throwable().fillInStackTrace());
@@ -86,6 +126,9 @@ public class Network {
         softMax();
     }
 
+    /**
+     * Resets the activation states within the network to prepare the next forward propagation
+     */
     public void resetState() {
         for (List<Neuron> layer : layers) {
             for (Neuron neuron : layer) {
@@ -98,6 +141,10 @@ public class Network {
         }
     }
 
+    /**
+     * Backpropagation based calculated error between the output and the expected reward
+     * @param reward double[] of expected rewards for each option
+     */
     public void reverse(double[] reward) {
         lastError = 0;
 
@@ -125,6 +172,9 @@ public class Network {
         }
     }
 
+    /**
+     * Implements Markovian decision-making by randomly selecting an option based on its probability
+     */
     private void softMax() {
         double rand = Math.random();
         double totalValues = options.stream().mapToDouble(o -> Math.exp(o.getSum())).sum();
@@ -145,6 +195,10 @@ public class Network {
                 .orElse(null);
     }
 
+    /**
+     * Gets the last calculated error
+     * @return double value of error
+     */
     public double getLastError() {
         return lastError;
     }

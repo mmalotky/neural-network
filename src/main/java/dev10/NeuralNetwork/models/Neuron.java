@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Component of a neural network that receives and sends signals to input and output synapses based on an activation
+ * function processing the inputs.
+ */
 public class Neuron implements Node {
     private final List<Synapse> connections;
     private int inputSize;
@@ -28,6 +32,10 @@ public class Neuron implements Node {
         inputCount = 0;
     }
 
+    /**
+     * Sets the number of inputs that must be filled before assessing activation. Should only be called during instantiation.
+     * @param inputSize int number of inputs
+     */
     private void setInputSize(int inputSize) {
         this.inputSize = inputSize;
         for(int i = 0; i < inputSize; i++) {
@@ -35,6 +43,10 @@ public class Neuron implements Node {
         }
     }
 
+    /**
+     * Gets a list of the Synapses this neuron outputs from
+     * @return List of Synapse objects
+     */
     public List<Synapse> getConnections() {
         return connections;
     }
@@ -44,6 +56,11 @@ public class Neuron implements Node {
         return activationState;
     }
 
+    /**
+     * Adds a value to the activation state based on Leaky ReLu activation function.
+     * @param inputId int id from the sender
+     * @param state double input state
+     */
     @Override
     public void input(int inputId, double state) {
         activationState.set(inputId, state);
@@ -71,10 +88,15 @@ public class Neuron implements Node {
         this.errorByState = errorByState;
     }
 
+    @Override
     public double getSum() {
         return sum;
     }
 
+    /**
+     * Transmit a value to the output synapses
+     * @param value value to be transmitted
+     */
     private void output(double value) {
         for(Synapse connection : connections) {
             connection.transmit(value);

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Node in the final layer of the neural network, meant for option selection.
+ */
 public class Option implements Node {
     private final int optionId;
 
@@ -32,6 +35,10 @@ public class Option implements Node {
         inputCount = 0;
     }
 
+    /**
+     * Sets the number of inputs that must be filled before assessing activation. Should only be called during instantiation.
+     * @param inputSize int number of inputs
+     */
     private void setInputSize(int inputSize) {
         this.inputSize = inputSize;
         for(int i = 0; i < inputSize; i++) {
@@ -53,18 +60,31 @@ public class Option implements Node {
         }
     }
 
+    /**
+     * Gets the identifier for the Option
+     * @return int identifier for th option
+     */
     public int getOptionId() {
         return optionId;
     }
 
+    @Override
     public double getSum() {
         return sum;
     }
 
+    /**
+     * Gets the calculated probability of the option given the last forward propagation
+     * @return double probability
+     */
     public double getLastProbability() {
         return lastProbability;
     }
 
+    /**
+     * Sets the calculated probability of the option given the last forward propagation
+     * @param lastProbability double probability
+     */
     public void setLastProbability(double lastProbability) {
         this.lastProbability = lastProbability;
     }

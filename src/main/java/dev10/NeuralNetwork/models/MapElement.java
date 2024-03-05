@@ -1,5 +1,9 @@
 package dev10.NeuralNetwork.models;
 
+/**
+ * Elements that represent components of a Navigable map. Each is assigned a value representing its contribution
+ * to the total calculated rewards.
+ */
 public enum MapElement {
     FLOOR(0.0),
     WALL(-1.0),
